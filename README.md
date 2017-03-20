@@ -1,6 +1,6 @@
 # multiple-design
 
-In this repository, I am posting my newest implementation files of one-region template, multiple-design master site approach.
+In this repository, I am posting my newest implementation files of the one-region template, multiple-design master site approach.
 
 _core.csse last modified: 03/20/2017
 
