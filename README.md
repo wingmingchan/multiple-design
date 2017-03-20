@@ -9,7 +9,7 @@ All the code I can post used in the implementation of the multiple-design master
 1. Velocity formats, which are posted under https://github.com/wingmingchan/velocity
 2. PHP code used to generate CSS
 
-_core.csse: The core containing only Velocity library code
+_core.csse: The core containing only Velocity library code<br />
 _master_site: The master site, still in developement
 
 <h3>Documentation</h3>
