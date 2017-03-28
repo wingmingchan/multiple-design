@@ -1,0 +1,46 @@
+#chanwReviveGlobalVariable( "PagesWithoutBreadcrumbs" $design_namespace )
+#chanwProcessSystemPage( $page ) ## still need to process the page for last modified
+
+## skip breadcrumbs if page path is in the list
+#if( !$chanwReviveGlobalVariable.contains( $currentPagePath ) )
+#set( $trail       = $_XPathTool.selectNodes( $contentRoot, "//system-folder" ) )
+#set( $baseFolder  = "Base Folder" )
+#set( $defaultPage = "index" )
+#chanwReviveGlobalVariable( "BreadcrumbsHomeString" $design_namespace )
+#set( $homeString = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "BreadcrumbsSeparatorString" $design_namespace )
+#set( $separatorString = $chanwReviveGlobalVariable )
+    
+<div id="breadcrumb-div">
+<div class="container clearfix" id="breadcrumb-site-search-div">
+<nav class="col-sm-9" id="breadcrumb">
+    ## root-level pages, generate Home, possibly a link
+    #if( $page.getParent().name == "system-index-block" )
+        #if( $currentPage.name == $defaultPage )
+            $homeString
+        #else<a href="${defaultPage}">$homeString</a>#end
+    ## pages in folders
+    #else
+        ## non-indexable page
+        #if( $page.getParent().name == "calling-page" )<a href="${defaultPage}">$homeString</a>
+        ## generate Home link first
+        #else<a href="${defaultPage}">$homeString</a> $separatorString&#160;#end
+        
+        ## each folder
+        #foreach ( $folder in $trail )
+            #if( $folder.isAncestor( $page ) )
+                #chanwProcessSystemFolder( $folder )
+                #set( $theFolderTitle = "" )
+                ## get the folder display name
+                #set( $theFolderTitle = $systemFolderDisplayName.replaceAll( '&amp;amp;', '&amp;' ) )
+    
+                #if( $folder.getAttribute( "current" ) ) <a href="$systemFolderLink/$defaultPage">$theFolderTitle</a>
+                    #if( $page.getParent() != $folder ) $separatorString&#160;#end 
+                #else<a href="$systemFolderLink/$defaultPage">$theFolderTitle</a> $separatorString&#160;#end
+            #end
+        #end
+    #end
+</nav>
+</div>
+</div>
+#end
