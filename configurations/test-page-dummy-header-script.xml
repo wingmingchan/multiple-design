@@ -1,0 +1,5 @@
+<scripts>
+    <code>
+#chanwSetVariable( "${design_namespace}Header" "${masterSiteDesignPath}dummy-header" )
+    </code>
+</scripts>
