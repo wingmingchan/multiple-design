@@ -1,0 +1,14 @@
+$S_SYSTEM_VIEW_INTERNAL
+    <link href="site://Upstate-Globals/assets/global-rwd3.css" media="all" rel="stylesheet"/>
+    <link href="http://www.upstate.edu/assets/css/jquery.ui-1.11.4.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="http://www.upstate.edu/assets/css/vlightbox1.css" rel="stylesheet" type="text/css"/>
+    <link href="http://www.upstate.edu/assets/css/visuallightbox.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="http://www.upstate.edu/assets/css/vlightbox1.css" rel="stylesheet" type="text/css"/>
+    <link href="http://www.upstate.edu/assets/css/visuallightbox.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="http://www.upstate.edu/assets/css/flexslider.css" media="all" rel="stylesheet"/>
+$E_SYSTEM_VIEW_INTERNAL
+$S_SYSTEM_VIEW_EXTERNAL
+    $S_PHP_PASSTHROUGH
+        createGlobalX( "link" );
+    $E_PHP_PASSTHROUGH
+$E_SYSTEM_VIEW_EXTERNAL
