@@ -1,0 +1,46 @@
+#* Do not hard-code master site name and design name here *#
+
+## accessibility
+#chanwSetVariable( "${design_namespace}Accessibility"    "${masterSiteDesignPath}accessibility" )
+#chanwSetVariable( "${design_namespace}Copyright"        "${masterSiteDesignPath}copyright" )
+#chanwSetVariable( "${design_namespace}GlobalMenuSearch" "${masterSiteDesignPath}global-menu-search" )
+#chanwSetVariable( "${design_namespace}LastModified"     "${masterSiteDesignPath}last-modified" )
+#chanwSetVariable( "${design_namespace}SiteTitle"        "${masterSiteDesignPath}site-title" )
+
+## site config
+#set( $siteSetupFormatSiteName   = $currentPageSiteName )
+#set( $siteSetupFormatFolderPath = "/" )
+#set( $siteSetupFormatName       = $SITE_SETUP_FORMAT_NAME )
+
+## site theme
+#chanwSetVariable( "${design_namespace}SiteThemeCSS"      "" )
+
+## site local stylesheet
+#chanwSetVariable( "${design_namespace}SiteLocalCSS"      "" )
+
+## site logo
+#chanwSetVariable( "${design_namespace}SiteLogoSiteName"      $master_site_name )
+#chanwSetVariable( "${design_namespace}SiteLogoFolderPath"    "formats/${design_namespace}" )
+#chanwSetVariable( "${design_namespace}SiteLogoFormatName"    "logo" )
+
+##site title
+#chanwSetVariable( "${design_namespace}RenderSiteTitle" true )
+#chanwSetVariable( "${design_namespace}SiteTitleLink"   "index" )
+
+## site nav
+#chanwSetVariable( "${design_namespace}HomeLinkTextInSiteNav"  "Home" )
+
+## breadcrumbs
+#chanwSetVariable( "${design_namespace}BreadcrumbsHomeString"      "Home" )
+#chanwSetVariable( "${design_namespace}BreadcrumbsSeparatorString" ">" )
+
+## h2 in row block
+#chanwSetVariable( "${design_namespace}RowCenterHeaderClasses" "centerobject" )
+
+## layouts
+#chanwSetVariable( "${design_namespace}TopLeftCssClass"                       "col-md-3 nopadding" )
+#chanwSetVariable( "${design_namespace}MiddleCenterCssClass"                  "col-md-6" )
+#chanwSetVariable( "${design_namespace}BottomRightCssClass"                   "col-md-3 nopadding" )
+#chanwSetVariable( "${design_namespace}MiddleCenterWithNoTopLeftCssClass"     "col-md-9" )
+#chanwSetVariable( "${design_namespace}MiddleCenterWithNoBottomRightCssClass" "col-md-9" )
+#chanwSetVariable( "${design_namespace}PageCssClass"                          "bg-white" )
