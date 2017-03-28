@@ -1,0 +1,9 @@
+#chanwReviveGlobalVariable( "SiteTitleString" $design_namespace )
+#if( $chanwReviveGlobalVariable )
+    #set( $siteTitleString = $chanwReviveGlobalVariable + " | " )
+#else
+    #set( $siteTitleString = "" )
+#end
+#if( $currentPage.path == "index" )
+    $siteTitleString SUNY Upstate Medical University#else
+    <system-page-title/> | $siteTitleString SUNY Upstate Medical University#end
