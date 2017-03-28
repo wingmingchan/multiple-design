@@ -1,0 +1,5 @@
+<div id="last-modified">
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "copyright" )
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "privacy-policy" )
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "contact" )
+</div>
