@@ -1,0 +1,64 @@
+<div id="site-menu-bar-div">
+<div class="container" id="site-menu-div">
+<nav id="site-menu">
+#set( $base_folder = $_.locateFolder( "/", $currentPageSiteName ) )
+#set( $children = $base_folder.Children )
+
+## the logic here assumes that all indexable assets are ordered before
+## non-indexable asset; hence we can stop when the first non-indexable
+## asset is encountered
+## alternative: process all assets, and do nothing for non-indexable assets
+## it is also assumed that all assets have display names
+<ul>
+#foreach( $child in $children )##
+    #if( !$child.ShouldBeIndexed )##
+        #break##
+    #elseif( $child.Identifier.Type == "folder" )
+        #chanwIsAncestorOf( $child $currentPage )
+        
+        #if( $chanwIsAncestorOf )  ## for highlighting
+            #set( $li_class = ' class="currentMenuItem"' )
+        #else
+            #set( $li_class = '' )
+        #end
+    
+        #set( $folderDisplayName = $_EscapeTool.xml( $child.Metadata.DisplayName ) )
+        #set( $indexLink         = "" )
+<li${li_class}><a href="${child.Link}/index" name="${folderDisplayName}">$folderDisplayName</a>
+        #set( $grandchildren = $child.Children )
+<ul>
+        #foreach( $grandchild in $grandchildren )
+            #if( !$grandchild.ShouldBeIndexed && $grandchild.Identifier.Type != "symlink" )
+                #break
+            #elseif( $grandchild.Name == "index" )
+                ## do nothing
+            #elseif( $grandchild.Identifier.Type == "folder" )
+<li><a href="${grandchild.Link}/index">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+            #else ## pages, symlinks
+<li><a href="${grandchild.Link}">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+            #end
+        #end
+</ul></li>
+        
+        #if( $children[ $foreach.count ].ShouldBeIndexed )
+<li class="separator"><div></div></li>        
+        #end
+    #elseif( $child.Name == "index" )
+        #chanwReviveGlobalVariable( "RenderHomeInSiteNav" $design_namespace )
+
+        #if( $chanwReviveGlobalVariable )
+            #chanwReviveGlobalVariable( "HomeLinkTextInSiteNav" $design_namespace )
+                    
+            #if( $chanwReviveGlobalVariable != "" )
+<li><a href="${child.Link}">$chanwReviveGlobalVariable</a></li>
+<li class="separator"><div></div></li>
+            #end
+        #end
+    #elseif( $child.Identifier.Type == "symlink" )
+<li><a href="${child.Link}">$_EscapeTool.xml( $child.Metadata.DisplayName )</a></li>        
+    #end
+#end
+</ul>
+</nav> 
+</div>
+</div>
