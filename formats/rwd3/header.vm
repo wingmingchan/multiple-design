@@ -1,0 +1,20 @@
+<header id="header">
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "global-menu-search" )
+
+<div class="container" id="logo-site-title-div">
+<div class="row">
+#chanwReviveGlobalVariable( "SiteLogoSiteName" $design_namespace )
+#set( $siteLogoSiteName = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "SiteLogoFolderPath" $design_namespace )
+#set( $siteLogoFolderPath = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "SiteLogoFormatName" $design_namespace )
+#set( $siteLogoFormatName = $chanwReviveGlobalVariable )
+#chanwImportScript( $siteLogoFolderPath $siteLogoSiteName $siteLogoFormatName )
+<div class="col-sm-9" id="site-menu-handle-title-div">
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "site-menu-handle" )
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "site-title" )
+</div>
+</div>
+</div>
+<div id="site-title-menu-background"></div>
+</header>
