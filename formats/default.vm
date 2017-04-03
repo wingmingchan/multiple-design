@@ -29,7 +29,8 @@
 #end
 
 ## after page-level override, if global variables have not been imported, import now
-#import( "site://${master_site_name}/formats/${MASTER_SETUP_GLOBAL_VARIABLES}" )
+##import( "site://${master_site_name}/formats/${MASTER_SETUP_GLOBAL_VARIABLES}" )
+#chanwImportScript( "formats" $master_site_name $MASTER_SETUP_GLOBAL_VARIABLES )
 
 #* --- the design setup format --- *#
 #chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )
@@ -183,7 +184,7 @@
     #if( $renderH1 && !$pagesWithoutH1.contains( $currentPagePath ) )
         #chanwReviveGlobalVariable( "H1AboveGrid" $design_namespace )
         #if( $chanwReviveGlobalVariable ) 
-        <div class="container"><h1>$h1</h1></div>
+        <div class="container nopadding-left"><h1>$h1</h1></div>
         #end
     #end
     
