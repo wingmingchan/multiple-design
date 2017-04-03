@@ -3,9 +3,5 @@
 #set( $design_namespace = "hannonHill" )
 ## global components: components existing in every design
 #set( $masterSiteDesignPath = "site://${master_site_name}/formats/${design_namespace}/" )
-#import( "site://${master_site_name}/formats/${MASTER_SETUP_GLOBAL_VARIABLES}" )
-
-## override whatever needed for this page
-#chanwSetVariable( "${design_namespace}RenderBreadcrumbs" false )
     </code>
 </scripts>
