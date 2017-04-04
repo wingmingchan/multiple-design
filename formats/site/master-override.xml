@@ -1,0 +1,7 @@
+<scripts>
+    <code>
+#set( $design_namespace = "rwd4" )
+## global components: components existing in every design
+#set( $masterSiteDesignPath = "site://${master_site_name}/formats/${design_namespace}/" )
+    </code>
+</scripts>
