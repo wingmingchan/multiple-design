@@ -5,7 +5,7 @@
 #chanwSetVariable( "${design_namespace}SiteThemeCSS"       "assets/hospital-rwd-theme.css" )
 #chanwSetVariable( "${design_namespace}SiteLocalCSS"       "cascade-admin/_extra/local.css" )
 #chanwSetVariable( "${design_namespace}SiteLogoFormatName" "hospital-logo" )
-##chanwSetVariable( "${design_namespace}Header"              "site://${master_site_name}/formats/${design_namespace}/dummy-header" )
+##chanwSetVariable( "${design_namespace}Header"            "site://${master_site_name}/formats/${design_namespace}/dummy-header" )
 
 #chanwSetVariable( "${design_namespace}PagesWithoutBreadcrumbs" [ "index" ] )
 #chanwSetVariable( "${design_namespace}PagesWithoutH1" [ "test-pages/blocks/row-block/top-image-c" ] )
