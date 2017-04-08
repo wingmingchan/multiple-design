@@ -2,7 +2,7 @@
 
 In this repository, I am posting my newest implementation files of the one-region template, multiple-design master site approach.
 
-_core.csse last modified: 03/20/2017
+_core.csse last modified: 04/08/2017 
 
 All the code I can post used in the implementation of the multiple-design master site can be found here. What are not included here:
 
