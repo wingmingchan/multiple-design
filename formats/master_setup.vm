@@ -1,8 +1,21 @@
-#* Except the first part, do not hard-code any site name or design name here *#
-
+#*
+《code》
+《copyright》
+Authors: Wing Ming Chan
+Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
+MIT Licensed
+Modification history:
+《/copyright》
+《documentation id=“top”》
+《h2》Introduction《/h2》
+《p》This is the master_setup format. The sole purpose of this format is to
+associate sites with designs.《/p》
+《/documentation》
+*#
+## Except the first part, do not hard-code any site name or design name here
 ## lists to associate sites with designs
 #set( $rwd3 = [ "cascade-admin" ] )
-#set( $rwd4 = [] )
+#set( $rwd4 = [ "about" ] )
 
 #if( $rwd4.contains( $currentPageSiteName ) )
     #set( $design_namespace = "rwd4" )
@@ -15,3 +28,8 @@
 
 ## to allow this master setup to be overridden at the page level, 
 ## import global_variables only in default, not here because #import only works once
+#*
+《documentation id=“bottom”》
+《/documentation》
+《/code》
+*#
