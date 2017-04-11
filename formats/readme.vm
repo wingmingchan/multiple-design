@@ -34,20 +34,32 @@ named 《code》rwd_template《/code》 like this:
 <xsl:processing-instruction name="php">require_once('cascade/cascade_global.php');$responsive = true;echo $doctype;</xsl:processing-instruction>
 《/pre》
 《/li》
+《li》When writing 《code》#import《/code》 statements to import global components,
+follow the sequence of the components appearing in the XHTML markups《/li》
+《li》Never hard code a design name here; used 《code》$design_namespace《/code》 instead《/li》
+《li》When processing the page data definition and whenever a 《code》content《/code》 element
+is encountered, invoke 《code》#chanwProcessBlockChooser《/code》 and pass in the
+《code》content《/code》 element《/li》
+《li》As long as the block attached to a block chooser is set up properly (named
+properly, or embedded with type information or with a macro name), automatic macro
+invocation will kick in《/li》
 《/ul》
-
-《!--
-《h2》《code》《/code》《/h2》
-《p》《/p》
+《h2》The 《code》layout《/code》 Format《/h2》
 《ul》
-《li》《/li》
-《li》《/li》
-《li》《/li》
-《li》《/li》
-《li》《/li》
+《li》Defines XHTML structure for pages《/li》
+《li》Use various layout-related parameters to calculate the desired layout《/li》
+《li》Calculate CSS class names based on global variables defined in setup formats
+and insert them into 《code》div《/code》 elements《/li》
 《/ul》
---》
-
+《h2》The 《code》custom_macro_list《/code》 Format《/h2》
+《ul》
+《li》The list named 《code》$single_group_names《/code》 only contains
+values assigned to the 《code》default《/code》 attribute of a field whose
+identifier is 《code》block-type《/code》 of a single-functional
+data definition《/li》
+《li》The list named 《code》$multi_macro_names《/code》 only contains names of
+macros invoked to process multi-functional data definition blocks《/li》
+《/ul》
 《/documentation》
 《documentation id=“bottom”》
 《/documentation》
