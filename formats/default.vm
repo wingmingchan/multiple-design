@@ -1,3 +1,25 @@
+#*
+《code》
+《copyright》
+Authors: Wing Ming Chan
+Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
+MIT Licensed
+Modification history:
+《/copyright》
+《documentation id=“top”》
+《h2》Introduction《/h2》
+《p》This is the default format attached to the DEFAULT region of the configuration
+named 《code》RWD《/code》 of the configuration set named 《code》RWD《/code》.《/p》
+《/documentation》
+《documentation》
+《code》Import statements《/code》
+《p》This part defines the page structure and imports all global components.
+Note that the order of the import statements follows the same order of elements
+in the desired XHTML markups.《/p》
+《/documentation》
+《macro id=“importstatements”》
+*#
+<!--#protect-top<!DOCTYPE html>#protect-top-->
 <html lang="en-US">
     <head>
 #* Except lines 7 and 11, do not hard-code any site information here *#
@@ -29,8 +51,7 @@
 #end
 
 ## after page-level override, if global variables have not been imported, import now
-##import( "site://${master_site_name}/formats/${MASTER_SETUP_GLOBAL_VARIABLES}" )
-#chanwImportScript( "formats" $master_site_name $MASTER_SETUP_GLOBAL_VARIABLES )
+#import( "site://${master_site_name}/formats/${MASTER_SETUP_GLOBAL_VARIABLES}" )
 
 #* --- the design setup format --- *#
 #chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )
@@ -128,13 +149,28 @@
 #end
 
 <div id="show-zone3"></div>
-
+#*
+《/macro》
+《documentation》
+《code》processespagecontents《/code》
+《p》Processes page contents.《/p》
+《/documentation》
+《macro id=“processespagecontents”》
+*#
 #chanwReviveGlobalVariable( "ProcessPageSystemDataStructure" $design_namespace )
 
 #if( $chanwReviveGlobalVariable )
     #processPageSystemDataStructure
 #end
-
+#*
+《/macro》
+《documentation》
+《code》moreimportstatements《/code》
+《p》More import statements related to global components appearing after the page
+contents.《/p》
+《/documentation》
+《macro id=“moreimportstatements”》
+*#
 ## footer
 #chanwReviveGlobalVariable( "Footer" $design_namespace )
 #import( $chanwReviveGlobalVariable )
@@ -147,7 +183,14 @@
 <a class="cd-top" href="#0">Top</a>
     </body>
 </html>
-
+#*
+《/macro》
+《documentation》
+《code》processPageSystemDataStructure《/code》
+《p》Processes every field defined in the page data definition.《/p》
+《/documentation》
+《macro id=“processPageSystemDataStructure”》
+*#
 #macro( processPageSystemDataStructure )
     #set( $pageLayout              = $pageSystemDataStructure.getChild( "layout" ) )
     #set( $pageLayoutTop           = $pageLayout.getChild( "layout-top-group" ).getChild( "layout-top" ).Value )
@@ -188,8 +231,8 @@
         #end
     #end
     
-    ## import the layouts format
-    #import( "site://${master_site_name}/formats/layouts" )
+    ## import the layout format
+    #import( "site://${master_site_name}/formats/layout" )
 
     ## the chooser group after the wysiwyg
     #chanwReviveGlobalVariable( "RenderPostWysiwygGroup" $design_namespace )
@@ -216,3 +259,9 @@
         #end
     #end
 #end
+#*
+《/macro》
+《documentation id=“bottom”》
+《/documentation》
+《/code》
+*#
