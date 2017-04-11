@@ -1,9 +1,37 @@
+#*
+《code》
+《copyright》
+Authors: Wing Ming Chan
+Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
+MIT Licensed
+Modification history:
+《/copyright》
+《documentation id=“top”》
+《h2》Introduction《/h2》
+《p》This is the format defining global variables with default values used
+in the master site.《/p》
+《/documentation》
+《documentation》
+《code》Site setup《/code》
+《p》This part defines the location of a site setup format.《/p》
+《/documentation》
+《macro id=“sitesetup”》
+*#
 ## site setup: the setup format should be in the Base Folder of a site
 #set( $siteSetupFormatSiteName   = $currentPageSiteName )
 #set( $siteSetupFormatFolderPath = "/" )
 #set( $siteSetupFormatName       = $SITE_SETUP_FORMAT_NAME  ) ## defined in _core
-
-## global components: components existing in every design
+#*
+《/macro》
+《documentation》
+《code》Global components《/code》
+《p》This part defines the location of global components. These components should
+be organization-agnostic and very general, and should be existing in every design.
+Details about parts within a global component are defined in the global component
+in a design.《/p》
+《/documentation》
+《macro id=“globalcomponent”》
+*#
 #chanwSetVariable( "${design_namespace}Breadcrumbs"      "${masterSiteDesignPath}breadcrumbs" )
 #chanwSetVariable( "${design_namespace}Contact"          "${masterSiteDesignPath}contact" )
 #chanwSetVariable( "${design_namespace}FolderNav"        "${masterSiteDesignPath}folder-nav" )
@@ -16,7 +44,15 @@
 #chanwSetVariable( "${design_namespace}SiteNav"          "${masterSiteDesignPath}site-nav" )
 #chanwSetVariable( "${design_namespace}SiteTitle"        "${masterSiteDesignPath}site-title" )
 #chanwSetVariable( "${design_namespace}Title"            "${masterSiteDesignPath}title" )
-
+#*
+《/macro》
+《documentation》
+《code》Control flags《/code》
+《p》This part defines control flags: variables whose values are used to control
+default behaviors of rendering of global components.《/p》
+《/documentation》
+《macro id=“controlflags”》
+*#
 ## global nav
 #chanwSetVariable( "${design_namespace}RenderGlobalNav"        true )
 
@@ -70,3 +106,9 @@
 
 ## global flags to control data definition blocks
 #chanwSetVariable( "${design_namespace}RenderWysiwygBlock" true )
+#*
+《/macro》
+《documentation id=“bottom”》
+《/documentation》
+《/code》
+*#
