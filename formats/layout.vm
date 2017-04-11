@@ -1,3 +1,22 @@
+#*
+《code》
+《copyright》
+Authors: Wing Ming Chan
+Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
+MIT Licensed
+Modification history:
+《/copyright》
+《documentation id=“top”》
+《h2》Introduction《/h2》
+《p》This format defines variables and introduces XHTML markups for the content
+area of a page.《/p》
+《/documentation》
+《documentation》
+《code》Page layouts《/code》
+《p》This part defines variables used to control page layouts.《/p》
+《/documentation》
+《macro id=“pagelayouts”》
+*#
 ## global setup
 #chanwReviveGlobalVariable( "HasTopRowLeftCol" $design_namespace )
 #set( $siteHasTop = $chanwReviveGlobalVariable )
@@ -7,26 +26,33 @@
 ## page-specific layout
 #if( $siteHasTop && $siteHasBottom && $pageHasTop && $pageHasBottom )
     #chanwReviveGlobalVariable( "TopLeftCssClass" $design_namespace )
-    #set( $topCssClass = $chanwReviveGlobalVariable )
+    #set( $topCssClass = $chanwReviveGlobalVariable + " nopadding-left" )
     #chanwReviveGlobalVariable( "MiddleCenterCssClass" $design_namespace )
     #set( $middleCssClass = $chanwReviveGlobalVariable )
     #chanwReviveGlobalVariable( "BottomRightCssClass" $design_namespace )
-    #set( $bottomCssClass = $chanwReviveGlobalVariable )
+    #set( $bottomCssClass = $chanwReviveGlobalVariable + " nopadding-right" )
 #elseif( $siteHasTop && $pageHasTop ) ## no bottom right
     #chanwReviveGlobalVariable( "TopLeftCssClass" $design_namespace )
     #set( $topCssClass = $chanwReviveGlobalVariable )
     #chanwReviveGlobalVariable( "MiddleCenterWithNoBottomRightCssClass" $design_namespace )
-    #set( $middleCssClass = $chanwReviveGlobalVariable )
+    #set( $middleCssClass = $chanwReviveGlobalVariable + " nopadding-right" )
 #elseif( $siteHasBottom && $pageHasBottom ) ## no top left
     #chanwReviveGlobalVariable( "MiddleCenterWithNoTopLeftCssClass" $design_namespace )
     #set( $middleCssClass = $chanwReviveGlobalVariable )
     #chanwReviveGlobalVariable( "BottomRightCssClass" $design_namespace )
-    #set( $bottomCssClass = $chanwReviveGlobalVariable )
+    #set( $bottomCssClass = $chanwReviveGlobalVariable + " nopadding-left" )
 #end
-
+#*
+《/macro》
+《documentation》
+《code》Page markups《/code》
+《p》Markups of the page content area.《/p》
+《/documentation》
+《macro id=“pagemarkups”》
+*#
 ## local class for page background
 #chanwReviveGlobalVariable( "PageCssClass" $design_namespace )
-#set( $containerClass = "container " + $chanwReviveGlobalVariable )
+#set( $containerClass = "container nopadding " + $chanwReviveGlobalVariable )
 
 <div id="main-div-wrapper" class="${containerClass}">
     #if( $siteHasTop && $pageHasTop )
@@ -127,3 +153,9 @@
     </div>
     #end
 </div>
+#*
+《/macro》
+《documentation id=“bottom”》
+《/documentation》
+《/code》
+*#
