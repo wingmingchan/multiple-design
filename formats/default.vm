@@ -19,7 +19,6 @@ in the desired XHTML markups.《/p》
 《/documentation》
 《macro id=“importstatements”》
 *#
-<!--#protect-top<!DOCTYPE html>#protect-top-->
 <html lang="en-US">
     <head>
 #* Except lines 7 and 11, do not hard-code any site information here *#
