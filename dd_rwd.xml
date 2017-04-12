@@ -1,5 +1,13 @@
 <system-data-structure>
-    <group identifier="layout" label="layout">
+    <asset type="block" identifier="pre-h1-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
+    <text identifier="h1" label="H1 Page Title" required="true"/>
+    <asset type="block" identifier="pre-wysiwyg-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
+    <text wysiwyg="true" identifier="wysiwyg" label="Content"/>
+    <asset type="block" identifier="post-wysiwyg-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
+    <group identifier="post-wysiwyg-group" label="Post Wysiwyg Group" collapsed="true">
+        <asset type="block" identifier="post-wysiwyg-group-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
+    </group>
+    <group identifier="layout" label="layout" collapsed="true">
         <group identifier="layout-top-group" label="Top Row/Left Column" collapsed="true">
             <text type="radiobutton" identifier="layout-top" label="With Top Section" default="yes">
                 <radio-item value="yes" show-fields="top-group"/>
@@ -13,21 +21,13 @@
             </text>
         </group>
     </group>
-    <group identifier="top-group" label="Top Row/Left Column Group">
+    <group identifier="top-group" label="Top Row/Left Column Group" collapsed="true">
         <asset type="block" identifier="top-group-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
     </group>
-    <asset type="block" identifier="pre-h1-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
-    <text identifier="h1" label="H1 Page Title" required="true"/>
-    <asset type="block" identifier="pre-wysiwyg-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
-    <text wysiwyg="true" identifier="wysiwyg" label="Content"/>
-    <asset type="block" identifier="post-wysiwyg-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
-    <group identifier="post-wysiwyg-group" label="Post Wysiwyg Group">
-        <asset type="block" identifier="post-wysiwyg-group-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
-    </group>
-    <group identifier="bottom-group" label="Bottom Row/Right Column Group">
+    <group identifier="bottom-group" label="Bottom Row/Right Column Group" collapsed="true">
         <asset type="block" identifier="bottom-group-chooser" label="Choose a block" multiple="true" render-content-depth="5"/>
     </group>
-    <group identifier="admin-group" label="Admin Group" restrict-to-groups="Administrators,CWT-Designers">
+    <group identifier="admin-group" label="Admin Group" restrict-to-groups="Administrators,CWT-Designers" collapsed="true">
         <asset type="block" identifier="master-level-override" label="Master Level Override" restrict-to-groups="Administrators" render-content-depth="5"/>
         <asset type="block" identifier="page-level-override" label="Page Level Override" restrict-to-groups="Administrators" render-content-depth="5"/>
     </group>
