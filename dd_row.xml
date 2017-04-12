@@ -1,31 +1,21 @@
 <system-data-structure>
-  <text default="row" identifier="block-type" label="Block type" restrict-to-groups="wing"/>
-  <text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
-    <radio-item value="yes"/>
-    <radio-item value="no"/>
-  </text>
-  <group identifier="row-group" label="Row Group">
-    <text default="none" help-text="Select a col class for the block" identifier="col-class" label="Col Class" required="true" type="radiobutton">
-      <radio-item value="none"/>
-      <radio-item value="3"/>
-      <radio-item value="4"/>
-      <radio-item value="5"/>
-      <radio-item value="6"/>
-      <radio-item value="7"/>
-      <radio-item value="8"/>
-      <radio-item value="9"/>
+    <text default="row" identifier="block-type" label="Block type" restrict-to-groups="wing"/>
+    <text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
+        <radio-item value="yes"/>
+        <radio-item value="no"/>
     </text>
-    <text identifier="background-classes" label="Background Classes"/>
-    <text identifier="row-header" label="Row Header"/>
-    <text identifier="options" label="Options" type="checkbox">
-      <checkbox-item value="centered header"/>
-      <checkbox-item value="full width"/>
-      <checkbox-item value="even column"/>
-      <checkbox-item value="padding"/>
-      <checkbox-item value="margin"/>
-      <checkbox-item value="bottom spacing"/>
-      <checkbox-item value="bottom hr"/>
-    </text>
-    <asset identifier="row-block-chooser" label="Block Chooser" maximum-number="4" minimum-number="2" multiple="true" render-content-depth="5" type="block"/>
-  </group>
+    <group identifier="row-group" label="Row Group">
+        <text identifier="background-classes" label="Background Classes"/>
+        <text identifier="row-header" label="Row Header"/>
+        <text identifier="options" label="Options" type="checkbox">
+            <checkbox-item value="centered header"/>
+            <checkbox-item value="full width"/>
+            <checkbox-item value="even column"/>
+            <checkbox-item value="padding"/>
+            <checkbox-item value="margin"/>
+            <checkbox-item value="bottom spacing"/>
+            <checkbox-item value="bottom hr"/>
+        </text>
+        <asset identifier="row-block-chooser" label="Block Chooser" maximum-number="4" minimum-number="2" multiple="true" render-content-depth="5" type="block"/>
+    </group>
 </system-data-structure>
