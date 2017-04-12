@@ -42,7 +42,6 @@ in a design.《/p》
 #chanwSetVariable( "${design_namespace}Meta"             "${masterSiteDesignPath}meta" )
 #chanwSetVariable( "${design_namespace}Script"           "${masterSiteDesignPath}script" )
 #chanwSetVariable( "${design_namespace}SiteNav"          "${masterSiteDesignPath}site-nav" )
-#chanwSetVariable( "${design_namespace}SiteTitle"        "${masterSiteDesignPath}site-title" )
 #chanwSetVariable( "${design_namespace}Title"            "${masterSiteDesignPath}title" )
 #*
 《/macro》
@@ -55,10 +54,6 @@ default behaviors of rendering of global components.《/p》
 *#
 ## global nav
 #chanwSetVariable( "${design_namespace}RenderGlobalNav"        true )
-
-## site title
-#chanwSetVariable( "${design_namespace}RenderSiteTitle"        true )
-#chanwSetVariable( "${design_namespace}PagesWithoutSiteTitle"  [] )
 
 ## site navigation
 #chanwSetVariable( "${design_namespace}RenderSiteNav"          true )
