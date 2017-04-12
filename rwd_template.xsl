@@ -19,10 +19,10 @@
         <!-- this element shows up in head, right before the end tag of head -->
         <element id="page-level-override" name="div"/>
         <!-- these are zones defined in the default format -->
-        <element id="zone1" name="div"/>
-        <element id="zone2" name="div"/>
-        <element id="zone3" name="div"/>
-        <element id="zone4" name="div"/>
+        <element id="zone1" name="div"/><!-- between header and site nav -->
+        <element id="zone2" name="div"/><!-- between site nav and breadcrumbs -->
+        <element id="zone3" name="div"/><!-- between breadcrumbs and page contents -->
+        <element id="zone4" name="div"/><!-- below footer -->
     </xsl:variable>
     <!-- used by Angular.js -->
     <xsl:template match="html">
