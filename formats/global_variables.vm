@@ -9,7 +9,9 @@ Modification history:
 《documentation id=“top”》
 《h2》Introduction《/h2》
 《p》This is the format defining global variables with default values used
-in the master site.《/p》
+in the master site. When introducing a new design, try not to modify this
+format. Instead, build the new business logic into global components
+of the new design.《/p》
 《/documentation》
 《documentation》
 《code》Site setup《/code》
