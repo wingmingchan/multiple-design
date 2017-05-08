@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+5/8/2017 Split processing code into macros.
 《/copyright》
 《documentation id=“top”》
 《h2》Introduction《/h2》
@@ -21,176 +22,238 @@ in the desired XHTML markups.《/p》
 *#
 <html lang="en-US">
     <head>
-#* Except lines 7 and 11, do not hard-code any site information here *#
-
-#* ==================== setup ==================== *#
-## import the library
-#set( $core_site_name = "_common_assets" )
-#import( "site://${core_site_name}/formats/library/velocity/chanw_library_import" )
-
-#* ---  the master setup format --- *#
-#set( $master_site_name  = "_master_site" )
-#import( "site://${master_site_name}/formats/${MASTER_SETUP_FORMAT_NAME}" )
-
-#* --- the master override --- *#
-## for a root-level page, there is no current folder
-#set( $page = $_XPathTool.selectSingleNode( $contentRoot, "//system-folder[@current]/system-page[@current]" ) )
-## root-level pages
-#if( $_PropertyTool.isNull( $page ) )
-    #set( $page = $_XPathTool.selectSingleNode( $contentRoot, "//system-page[@current]" ) )
-#end
-## get the script block for configuration
-#set( $pageSystemDataStructure  = $page.getChild( "system-data-structure" ) )
-#set( $masterLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "master-level-override" ).getChild( "content" ) )
-## execute the code in the block          
-#if( $masterLevelOverrideContent )
-<div id="hide-master-level-override">
-    #chanwProcessBlockChooser( $masterLevelOverrideContent ) ## there is no show-master-level-override anywhere
-</div>
-#end
-
-## after page-level override, if global variables have not been imported, import now
-#import( "site://${master_site_name}/formats/${MASTER_SETUP_GLOBAL_VARIABLES}" )
-
-#* --- the design setup format --- *#
-#chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )
-
-#* --- the site setup format --- *#
-#chanwImportScript( $siteSetupFormatFolderPath $siteSetupFormatSiteName $siteSetupFormatName )
-#set( $siteSetupFormatExists = $chanwImportScript )
-
-#* --- the folder setup format --- *#
-#set( $folderSetupFormatExists = false )
-#chanwLocateAssetInAncestorFolder(
-    $currentPage.ParentFolder.Path $currentPageSiteName "format" $FOLDER_SETUP_FORMAT_NAME )
-
-#if( $chanwLocateAssetInAncestorFolder != "" && $chanwLocateAssetInAncestorFolder.ParentFolder.Path != "/" )
-    #set( $folderSetupFormatExists = true )
-    #import( "site://${currentPageSiteName}/${chanwLocateAssetInAncestorFolder.ParentFolder.Path}/${FOLDER_SETUP_FORMAT_NAME}" )
-#end
-
-#* --- the page override --- *#
-#set( $pageLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "page-level-override" ).getChild( "content" ) )
-            
-#if( $pageLevelOverrideContent )
-<div id="hide-page-level-override">
-    #chanwProcessBlockChooser( $pageLevelOverrideContent )
-</div>
-#end
-
-#* ==================== block processing ==================== *#
-## import required formats for processing blocks
-#import( "site://${master_site_name}/formats/process_block" )
-
-## meta
-#chanwReviveGlobalVariable( "Meta" $design_namespace )
-#import( $chanwReviveGlobalVariable )
-
-## title element
-#chanwReviveGlobalVariable( "Title" $design_namespace )
-    <title>#import( $chanwReviveGlobalVariable )</title>
-
-## link elements
-#chanwReviveGlobalVariable( "Link" $design_namespace )
-#import( $chanwReviveGlobalVariable )
-
-## site theme
-#chanwReviveGlobalVariable( "SiteThemeCSS" $design_namespace )
-#if( $chanwReviveGlobalVariable != "" )
-    #set( $siteThemeURL = "http://www.upstate.edu/${chanwReviveGlobalVariable}" )
-#else
-    #set( $siteThemeURL = "" )
-#end
-
-#if( $siteThemeURL && $siteThemeURL != "" )
-    <link href="${siteThemeURL}" media="all" rel="stylesheet"/>
-#end
-
-## local CSS
-#chanwReviveGlobalVariable( "SiteLocalCSS" $design_namespace )
-#if( $chanwReviveGlobalVariable != "" )
-    #set( $siteLocalCSSURL = "http://www.upstate.edu/${chanwReviveGlobalVariable}" )
-#end
-
-#if( $siteLocalCSSURL && $siteLocalCSSURL != "" )
-    <link href="${siteLocalCSSURL}" media="all" rel="stylesheet"/>
-#end
-        <div id="show-page-level-override"></div>
+#upstateInitialize
+#upstateProcessHead
     </head>
+#*
+《/macro》
+《documentation》
+《code》processesbodypart1《/code》
+《p》Invokes 《code》#upstateProcessBodyPart1《/code》 to processes everything before page contents.《/p》
+《/documentation》
+《macro id=“processesbodypart1”》
+*#
     <body>
-
-## accessibility
-#chanwReviveGlobalVariable( "Accessibility" $design_namespace )
-#import( $chanwReviveGlobalVariable )
-
-## google tag manager
-#chanwReviveGlobalVariable( "Google" $design_namespace )
-#import( $chanwReviveGlobalVariable )
-
-## header
-#chanwReviveGlobalVariable( "Header" $design_namespace )
-#import( $chanwReviveGlobalVariable )
-    
-<div id="show-zone1"></div>
-
-## site nav
-#chanwReviveGlobalVariable( "SiteNav" $design_namespace )
-#import( $chanwReviveGlobalVariable )
-
-<div id="show-zone2"></div>
-
-## breadcrumbs; the variable $page must be set
-#chanwReviveGlobalVariable( "RenderBreadcrumbs" $design_namespace )
-
-#if( $chanwReviveGlobalVariable )
-    #chanwReviveGlobalVariable( "Breadcrumbs" $design_namespace )
-    #import( $chanwReviveGlobalVariable )
-#end
-
-<div id="show-zone3"></div>
+#upstateProcessBodyPart1    
 #*
 《/macro》
 《documentation》
-《code》processespagecontents《/code》
-《p》Processes page contents.《/p》
+《code》processesbodypart2《/code》
+《p》Invokes 《code》#upstateProcessBodyPart2《/code》 to processes page contents.《/p》
 《/documentation》
-《macro id=“processespagecontents”》
+《macro id=“processesbodypart2”》
 *#
-#chanwReviveGlobalVariable( "ProcessPageSystemDataStructure" $design_namespace )
-
-#if( $chanwReviveGlobalVariable )
-    #processPageSystemDataStructure
-#end
+#upstateProcessBodyPart2
 #*
 《/macro》
 《documentation》
-《code》moreimportstatements《/code》
-《p》More import statements related to global components appearing after the page
-contents.《/p》
+《code》processesbodypart3《/code》
+《p》Invokes 《code》#upstateProcessBodyPart3《/code》 to process everything after the page contents.《/p》
 《/documentation》
-《macro id=“moreimportstatements”》
+《macro id=“processesbodypart3”》
 *#
-## footer
-#chanwReviveGlobalVariable( "Footer" $design_namespace )
-#import( $chanwReviveGlobalVariable )
-
-## script elements
-#chanwReviveGlobalVariable( "Script" $design_namespace )
-#import( $chanwReviveGlobalVariable )
-
-<div id="show-zone4"></div>
-<a class="cd-top" href="#0">Top</a>
+#upstateProcessBodyPart3
     </body>
 </html>
 #*
 《/macro》
 《documentation》
-《code》processPageSystemDataStructure《/code》
+《code》#upstateInitialize《/code》
+《p》Initializes the setup by importing all required formats.《/p》
+《/documentation》
+《macro id=“upstateInitialize”》
+*#
+#macro( upstateInitialize )
+    #* ==================== setup ==================== *#
+    ## import the library
+    #set( $core_site_name = "_common_assets" )
+    #import( "site://${core_site_name}/formats/library/velocity/chanw_library_import" )
+
+    #* ---  the master setup format --- *#
+    #set( $master_site_name  = "_master_site" )
+    #import( "site://${master_site_name}/formats/${MASTER_SETUP_FORMAT_NAME}" )
+    
+    #* --- the master override --- *#
+    ## for a root-level page, there is no current folder
+    #set( $page = $_XPathTool.selectSingleNode( $contentRoot, "//system-folder[@current]/system-page[@current]" ) )
+    ## root-level pages
+    #if( $_PropertyTool.isNull( $page ) )
+        #set( $page = $_XPathTool.selectSingleNode( $contentRoot, "//system-page[@current]" ) )
+    #end   
+    #set( $pageSystemDataStructure  = $page.getChild( "system-data-structure" ) )
+    #set( $masterLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "master-level-override" ).getChild( "content" ) )
+            
+    #if( $masterLevelOverrideContent )
+<div id="hide-master-level-override">
+    #chanwProcessBlockChooser( $masterLevelOverrideContent ) ## there is no show-master-level-override anywhere
+</div>
+    #end
+
+    ## after page-level override, if global variables have not been imported, import now
+    #import( "site://${core_site_name}/formats/library/velocity/${MASTER_SETUP_GLOBAL_VARIABLES}" )
+
+    #* --- the design setup format --- *#
+    #chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )
+
+    #* --- the site setup format --- *#
+    #chanwImportScript( $siteSetupFormatFolderPath $siteSetupFormatSiteName $siteSetupFormatName )
+    #set( $siteSetupFormatExists = $chanwImportScript )
+
+    #* --- the folder setup format --- *#
+    #set( $folderSetupFormatExists = false )
+    #chanwLocateAssetInAncestorFolder(
+        $currentPage.ParentFolder.Path $currentPageSiteName "format" $FOLDER_SETUP_FORMAT_NAME )
+
+    #if( $chanwLocateAssetInAncestorFolder != "" && $chanwLocateAssetInAncestorFolder.ParentFolder.Path != "/" )
+        #set( $folderSetupFormatExists = true )
+        #import( "site://${currentPageSiteName}/${chanwLocateAssetInAncestorFolder.ParentFolder.Path}/${FOLDER_SETUP_FORMAT_NAME}" )
+    #end
+
+    #* --- the page override --- *#
+    #set( $pageLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "page-level-override" ).getChild( "content" ) )
+            
+    #if( $pageLevelOverrideContent )
+<div id="hide-page-level-override">
+    #chanwProcessBlockChooser( $pageLevelOverrideContent )
+</div>
+    #end
+    
+    #* ==================== block processing ==================== *#
+    ## import required formats for processing blocks
+    #import( "site://${master_site_name}/formats/process_block" )
+#end
+#*
+《/macro》
+《documentation》
+《code》#upstateProcessBodyPart1《/code》
+《p》Process everything before page contents.《/p》
+《/documentation》
+《macro id=“upstateProcessBodyPart1”》
+*#
+#macro( upstateProcessBodyPart1 )
+    ## part 1: everything before page content
+    ## google-tag-manager-noscript
+    #chanwReviveGlobalVariable( "GoogleNoscript" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+
+    ## accessibility
+    #chanwReviveGlobalVariable( "Accessibility" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+
+    ## header
+    #chanwReviveGlobalVariable( "Header" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+    
+    <div id="show-zone1"></div>
+
+    ## site nav
+    #chanwReviveGlobalVariable( "SiteNav" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+
+    <div id="show-zone2"></div>
+
+    ## breadcrumbs; the variable $page must be set
+    #chanwReviveGlobalVariable( "RenderBreadcrumbs" $design_namespace )
+
+    #if( $chanwReviveGlobalVariable )
+        #chanwReviveGlobalVariable( "Breadcrumbs" $design_namespace )
+        #import( $chanwReviveGlobalVariable )
+    #end
+
+    <div id="show-zone3"></div>
+#end
+#*
+《/macro》
+《documentation》
+《code》#upstateProcessBodyPart2《/code》
+《p》Process page contents.《/p》
+《/documentation》
+《macro id=“upstateProcessBodyPart2”》
+*#
+#macro( upstateProcessBodyPart2 )
+    #chanwReviveGlobalVariable( "ProcessPageSystemDataStructure" $design_namespace )
+
+    #if( $chanwReviveGlobalVariable )
+        #upstateProcessPageSystemDataStructure
+    #end
+#end
+#*
+《/macro》
+《documentation》
+《code》#upstateProcessBodyPart3《/code》
+《p》Process everything after page contents.《/p》
+《/documentation》
+《macro id=“upstateProcessBodyPart3”》
+*#
+#macro( upstateProcessBodyPart3 )
+    ## footer
+    #chanwReviveGlobalVariable( "Footer" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+
+    ## script elements
+    #chanwReviveGlobalVariable( "Script" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+
+    <div id="show-zone4"></div>
+    <a class="cd-top" href="#0">Top</a>
+#end
+#*
+《/macro》
+《documentation》
+《code》#upstateProcessHead《/code》
+《p》Process everything in the head element.《/p》
+《/documentation》
+《macro id=“upstateProcessHead”》
+*#
+#macro( upstateProcessHead )
+    ## meta
+    #chanwReviveGlobalVariable( "Meta" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+
+    ## title element
+    #chanwReviveGlobalVariable( "Title" $design_namespace )
+<title>#import( $chanwReviveGlobalVariable )</title>
+    
+    ## google tag manager
+    #chanwReviveGlobalVariable( "Google" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+
+    ## link elements
+    #chanwReviveGlobalVariable( "Link" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+
+    ## site theme
+    #chanwReviveGlobalVariable( "SiteThemeCSS" $design_namespace )
+    #if( $chanwReviveGlobalVariable != "" )
+        #set( $siteThemeURL = "http://www.upstate.edu/${chanwReviveGlobalVariable}" )
+    #else
+        #set( $siteThemeURL = "" )
+    #end
+
+    #if( $siteThemeURL && $siteThemeURL != "" )
+<link href="${siteThemeURL}" media="all" rel="stylesheet"/>
+    #end
+
+    ## local CSS
+    #chanwReviveGlobalVariable( "SiteLocalCSS" $design_namespace )
+    #if( $chanwReviveGlobalVariable != "" )
+        #set( $siteLocalCSSURL = "http://www.upstate.edu/${chanwReviveGlobalVariable}" )
+    #end
+
+    #if( $siteLocalCSSURL && $siteLocalCSSURL != "" )
+<link href="${siteLocalCSSURL}" media="all" rel="stylesheet"/>
+    #end
+    <div id="show-page-level-override"></div>
+#end
+#*
+《/macro》
+《documentation》
+《code》upstateProcessPageSystemDataStructure《/code》
 《p》Processes every field defined in the page data definition.《/p》
 《/documentation》
-《macro id=“processPageSystemDataStructure”》
+《macro id=“upstateProcessPageSystemDataStructure”》
 *#
-#macro( processPageSystemDataStructure )
+#macro( upstateProcessPageSystemDataStructure )
     #set( $pageLayout              = $pageSystemDataStructure.getChild( "layout" ) )
     #set( $pageLayoutTop           = $pageLayout.getChild( "layout-top-group" ).getChild( "layout-top" ).Value )
     #set( $pageLayoutBottom        = $pageLayout.getChild( "layout-bottom-group" ).getChild( "layout-bottom" ).Value )
