@@ -142,12 +142,19 @@ area of a page.《/p》
         #chanwReviveGlobalVariable( "RenderBottomRightGroup" $design_namespace )
         
         #if( $chanwReviveGlobalVariable )
+            #set( $bottomGroupChoosers = $pageSystemDataStructure.getChild( "bottom-group"
+                ).getChildren( "bottom-group-chooser" ) )
         
-            #set( $bottomGroupChooserContent = $pageSystemDataStructure.getChild( "bottom-group"
-                ).getChild( "bottom-group-chooser" ).getChild( "content" ) )
+            #if( $bottomGroupChoosers.size() > 0 )
+                #foreach( $bottomGroupChooser in $bottomGroupChoosers )
+                    #set( $bottomGroupChooserContent = $bottomGroupChooser.getChild( "content" ) )
             
-            #if( $bottomGroupChooserContent )
-                #chanwProcessBlockChooser( $bottomGroupChooserContent )
+                    #if( $bottomGroupChooserContent )
+                        <div class="padbottom5">
+                        #chanwProcessBlockChooser( $bottomGroupChooserContent )
+                        </div>
+                    #end
+                #end
             #end
         #end
     </div>
