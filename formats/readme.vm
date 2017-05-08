@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+5/8/2017 Changed name of global_variables to chanw_setup_global_variables.
 《/copyright》
 《documentation id=“top”》
 《h2》Introduction《/h2》
@@ -16,8 +17,8 @@ important issues related to the multiple-design master site and various parts.�
 《li》If a site is associated with the default design, its name does not have to
 be added to the default list《/li》
 《/ul》
-《h2》The 《code》global_variables《/code》 Format《/h2》
-《p》《/p》
+《h2》The 《code》chanw_setup_global_variables《/code》 Format《/h2》
+《p》This format resides in the library of the core site.《/p》
 《ul》
 《li》Defines variables associated with locations of global components and default rendering behaviors《/li》
 《li》Global components should be extremely generic and should not be tied with a specific design《/li》
