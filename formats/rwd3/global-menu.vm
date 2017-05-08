@@ -2,7 +2,7 @@
 
 #if( $chanwReviveGlobalVariable )
 <div class="col-sm-9"><nav id="global-menu">
-<div id="mobile-handle"><img alt="Global Handle" src="/render/file.act?path=site://Upstate-Globals/assets/images/global.gif" /></div>
+<div id="mobile-handle"><img alt="Global Handle" src="http://www.upstate.edu/assets/images/global.gif" /></div>
 $S_SYSTEM_VIEW_INTERNAL<ul>
 <li><a href="http://www.upstate.edu//">Upstate</a></li>
 <li><a href="http://www.upstate.edu/healthcare/">Patient Care</a></li>
