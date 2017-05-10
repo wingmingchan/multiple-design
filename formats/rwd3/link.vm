@@ -12,3 +12,25 @@ $S_SYSTEM_VIEW_EXTERNAL
         createGlobalX( "link" );
     $E_PHP_PASSTHROUGH
 $E_SYSTEM_VIEW_EXTERNAL
+
+## site theme
+#chanwReviveGlobalVariable( "SiteThemeCSS" $design_namespace )
+#if( $chanwReviveGlobalVariable != "" )
+    #set( $siteThemeURL = "http://www.upstate.edu/${chanwReviveGlobalVariable}" )
+#else
+    #set( $siteThemeURL = "" )
+#end
+
+#if( $siteThemeURL && $siteThemeURL != "" )
+    <link href="${siteThemeURL}" media="all" rel="stylesheet"/>
+#end
+
+## local CSS
+#chanwReviveGlobalVariable( "SiteLocalCSS" $design_namespace )
+#if( $chanwReviveGlobalVariable != "" )
+    #set( $siteLocalCSSURL = "http://www.upstate.edu/${chanwReviveGlobalVariable}" )
+#end
+
+#if( $siteLocalCSSURL && $siteLocalCSSURL != "" )
+    <link href="${siteLocalCSSURL}" media="all" rel="stylesheet"/>
+#end
