@@ -5,7 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
-5/10/2017 Moved link code to design.
+5/10/2017 Moved link code to design; added attributes to html, head and body.
 5/8/2017 Split processing code into macros.
 《/copyright》
 《documentation id=“top”》
@@ -21,9 +21,9 @@ in the desired XHTML markups.《/p》
 《/documentation》
 《macro id=“importstatements”》
 *#
-<html lang="en-US">
-    <head>
 #upstateInitialize
+<html lang="en-US" $upstateHtmlAttributes>
+    <head $upstateHeadAttributes>
 #upstateProcessHead
     </head>
 #*
@@ -34,8 +34,8 @@ in the desired XHTML markups.《/p》
 《/documentation》
 《macro id=“processesbodypart1”》
 *#
-    <body>
-#upstateProcessBodyPart1    
+    <body $upstateBodyAttributes>
+#upstateProcessBodyPart1
 #*
 《/macro》
 《documentation》
@@ -56,6 +56,25 @@ in the desired XHTML markups.《/p》
 #upstateProcessBodyPart3
     </body>
 </html>
+#*
+《/macro》
+《documentation》
+《code》#upstateGetAttributes《/code》
+《p》Gets the attribute strings from setup file.《/p》
+《/documentation》
+《macro id=“upstateGetAttributes”》
+*#
+#macro( upstateGetAttributes )
+    #chanwReviveGlobalVariable( "HtmlAttributes" $design_namespace )
+    #set( $upstateHtmlAttributes = $chanwReviveGlobalVariable )
+    #chanwReviveGlobalVariable( "HeadAttributes" $design_namespace )
+    #set( $upstateHeadAttributes = $chanwReviveGlobalVariable )
+    #chanwReviveGlobalVariable( "BodyAttributes" $design_namespace )
+    #set( $upstateBodyAttributes = $chanwReviveGlobalVariable )
+    #set( $upstateHtmlAttributes = $upstateHtmlAttributes.replaceAll( '&apos;', "'" ).replaceAll( '&quot;', "'" ) )
+    #set( $upstateHeadAttributes = $upstateHeadAttributes.replaceAll( '&apos;', "'" ).replaceAll( '&quot;', "'" ) )
+    #set( $upstateBodyAttributes = $upstateBodyAttributes.replaceAll( '&apos;', "'" ).replaceAll( '&quot;', "'" ) )
+#end
 #*
 《/macro》
 《documentation》
@@ -83,7 +102,7 @@ in the desired XHTML markups.《/p》
     #end   
     #set( $pageSystemDataStructure  = $page.getChild( "system-data-structure" ) )
     #set( $masterLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "master-level-override" ).getChild( "content" ) )
-            
+       
     #if( $masterLevelOverrideContent )
 <div id="hide-master-level-override">
     #chanwProcessBlockChooser( $masterLevelOverrideContent ) ## there is no show-master-level-override anywhere
@@ -109,19 +128,9 @@ in the desired XHTML markups.《/p》
         #set( $folderSetupFormatExists = true )
         #import( "site://${currentPageSiteName}/${chanwLocateAssetInAncestorFolder.ParentFolder.Path}/${FOLDER_SETUP_FORMAT_NAME}" )
     #end
-
-    #* --- the page override --- *#
-    #set( $pageLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "page-level-override" ).getChild( "content" ) )
-            
-    #if( $pageLevelOverrideContent )
-<div id="hide-page-level-override">
-    #chanwProcessBlockChooser( $pageLevelOverrideContent )
-</div>
-    #end
     
-    #* ==================== block processing ==================== *#
-    ## import required formats for processing blocks
-    #import( "site://${master_site_name}/formats/process_block" )
+    #* --- the attribute strings for html, head, and body --- *#
+    #upstateGetAttributes
 #end
 #*
 《/macro》
@@ -207,6 +216,18 @@ in the desired XHTML markups.《/p》
 《macro id=“upstateProcessHead”》
 *#
 #macro( upstateProcessHead )
+    #* --- the page override --- *#
+    #set( $pageLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "page-level-override" ).getChild( "content" ) )
+
+    #if( $pageLevelOverrideContent )
+<div id="hide-page-level-override">
+    #chanwProcessBlockChooser( $pageLevelOverrideContent )
+</div>
+    #end
+
+    #* ==================== block processing ==================== *#
+    ## import required formats for processing blocks
+    #import( "site://${master_site_name}/formats/process_block" )
     ## meta
     #chanwReviveGlobalVariable( "Meta" $design_namespace )
     #import( $chanwReviveGlobalVariable )
