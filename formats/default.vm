@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+5/10/2017 Moved link code to design.
 5/8/2017 Split processing code into macros.
 《/copyright》
 《documentation id=“top”》
@@ -48,7 +49,7 @@ in the desired XHTML markups.《/p》
 《/macro》
 《documentation》
 《code》processesbodypart3《/code》
-《p》Invokes 《code》#upstateProcessBodyPart3《/code》 to process everything after the page contents.《/p》
+《p》Invokes 《code》#upstateProcessBodyPart3《/code》 to process everything after page contents.《/p》
 《/documentation》
 《macro id=“processesbodypart3”》
 *#
@@ -212,7 +213,7 @@ in the desired XHTML markups.《/p》
 
     ## title element
     #chanwReviveGlobalVariable( "Title" $design_namespace )
-<title>#import( $chanwReviveGlobalVariable )</title>
+    #import( $chanwReviveGlobalVariable )
     
     ## google tag manager
     #chanwReviveGlobalVariable( "Google" $design_namespace )
@@ -222,27 +223,6 @@ in the desired XHTML markups.《/p》
     #chanwReviveGlobalVariable( "Link" $design_namespace )
     #import( $chanwReviveGlobalVariable )
 
-    ## site theme
-    #chanwReviveGlobalVariable( "SiteThemeCSS" $design_namespace )
-    #if( $chanwReviveGlobalVariable != "" )
-        #set( $siteThemeURL = "http://www.upstate.edu/${chanwReviveGlobalVariable}" )
-    #else
-        #set( $siteThemeURL = "" )
-    #end
-
-    #if( $siteThemeURL && $siteThemeURL != "" )
-<link href="${siteThemeURL}" media="all" rel="stylesheet"/>
-    #end
-
-    ## local CSS
-    #chanwReviveGlobalVariable( "SiteLocalCSS" $design_namespace )
-    #if( $chanwReviveGlobalVariable != "" )
-        #set( $siteLocalCSSURL = "http://www.upstate.edu/${chanwReviveGlobalVariable}" )
-    #end
-
-    #if( $siteLocalCSSURL && $siteLocalCSSURL != "" )
-<link href="${siteLocalCSSURL}" media="all" rel="stylesheet"/>
-    #end
     <div id="show-page-level-override"></div>
 #end
 #*
@@ -254,15 +234,13 @@ in the desired XHTML markups.《/p》
 《macro id=“upstateProcessPageSystemDataStructure”》
 *#
 #macro( upstateProcessPageSystemDataStructure )
-    #set( $pageLayout              = $pageSystemDataStructure.getChild( "layout" ) )
-    #set( $pageLayoutTop           = $pageLayout.getChild( "layout-top-group" ).getChild( "layout-top" ).Value )
-    #set( $pageLayoutBottom        = $pageLayout.getChild( "layout-bottom-group" ).getChild( "layout-bottom" ).Value )
-    #set( $h1                      = $_EscapeTool.xml( $pageSystemDataStructure.getChild( "h1" ).Value ) )
-    #set( $content                 = $pageSystemDataStructure.getChild( "wysiwyg" ) )
-    
+    #set( $pageLayout          = $pageSystemDataStructure.getChild( "layout" ) )
+    #set( $pageLayoutTop       = $pageLayout.getChild( "layout-top-group" ).getChild( "layout-top" ).Value )
+    #set( $pageLayoutBottom    = $pageLayout.getChild( "layout-bottom-group" ).getChild( "layout-bottom" ).Value )
+    #set( $h1                  = $_EscapeTool.xml( $pageSystemDataStructure.getChild( "h1" ).Value ) )
+    #set( $content             = $pageSystemDataStructure.getChild( "wysiwyg" ) )
     #set( $pageHasTop          = $pageLayoutTop == 'yes' )
     #set( $pageHasBottom       = $pageLayoutBottom == 'yes' )
-    
     #set( $preH1ChooserContent = $pageSystemDataStructure.getChild( "pre-h1-chooser" ).getChild( "content" ) )
     
     ## pre-h1 chooser
