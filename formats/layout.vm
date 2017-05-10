@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+5/10/2017 Added wrapper, top, and bottom variables for elements.
 《/copyright》
 《documentation id=“top”》
 《h2》Introduction《/h2》
@@ -54,9 +55,18 @@ area of a page.《/p》
 #chanwReviveGlobalVariable( "PageCssClass" $design_namespace )
 #set( $containerClass = "container nopadding " + $chanwReviveGlobalVariable )
 
-<div id="main-div-wrapper" class="${containerClass}">
+#chanwReviveGlobalVariable( "WrapperElement" $design_namespace )
+#set( $wrapperElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "WrapperId" $design_namespace )
+#set( $wrapperId = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "TopElement" $design_namespace )
+#set( $topElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "BottomElement" $design_namespace )
+#set( $bottomElement = $chanwReviveGlobalVariable )
+
+<${wrapperElement} id="${wrapperId}" class="${containerClass}">
     #if( $siteHasTop && $pageHasTop )
-    <div class="${topCssClass}">
+    <${topElement} class="${topCssClass}">
         #chanwReviveGlobalVariable( "RenderFolderNav" $design_namespace )
         
         #if( $chanwReviveGlobalVariable )
@@ -79,7 +89,7 @@ area of a page.《/p》
                 #chanwProcessBlockChooser( $topGroupChooserContent )
             #end
         #end
-    </div>
+    </${topElement}>
     #end
 
     ## middle part
@@ -126,7 +136,7 @@ area of a page.《/p》
     </div>
 
     #if( $siteHasBottom && $pageHasBottom )    
-    <div class="${bottomCssClass}">
+    <${bottomElement} class="${bottomCssClass}">
         #chanwReviveGlobalVariable( "RenderFolderNav" $design_namespace )
 
         #if( $chanwReviveGlobalVariable )
@@ -157,9 +167,9 @@ area of a page.《/p》
                 #end
             #end
         #end
-    </div>
+    </${bottomElement}>
     #end
-</div>
+</${wrapperElement}>
 #*
 《/macro》
 《documentation id=“bottom”》
