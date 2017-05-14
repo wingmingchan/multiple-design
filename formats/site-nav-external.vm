@@ -1,0 +1,8 @@
+#set( $core_site_name = "_common_assets" )
+#import( "site://${core_site_name}/formats/library/velocity/chanw_library_import" )
+
+#set( $master_site_name  = "_master_site" )
+#import( "site://${master_site_name}/formats/${MASTER_SETUP_FORMAT_NAME}" )
+
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "setup" )
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "site-nav" )
