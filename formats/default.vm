@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+5/13/2017 Added code to toggle the use of external site nav.
 5/10/2017 Moved link code to design; added attributes to html, head and body.
 5/8/2017 Split processing code into macros.
 《/copyright》
@@ -34,7 +35,7 @@ in the desired XHTML markups.《/p》
 《/documentation》
 《macro id=“processesbodypart1”》
 *#
-    <body $upstateBodyAttributes>
+    <body $upstateBodyAttributes>    
 #upstateProcessBodyPart1
 #*
 《/macro》
@@ -71,6 +72,7 @@ in the desired XHTML markups.《/p》
     #set( $upstateHeadAttributes = $chanwReviveGlobalVariable )
     #chanwReviveGlobalVariable( "BodyAttributes" $design_namespace )
     #set( $upstateBodyAttributes = $chanwReviveGlobalVariable )
+    ## quotes are turned into &quot; and &apos; need to switch them back
     #set( $upstateHtmlAttributes = $upstateHtmlAttributes.replaceAll( '&apos;', "'" ).replaceAll( '&quot;', "'" ) )
     #set( $upstateHeadAttributes = $upstateHeadAttributes.replaceAll( '&apos;', "'" ).replaceAll( '&quot;', "'" ) )
     #set( $upstateBodyAttributes = $upstateBodyAttributes.replaceAll( '&apos;', "'" ).replaceAll( '&quot;', "'" ) )
@@ -131,6 +133,9 @@ in the desired XHTML markups.《/p》
     
     #* --- the attribute strings for html, head, and body --- *#
     #upstateGetAttributes
+    
+    #* --- get the upstate server name --- *#
+    #import( "site://${master_site_name}/formats/upstate-server" )
 #end
 #*
 《/macro》
@@ -148,7 +153,9 @@ in the desired XHTML markups.《/p》
 
     ## accessibility
     #chanwReviveGlobalVariable( "Accessibility" $design_namespace )
-    #import( $chanwReviveGlobalVariable )
+    #if( $chanwReviveGlobalVariable != "" )
+        #import( $chanwReviveGlobalVariable )
+    #end
 
     ## header
     #chanwReviveGlobalVariable( "Header" $design_namespace )
@@ -157,8 +164,27 @@ in the desired XHTML markups.《/p》
     <div id="show-zone1"></div>
 
     ## site nav
-    #chanwReviveGlobalVariable( "SiteNav" $design_namespace )
-    #import( $chanwReviveGlobalVariable )
+    #chanwReviveGlobalVariable( "UseExternalSiteNav" $design_namespace )
+    
+    #if( $chanwReviveGlobalVariable )
+    
+$S_SYSTEM_VIEW_EXTERNAL
+        #chanwReviveGlobalVariable( "SiteNavPath" $design_namespace )
+<!--#passthrough<?php
+if( file_exists( "$upstateServer/$currentPageSiteName$chanwReviveGlobalVariable" ) )
+require_once( "$upstateServer/$currentPageSiteName$chanwReviveGlobalVariable" );
+?>#passthrough-->
+$E_SYSTEM_VIEW_EXTERNAL
+
+$S_SYSTEM_VIEW_INTERNAL
+        #chanwReviveGlobalVariable( "SiteNav" $design_namespace )
+        #import( $chanwReviveGlobalVariable )
+$E_SYSTEM_VIEW_INTERNAL
+
+    #else
+        #chanwReviveGlobalVariable( "SiteNav" $design_namespace )
+        #import( $chanwReviveGlobalVariable )
+    #end
 
     <div id="show-zone2"></div>
 
@@ -196,6 +222,13 @@ in the desired XHTML markups.《/p》
 《macro id=“upstateProcessBodyPart3”》
 *#
 #macro( upstateProcessBodyPart3 )
+#* ==================== hannonHill design ==================== *#
+#if( $design_namespace == "hannonHill" )
+    ## contact
+    #chanwReviveGlobalVariable( "Contact" $design_namespace )
+    #import( $chanwReviveGlobalVariable )
+#end
+#* ==================== end ==================== *#
     ## footer
     #chanwReviveGlobalVariable( "Footer" $design_namespace )
     #import( $chanwReviveGlobalVariable )
@@ -216,7 +249,7 @@ in the desired XHTML markups.《/p》
 《macro id=“upstateProcessHead”》
 *#
 #macro( upstateProcessHead )
-    #* --- the page override --- *#
+    #* --- the page override, use text blocks, script blocks, or macro blocks only --- *#
     #set( $pageLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "page-level-override" ).getChild( "content" ) )
 
     #if( $pageLevelOverrideContent )
