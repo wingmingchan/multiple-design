@@ -1,0 +1,109 @@
+#macro( createSiteNav $ext )
+<div id="site-menu-bar-div">
+<div class="container nopadding-left" id="site-menu-div">
+<nav id="site-menu">
+#set( $base_folder = $_.locateFolder( "/", $currentPageSiteName ) )
+#set( $children = $base_folder.Children )
+
+## the logic here assumes that all indexable assets are ordered before
+## non-indexable asset; hence we can stop when the first non-indexable
+## asset is encountered
+## alternative: process all assets, and do nothing for non-indexable assets
+## it is also assumed that all assets have display names
+<ul>
+#foreach( $child in $children )##
+    #if( !$child.ShouldBeIndexed && $child.Identifier.Type != "symlink" )##
+        #break##
+    #elseif( $child.Identifier.Type == "folder" )
+        #chanwGetMetadataData( $child.Metadata )
+        
+        #if( !$chanwGetMetadataData.get( "DynamicFieldsData" ).get( "exclude-from-menu" ).get( "Value" ) ) ## not defined
+            #set( $folderDisplayName = $_EscapeTool.xml( $child.Metadata.DisplayName ) )
+            #set( $indexLink         = "" )
+
+            #chanwIsAncestorOf( $child $currentPage )
+        
+            #if( $chanwIsAncestorOf )  ## for highlighting
+                #set( $li_class = ' class="currentMenuItem"' )
+            #else
+                #set( $li_class = '' )
+            #end
+
+            #set( $li_id_class = " id='${child.Name}' class=''" )
+            
+            #chanwReviveGlobalVariable( "SiteNameForSiteNav" $design_namespace )
+            #set( $homeLink = "site://${chanwReviveGlobalVariable}" )
+            #set( $siteName = $chanwReviveGlobalVariable )
+
+            #if( $ext )
+<li${li_id_class}><a href="site://${siteName}${child.link}/index.php">$folderDisplayName</a>
+            #else
+<li${li_class}><a href="${child.link}/index">$folderDisplayName</a>
+            #end
+
+            #set( $grandchildren = $child.Children )
+<ul>
+            #foreach( $grandchild in $grandchildren )
+                #if( !$grandchild.ShouldBeIndexed && $grandchild.Identifier.Type != "symlink" )
+                    #break
+                #elseif( $grandchild.Name == "index" )
+                    ## do nothing
+                #elseif( $grandchild.Identifier.Type == "folder" )
+                    #if( $ext )
+<li><a href="site://${siteName}${grandchild.Link}/index.php">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+                    #else
+<li><a href="${grandchild.Link}/index">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+                    #end
+                #elseif( $grandchild.Identifier.Type == "page" )
+                    #if( $ext )
+<li><a href="site://${siteName}${grandchild.Link}.php">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+                    #else
+<li><a href="${grandchild.Link}">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+                    #end
+                #else ## symlinks
+<li><a href="${grandchild.Link}">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+                #end
+            #end
+</ul></li>
+        #end
+        
+        #if( $children[ $foreach.count ].ShouldBeIndexed || $children[ $foreach.count ].Identifier.Type == "symlink" )
+<li class="separator"><div></div></li>        
+        #end
+    #elseif( $child.Name == "index" )
+        #chanwReviveGlobalVariable( "RenderHomeInSiteNav" $design_namespace )
+
+        #if( $chanwReviveGlobalVariable )
+            #chanwReviveGlobalVariable( "HomeLinkTextInSiteNav" $design_namespace )
+            
+            #if( $chanwReviveGlobalVariable != "" )
+                #if( $ext )
+<li><a href="site://${siteName}${child.Link}.php">$chanwReviveGlobalVariable</a></li>
+                #else
+<li><a href="${child.Link}">$chanwReviveGlobalVariable</a></li>
+                #end
+<li class="separator"><div></div></li>
+            #end
+        #end
+    #elseif( $child.Identifier.Type == "symlink" )
+        #chanwGetMetadataData( $child.Metadata )
+        
+        #if( !$chanwGetMetadataData.get( "DynamicFieldsData" ).get( "exclude-from-menu" ).get( "Value" ) ) ## not defined
+<li><a href="${child.Link}">$_EscapeTool.xml( $child.Metadata.DisplayName )</a></li>
+        #end
+        
+        #if( ( $children[ $foreach.count ].ShouldBeIndexed && $children[ $foreach.count ].Identifier.Type == "folder" ) || 
+            $children[ $foreach.count ].Identifier.Type == "symlink" )
+            #chanwGetMetadataData( $children[ $foreach.count ].Metadata )
+            
+            #if( !$chanwGetMetadataData.get( "DynamicFieldsData" ).get( "exclude-from-menu" ).get( "Value" ) )## not defined
+<li class="separator"><div></div></li>
+            #end
+        #end
+    #end
+#end
+</ul>
+</nav> 
+</div>
+</div>
+#end
