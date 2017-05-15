@@ -1,8 +1,25 @@
-#macro( createSiteNav $ext )
+#macro( createSiteNav $ext $hrefSiteName $baseFolderSiteName )
+    ## the first part deals with sites like hr and hrintra
+    ## where hrintra is published to hr/intra
+    ## the $hrefSiteName can be 'hr', a site name to be added to the href
+    ## the $baseFolderSiteName can be 'hrintra', the name used by the locator tool
+    #if( !$hrefSiteName || $hrefSiteName.Class.Name != $JAVA_LANG_STRING_CLASS_NAME && $hrefSiteName == "" )
+        #set( $upstateHrefSiteName = $currentPageSiteName )
+    #else
+        #set( $upstateHrefSiteName = $hrefSiteName )
+    #end
+
+    #if( !$baseFolderSiteName || $baseFolderSiteName.Class.Name != $JAVA_LANG_STRING_CLASS_NAME && $baseFolderSiteName == "" )
+        #set( $upstateBaseFolderSiteName = $currentPageSiteName )
+    #else
+        #set( $upstateBaseFolderSiteName = $baseFolderSiteName )
+    #end
+
 <div id="site-menu-bar-div">
 <div class="container nopadding-left" id="site-menu-div">
 <nav id="site-menu">
-#set( $base_folder = $_.locateFolder( "/", $currentPageSiteName ) )
+## this is the base folder of the site
+#set( $base_folder = $_.locateFolder( "/", $upstateBaseFolderSiteName ) )
 #set( $children = $base_folder.Children )
 
 ## the logic here assumes that all indexable assets are ordered before
@@ -31,12 +48,13 @@
 
             #set( $li_id_class = " id='${child.Name}' class=''" )
             
-            #chanwReviveGlobalVariable( "SiteNameForSiteNav" $design_namespace )
-            #set( $homeLink = "site://${chanwReviveGlobalVariable}" )
-            #set( $siteName = $chanwReviveGlobalVariable )
+            
+            ##chanwReviveGlobalVariable( "SiteNameForSiteNav" $design_namespace )
+            #set( $homeLink = "site://${upstateHrefSiteName}" )
+            ##set( $siteName = $chanwReviveGlobalVariable )
 
             #if( $ext )
-<li${li_id_class}><a href="site://${siteName}${child.link}/index.php">$folderDisplayName</a>
+<li${li_id_class}><a href="site://${upstateHrefSiteName}${child.link}/index.php">$folderDisplayName</a>
             #else
 <li${li_class}><a href="${child.link}/index">$folderDisplayName</a>
             #end
@@ -50,13 +68,13 @@
                     ## do nothing
                 #elseif( $grandchild.Identifier.Type == "folder" )
                     #if( $ext )
-<li><a href="site://${siteName}${grandchild.Link}/index.php">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+<li><a href="site://${upstateHrefSiteName}${grandchild.Link}/index.php">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
                     #else
 <li><a href="${grandchild.Link}/index">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
                     #end
                 #elseif( $grandchild.Identifier.Type == "page" )
                     #if( $ext )
-<li><a href="site://${siteName}${grandchild.Link}.php">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
+<li><a href="site://${upstateHrefSiteName}${grandchild.Link}.php">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
                     #else
 <li><a href="${grandchild.Link}">$_EscapeTool.xml( $grandchild.Metadata.DisplayName )</a></li>
                     #end
@@ -78,7 +96,7 @@
             
             #if( $chanwReviveGlobalVariable != "" )
                 #if( $ext )
-<li><a href="site://${siteName}${child.Link}.php">$chanwReviveGlobalVariable</a></li>
+<li><a href="site://${upstateHrefSiteName}${child.Link}.php">$chanwReviveGlobalVariable</a></li>
                 #else
 <li><a href="${child.Link}">$chanwReviveGlobalVariable</a></li>
                 #end
