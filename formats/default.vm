@@ -166,8 +166,10 @@ in the desired XHTML markups.《/p》
     ## site nav
     #chanwReviveGlobalVariable( "UseExternalSiteNav" $design_namespace )
     
+    ## check if external file should be used
     #if( $chanwReviveGlobalVariable )
     
+    ## if external file is to be used, generate PHP code
 $S_SYSTEM_VIEW_EXTERNAL
         #chanwReviveGlobalVariable( "SiteNavPath" $design_namespace )
 <!--#passthrough<?php
@@ -181,7 +183,7 @@ $S_SYSTEM_VIEW_INTERNAL
         #import( $chanwReviveGlobalVariable )
 $E_SYSTEM_VIEW_INTERNAL
 
-    #else
+    #else ## the same view for both
         #chanwReviveGlobalVariable( "SiteNav" $design_namespace )
         #import( $chanwReviveGlobalVariable )
     #end
