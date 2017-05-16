@@ -1,3 +1,28 @@
+#*
+《code》
+《copyright》
+Authors: Wing Ming Chan
+Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
+MIT Licensed
+Modification history:
+5/13/2017 Added parameters and logic to allow for generation of external file.
+《/copyright》
+《documentation id=“top”》
+《h2》Introduction《/h2》
+《p》The format defines a single macro used to generate site nav.《/p》
+《/documentation》
+《documentation》
+《code》#createSiteNav(  $ext $hrefSiteName $baseFolderSiteName  )《/code》
+《p》The macro generates the internal view, external view, and page contents of
+a site nav.《/p》
+《pre》
+#createSiteNav( false )                     ## not using external site nav
+#createSiteNav( true $currentPageSiteName ) ## external view with PHP code
+#createSiteNav( true 'hr' 'hrintra' )
+《/pre》
+《/documentation》
+《macro id=“createSiteNav”》
+*#
 #macro( createSiteNav $ext $hrefSiteName $baseFolderSiteName )
     ## the first part deals with sites like hr and hrintra
     ## where hrintra is published to hr/intra
@@ -47,11 +72,6 @@
             #end
 
             #set( $li_id_class = " id='${child.Name}' class=''" )
-            
-            
-            ##chanwReviveGlobalVariable( "SiteNameForSiteNav" $design_namespace )
-            #set( $homeLink = "site://${upstateHrefSiteName}" )
-            ##set( $siteName = $chanwReviveGlobalVariable )
 
             #if( $ext )
 <li${li_id_class}><a href="site://${upstateHrefSiteName}${child.link}/index.php">$folderDisplayName</a>
@@ -125,3 +145,7 @@
 </div>
 </div>
 #end
+#*
+《/macro》
+《/code》
+*#
