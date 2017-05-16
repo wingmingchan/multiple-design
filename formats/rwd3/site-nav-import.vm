@@ -1,0 +1,6 @@
+## design setup
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "setup" )
+## macro used to generate file
+#chanwImportScript( "formats/${design_namespace}" $master_site_name "site-nav-macro" )
+## site setup
+#chanwImportScript( "/" $currentPageSiteName "setup" )
