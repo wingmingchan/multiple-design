@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+5/18/2017 Added chanwDefaultGlobalVariables.
 5/13/2017 Added code to toggle the use of external site nav.
 5/10/2017 Moved link code to design; added attributes to html, head and body.
 5/8/2017 Split processing code into macros.
@@ -12,8 +13,62 @@ Modification history:
 《documentation id=“top”》
 《h2》Introduction《/h2》
 《p》This is the default format attached to the DEFAULT region of the configuration
-named 《code》RWD《/code》 of the configuration set named 《code》RWD《/code》.《/p》
+named 《code》RWD《/code》 of the configuration set named 《code》RWD《/code》.
+Many global variables defined here and elsewhere can be used here to allow for various
+types of configurations.《/p》
 《/documentation》
+《global-variables》
+*#
+#set( $chanwDefaultGlobalVariables = [
+    "content",
+    "core_site_name",
+    "{design_namespace}Accessibility",
+    "{design_namespace}BodyAttributes",
+    "{design_namespace}Breadcrumbs",
+    "{design_namespace}Contact",
+    "{design_namespace}Footer",
+    "{design_namespace}Google",
+    "{design_namespace}GoogleNoscript",
+    "{design_namespace}H1AboveGrid",
+    "{design_namespace}HeadAttributes",
+    "{design_namespace}Header",
+    "{design_namespace}HtmlAttributes",
+    "{design_namespace}Link",
+    "{design_namespace}Meta",
+    "{design_namespace}PagesWithoutH1",
+    "{design_namespace}ProcessPageSystemDataStructure",
+    "{design_namespace}RenderBreadcrumbs",
+    "{design_namespace}RenderH1",
+    "{design_namespace}RenderPostWysiwygGroup",
+    "{design_namespace}RenderPostWysiwygGroupInContainer",
+    "{design_namespace}RenderPreH1Chooser",
+    "{design_namespace}RenderPreH1ChooserInContainer",
+    "{design_namespace}Script",
+    "{design_namespace}SiteNav",
+    "{design_namespace}SiteNavPath",
+    "{design_namespace}Title",
+    "{design_namespace}UseExternalSiteNav",
+    "folderSetupFormatExists",
+    "h1",
+    "master_site_name",
+    "masterLevelOverrideContent",
+    "page",
+    "pageHasBottom",
+    "pageHasTop",
+    "pageLayout",
+    "pageLayoutBottom",
+    "pageLayoutTop",
+    "pageSystemDataStructure",
+    "postWysiwygGroupChildren",
+    "postWysiwygGroupChooserContent",
+    "preH1ChooserContent",
+    "renderPostWysiwygGroupInContainer",
+    "upstateBodyAttributes",
+    "upstateHeadAttributes",
+    "upstateHtmlAttributes"
+] )
+#*
+《/global-variables》
 《documentation》
 《code》Import statements《/code》
 《p》This part defines the page structure and imports all global components.
