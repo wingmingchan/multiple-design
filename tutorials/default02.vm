@@ -1,4 +1,6 @@
-<html lang="en-US"> 
+<html lang="en-US">
+<!-- step 2: move content out to create global components and
+use import directives instead --> 
 <head>
 #import( 'site://_chan_master/formats/uco/google' )
 #import( 'site://_chan_master/formats/uco/title' )
