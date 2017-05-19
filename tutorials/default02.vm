@@ -1,0 +1,18 @@
+<html lang="en-US"> 
+<head>
+#import( 'site://_chan_master/formats/uco/google' )
+#import( 'site://_chan_master/formats/uco/title' )
+#import( 'site://_chan_master/formats/uco/meta' )
+#import( 'site://_chan_master/formats/uco/link' )
+</head>
+
+<body>
+#import( 'site://_chan_master/formats/uco/pre-page' )
+<div class="page" id="page">
+    #import( 'site://_chan_master/formats/uco/search' )
+    #import( 'site://_chan_master/formats/uco/header' )
+    #import( 'site://_chan_master/formats/uco/footer' )
+</div>
+#import( 'site://_chan_master/formats/uco/script' )
+</body>
+</html>
