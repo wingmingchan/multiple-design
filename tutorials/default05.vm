@@ -1,4 +1,5 @@
-<html lang="en-US"> 
+<html lang="en-US">
+<!-- step 5: process h1 -->
 <head>
 #import( 'site://_chan_core/formats/library/velocity/chanw_library_import' )
 #import( 'site://_chan_master/formats/uco/google' )
@@ -54,6 +55,8 @@ admin-group/master-level-override/path
 admin-group/page-level-override
 admin-group/page-level-override/path
 *#
+
+<h1>$_XPathTool.selectNodes( $data, "h1" )[0].Value</h1>
 
 #*===  end page content   === *#
    
