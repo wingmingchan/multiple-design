@@ -1,5 +1,5 @@
 <html lang="en-US">
-<!-- step 3: put all xpaths here for reference -->
+<!-- step 4: put all xpaths here for reference -->
 <head>
 #import( 'site://_chan_core/formats/library/velocity/chanw_library_import' )
 #import( 'site://_chan_master/formats/uco/google' )
