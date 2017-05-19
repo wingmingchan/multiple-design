@@ -1,0 +1,64 @@
+<html lang="en-US"> 
+<head>
+#import( 'site://_chan_core/formats/library/velocity/chanw_library_import' )
+#import( 'site://_chan_master/formats/uco/google' )
+#import( 'site://_chan_master/formats/uco/title' )
+#import( 'site://_chan_master/formats/uco/meta' )
+#import( 'site://_chan_master/formats/uco/link' )
+</head>
+
+<body>
+#import( 'site://_chan_master/formats/uco/pre-page' )
+<div class="page" id="page">
+    #import( 'site://_chan_master/formats/uco/search' )
+    #import( 'site://_chan_master/formats/uco/header' )
+    
+#*===  page content   === *#
+
+#set( $data = $_XPathTool.selectNodes( $contentRoot, "calling-page/system-page/system-data-structure" )[0] )
+#chanwProcessSystemDataStructure( $data [ 'wysiwg' ] )
+#chanwDisplayMapKeys( $chanwXmlXPathTextMap true )
+
+#*
+pre-h1-chooser
+pre-h1-chooser/path
+h1
+pre-wysiwyg-chooser
+pre-wysiwyg-chooser/path
+wysiwyg
+post-wysiwyg-chooser
+post-wysiwyg-chooser/content
+post-wysiwyg-chooser/path
+post-wysiwyg-chooser/dynamic-metadata
+post-wysiwyg-chooser/dynamic-metadata/name
+post-wysiwyg-chooser/dynamic-metadata/value
+post-wysiwyg-chooser/site
+post-wysiwyg-chooser/name
+post-wysiwyg-group
+post-wysiwyg-group/post-wysiwyg-group-chooser
+post-wysiwyg-group/post-wysiwyg-group-chooser/path
+layout
+layout/layout-top-group
+layout/layout-top-group/layout-top
+layout/layout-bottom-group
+layout/layout-bottom-group/layout-bottom
+top-group
+top-group/top-group-chooser
+top-group/top-group-chooser/path
+bottom-group
+bottom-group/bottom-group-chooser
+bottom-group/bottom-group-chooser/path
+admin-group
+admin-group/master-level-override
+admin-group/master-level-override/path
+admin-group/page-level-override
+admin-group/page-level-override/path
+*#
+
+#*===  end page content   === *#
+   
+    #import( 'site://_chan_master/formats/uco/footer' )
+</div>
+#import( 'site://_chan_master/formats/uco/script' )
+</body>
+</html>
