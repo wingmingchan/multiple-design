@@ -1,4 +1,6 @@
-<html lang="en-US"> 
+<html lang="en-US">
+<!-- step 3: import library, select the system-data-structure node,
+and use library macros to display all xpaths -->
 <head>
 #import( 'site://_chan_core/formats/library/velocity/chanw_library_import' )
 #import( 'site://_chan_master/formats/uco/google' )
