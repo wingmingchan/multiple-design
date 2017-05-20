@@ -1,6 +1,8 @@
 #upstateInitialize
 <html lang="en-US">
-<!-- step 8: introduce macros to modularize code -->
+<!-- step 8: introduce macros to modularize code,
+use variables for core site name and master site name,
+use double quotes and {} for variable interpolation -->
 <head>
 #upstateProcessHead
 </head>
@@ -14,16 +16,17 @@
 #macro( upstateInitialize )
     #set( $core_site_name = "_chan_core" )
     #import( "site://${core_site_name}/formats/library/velocity/chanw_library_import" )
+    #set( $master_site_name = "_chan_master" )
 #end
 
 #macro( upstateProcessBodyPart1 ) ## before page contents
-    #import( 'site://_chan_master/formats/uco/pre-page' )
+    #import( "site://${master_site_name}/formats/uco/pre-page" )
 #end
 
 #macro( upstateProcessBodyPart2 ) ## page contents
     <!--#protect<div class="page" id="page">#protect-->
-    #import( 'site://_chan_master/formats/uco/search' )
-    #import( 'site://_chan_master/formats/uco/header' )
+    #import( "site://${master_site_name}/formats/uco/search" )
+    #import( "site://${master_site_name}/formats/uco/header" )
     
     #*===  page content   === *#
 
@@ -52,14 +55,14 @@
 #end
 
 #macro( upstateProcessBodyPart3 ) ## after page contents
-    #import( 'site://_chan_master/formats/uco/footer' )
+    #import( "site://${master_site_name}/formats/uco/footer" )
     <!--#protect</div>#protect-->
-    #import( 'site://_chan_master/formats/uco/script' )
+    #import( "site://${master_site_name}/formats/uco/script" )
 #end
 
 #macro( upstateProcessHead )
-    #import( 'site://_chan_master/formats/uco/google' )
-    #import( 'site://_chan_master/formats/uco/title' )
-    #import( 'site://_chan_master/formats/uco/meta' )
-    #import( 'site://_chan_master/formats/uco/link' )
+    #import( "site://${master_site_name}/formats/uco/google" )
+    #import( "site://${master_site_name}/formats/uco/title" )
+    #import( "site://${master_site_name}/formats/uco/meta" )
+    #import( "site://${master_site_name}/formats/uco/link" )
 #end
