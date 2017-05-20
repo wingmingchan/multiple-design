@@ -1,0 +1,65 @@
+#upstateInitialize
+<html lang="en-US">
+<!-- step 8: introduce macros to modularize code -->
+<head>
+#upstateProcessHead
+</head>
+<body>
+#upstateProcessBodyPart1
+#upstateProcessBodyPart2
+#upstateProcessBodyPart3
+</body>
+</html>
+
+#macro( upstateInitialize )
+    #set( $core_site_name = "_chan_core" )
+    #import( "site://${core_site_name}/formats/library/velocity/chanw_library_import" )
+#end
+
+#macro( upstateProcessBodyPart1 ) ## before page contents
+    #import( 'site://_chan_master/formats/uco/pre-page' )
+#end
+
+#macro( upstateProcessBodyPart2 ) ## page contents
+    <!--#protect<div class="page" id="page">#protect-->
+    #import( 'site://_chan_master/formats/uco/search' )
+    #import( 'site://_chan_master/formats/uco/header' )
+    
+    #*===  page content   === *#
+
+    #set( $data = $_XPathTool.selectNodes( $contentRoot, "calling-page/system-page/system-data-structure" )[0] )
+    <h1>$_EscapeTool.xml( $_XPathTool.selectNodes( $data, "h1" )[0].Value )</h1>
+
+    #set( $post_wysiwyg_chooser = $_XPathTool.selectNodes( $data, "post-wysiwyg-chooser" )[0] )
+    #set( $post_wysiwyg_chooser_content = $post_wysiwyg_chooser.getChild( "content" ) )
+
+    #if( $post_wysiwyg_chooser_content )
+        #chanwProcessBlockChooser( $post_wysiwyg_chooser_content )
+    #end
+
+    #set( $post_wysiwyg_group_choosers = $_XPathTool.selectNodes( $data, "post-wysiwyg-group/post-wysiwyg-group-chooser" ) )
+
+    #if( $post_wysiwyg_group_choosers.size() > 0 )
+        #foreach( $chooser in $post_wysiwyg_group_choosers )
+            #set( $post_wysiwyg_group_chooser_content = $chooser.getChild( "content" ) )
+        
+            #if( $post_wysiwyg_group_chooser_content )
+                #chanwProcessBlockChooser( $post_wysiwyg_group_chooser_content )
+            #end
+        #end
+    #end
+    #*===  end page content   === *#
+#end
+
+#macro( upstateProcessBodyPart3 ) ## after page contents
+    #import( 'site://_chan_master/formats/uco/footer' )
+    <!--#protect</div>#protect-->
+    #import( 'site://_chan_master/formats/uco/script' )
+#end
+
+#macro( upstateProcessHead )
+    #import( 'site://_chan_master/formats/uco/google' )
+    #import( 'site://_chan_master/formats/uco/title' )
+    #import( 'site://_chan_master/formats/uco/meta' )
+    #import( 'site://_chan_master/formats/uco/link' )
+#end
