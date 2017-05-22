@@ -1,0 +1,78 @@
+#upstateInitialize
+<html lang="en-US">
+<!-- step 10: introduce master_setup:
+to define $design_namespace to associate sites with designs
+see master_setup10 for example
+-->
+<head>
+#upstateProcessHead
+</head>
+<body>
+#upstateProcessBodyPart1
+#upstateProcessBodyPart2
+#upstateProcessBodyPart3
+</body>
+</html>
+
+#macro( upstateInitialize )
+    #set( $core_site_name = "_chan_core" )
+    #import( "site://${core_site_name}/formats/library/velocity/chanw_library_import" )
+    #set( $master_site_name = "_chan_master" )
+    #import( "site://${master_site_name}/formats/${MASTER_SETUP_FORMAT_NAME}" )
+#end
+
+#macro( upstateProcessBodyPart1 ) ## before page contents
+    #if( $design_namespace == "uco" )
+        #import( "site://${master_site_name}/formats/${design_namespace}/pre-page" )
+    #elseif( $design_namespace == "rwd3" )
+        #import( "site://${master_site_name}/formats/${design_namespace}/google-tag-manager-noscript" )
+        #import( "site://${master_site_name}/formats/${design_namespace}/header" )
+    #end
+#end
+
+#macro( upstateProcessBodyPart2 ) ## page contents
+    <!--#protect<div class="page" id="page">#protect-->
+    #if( $design_namespace == "uco" )
+        #import( "site://${master_site_name}/formats/${design_namespace}/search" )
+        #import( "site://${master_site_name}/formats/${design_namespace}/header" )
+    #end
+    
+    
+    #*===  page content   === *#
+
+    #set( $data = $_XPathTool.selectNodes( $contentRoot, "calling-page/system-page/system-data-structure" )[0] )
+    <h1>$_EscapeTool.xml( $_XPathTool.selectNodes( $data, "h1" )[0].Value )</h1>
+
+    #set( $post_wysiwyg_chooser = $_XPathTool.selectNodes( $data, "post-wysiwyg-chooser" )[0] )
+    #set( $post_wysiwyg_chooser_content = $post_wysiwyg_chooser.getChild( "content" ) )
+
+    #if( $post_wysiwyg_chooser_content )
+        #chanwProcessBlockChooser( $post_wysiwyg_chooser_content )
+    #end
+
+    #set( $post_wysiwyg_group_choosers = $_XPathTool.selectNodes( $data, "post-wysiwyg-group/post-wysiwyg-group-chooser" ) )
+
+    #if( $post_wysiwyg_group_choosers.size() > 0 )
+        #foreach( $chooser in $post_wysiwyg_group_choosers )
+            #set( $post_wysiwyg_group_chooser_content = $chooser.getChild( "content" ) )
+        
+            #if( $post_wysiwyg_group_chooser_content )
+                #chanwProcessBlockChooser( $post_wysiwyg_group_chooser_content )
+            #end
+        #end
+    #end
+    #*===  end page content   === *#
+#end
+
+#macro( upstateProcessBodyPart3 ) ## after page contents
+    #import( "site://${master_site_name}/formats/${design_namespace}/footer" )
+    <!--#protect</div>#protect-->
+    #import( "site://${master_site_name}/formats/${design_namespace}/script" )
+#end
+
+#macro( upstateProcessHead )
+    #import( "site://${master_site_name}/formats/${design_namespace}/google-tag-manager" )
+    #import( "site://${master_site_name}/formats/${design_namespace}/title" )
+    #import( "site://${master_site_name}/formats/${design_namespace}/meta" )
+    #import( "site://${master_site_name}/formats/${design_namespace}/link" )
+#end
