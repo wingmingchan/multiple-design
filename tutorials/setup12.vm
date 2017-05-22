@@ -1,0 +1,3 @@
+## this is the setup format of the uco design
+#chanwSetVariable( "${design_namespace}PrePage"    "${masterSiteDesignPath}pre-page" )
+#chanwSetVariable( "${design_namespace}Search"     "${masterSiteDesignPath}search" )
