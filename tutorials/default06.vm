@@ -2,7 +2,7 @@
 <!-- step 6: process a block chooser -->
 <head>
 #import( 'site://_chan_core/formats/library/velocity/chanw_library_import' )
-#import( 'site://_chan_master/formats/uco/google' )
+#import( 'site://_chan_master/formats/uco/google-tag-manager' )
 #import( 'site://_chan_master/formats/uco/title' )
 #import( 'site://_chan_master/formats/uco/meta' )
 #import( 'site://_chan_master/formats/uco/link' )
