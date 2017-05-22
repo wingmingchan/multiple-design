@@ -5,7 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
-5/22/2017 Added middle variable for element.
+5/22/2017 Added middle variable for element, ids for top, middle, and bottom.
 5/10/2017 Added wrapper, top, and bottom variables for elements.
 《/copyright》
 《documentation id=“top”》
@@ -62,14 +62,44 @@ area of a page.《/p》
 #set( $wrapperId = $chanwReviveGlobalVariable )
 #chanwReviveGlobalVariable( "TopElement" $design_namespace )
 #set( $topElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "TopId" $design_namespace )
+#set( $topId = $chanwReviveGlobalVariable )
 #chanwReviveGlobalVariable( "MiddleElement" $design_namespace )
 #set( $middleElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "MiddleId" $design_namespace )
+#set( $middleId = $chanwReviveGlobalVariable )
 #chanwReviveGlobalVariable( "BottomElement" $design_namespace )
 #set( $bottomElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "BottomId" $design_namespace )
+#set( $BottomId = $chanwReviveGlobalVariable )
 
-<${wrapperElement} id="${wrapperId}" class="${containerClass}">
+#if( $wrapperId != "" )
+    #set( $wrapperIdAttribute = "id='$wrapperId'" )
+#else
+    #set( $wrapperIdAttribute = "" )
+#end
+
+#if( $topId != "" )
+    #set( $topIdAttribute = "id='$topId'" )
+#else
+    #set( $topIdAttribute = "" )
+#end
+
+#if( $middleId != "" )
+    #set( $middleIdAttribute = "id='$middleId'" )
+#else
+    #set( $middleIdAttribute = "" )
+#end
+
+#if( $bottomId != "" )
+    #set( $bottomIdAttribute = "id='$bottomId'" )
+#else
+    #set( $bottomIdAttribute = "" )
+#end
+
+<${wrapperElement} ${wrapperIdAttribute} class="${containerClass}">
     #if( $siteHasTop && $pageHasTop )
-    <${topElement} class="${topCssClass}">
+    <${topElement} ${topIdAttribute} class="${topCssClass}">
         #chanwReviveGlobalVariable( "RenderFolderNav" $design_namespace )
         
         #if( $chanwReviveGlobalVariable )
@@ -96,7 +126,7 @@ area of a page.《/p》
     #end
 
     ## middle part
-    <${middleElement} class="${middleCssClass}" id="page-content-div">
+    <${middleElement} ${middleIdAttribute} class="${middleCssClass}">
         <div class="row">
     #chanwReviveGlobalVariable( "RenderH1" $design_namespace )
         
@@ -139,7 +169,7 @@ area of a page.《/p》
     </${middleElement}>
 
     #if( $siteHasBottom && $pageHasBottom )    
-    <${bottomElement} class="${bottomCssClass}">
+    <${bottomElement} ${bottomIdAttribute} class="${bottomCssClass}">
         #chanwReviveGlobalVariable( "RenderFolderNav" $design_namespace )
 
         #if( $chanwReviveGlobalVariable )
