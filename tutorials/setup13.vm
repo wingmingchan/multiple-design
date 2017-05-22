@@ -1,0 +1,3 @@
+## this is the setup format of a site
+#chanwSetVariable( "${design_namespace}SiteTitleString"    "Test Site" )
+#chanwSetVariable( "${design_namespace}SiteTitleLink"      "http://www.upstate.edu/" )
