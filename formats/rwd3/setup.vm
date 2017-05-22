@@ -2,16 +2,13 @@
 
 ## attributes
 ## Example: #chanwSetVariable( "${design_namespace}HtmlAttributes"   "data-ng-app='myApp'" )
-#chanwSetVariable( "${design_namespace}HtmlAttributes"   "" )
-#chanwSetVariable( "${design_namespace}HeadAttributes"   "" )
-#chanwSetVariable( "${design_namespace}BodyAttributes"   "" )
 
 ## accessibility
 #chanwSetVariable( "${design_namespace}Accessibility"    "${masterSiteDesignPath}accessibility" )
 #chanwSetVariable( "${design_namespace}Copyright"        "${masterSiteDesignPath}copyright" )
 #chanwSetVariable( "${design_namespace}GlobalMenuSearch" "${masterSiteDesignPath}global-menu-search" )
 #chanwSetVariable( "${design_namespace}LastModified"     "${masterSiteDesignPath}last-modified" )
-#chanwSetVariable( "${design_namespace}SiteTitle"        "${masterSiteDesignPath}site-title" )
+##chanwSetVariable( "${design_namespace}SiteTitle"        "${masterSiteDesignPath}site-title" )
 
 ## site config
 #set( $siteSetupFormatSiteName   = $currentPageSiteName )
@@ -48,8 +45,6 @@
 #chanwSetVariable( "${design_namespace}RowCenterHeaderClasses" "centerobject" )
 
 ## layouts
-#chanwSetVariable( "${design_namespace}WrapperElement"                        "main" )
-#chanwSetVariable( "${design_namespace}WrapperId"                             "main-div-wrapper" )
 #chanwSetVariable( "${design_namespace}TopLeftCssClass"                       "col-md-3 nopadding" )
 #chanwSetVariable( "${design_namespace}MiddleCenterCssClass"                  "col-md-6" )
 #chanwSetVariable( "${design_namespace}BottomRightCssClass"                   "col-md-3 nopadding" )
