@@ -1,0 +1,6 @@
+## this is the setup format of a site
+#chanwSetVariable( "${design_namespace}BodyAttributes"     "class='bg7'" )
+
+#chanwSetVariable( "${design_namespace}RenderSiteTitle"    false )
+#chanwSetVariable( "${design_namespace}SiteTitleString"    "Test Site" )
+#chanwSetVariable( "${design_namespace}SiteTitleLink"      "http://www.upstate.edu/" )
