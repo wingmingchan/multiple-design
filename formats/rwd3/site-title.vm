@@ -5,7 +5,7 @@
     #chanwReviveGlobalVariable( "SiteTitleLink" $design_namespace )
     #set( $siteTitleLink = $chanwReviveGlobalVariable )
     
-    #if( $chanwReviveGlobalVariable != "" && $siteTitleLink != "" )
+    #if( $siteTitleString != "" && $siteTitleLink != "" )
 <div id="site-title-div"><a href="${siteTitleLink}">$siteTitleString</a></div>
     #end
 #end
