@@ -1,0 +1,211 @@
+#*
+《code》
+《copyright》
+Authors: Wing Ming Chan
+Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
+MIT Licensed
+Modification history:
+5/22/2017 Added middle variable for element, ids for top, middle, and bottom.
+5/10/2017 Added wrapper, top, and bottom variables for elements.
+《/copyright》
+《documentation id=“top”》
+《h2》Introduction《/h2》
+《p》This format defines variables and introduces XHTML markups for the content
+area of a page.《/p》
+《/documentation》
+《documentation》
+《code》Page layouts《/code》
+《p》This part defines variables used to control page layouts.《/p》
+《/documentation》
+《macro id=“pagelayouts”》
+*#
+## global setup
+#chanwReviveGlobalVariable( "HasTopRowLeftCol" $design_namespace )
+#set( $siteHasTop = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "HasBottomRowRightCol" $design_namespace )
+#set( $siteHasBottom = $chanwReviveGlobalVariable )
+
+## page-specific layout
+#if( $siteHasTop && $siteHasBottom && $pageHasTop && $pageHasBottom )
+    #chanwReviveGlobalVariable( "TopLeftCssClass" $design_namespace )
+    #set( $topCssClass = $chanwReviveGlobalVariable + " nopadding-left" )
+    #chanwReviveGlobalVariable( "MiddleCenterCssClass" $design_namespace )
+    #set( $middleCssClass = $chanwReviveGlobalVariable )
+    #chanwReviveGlobalVariable( "BottomRightCssClass" $design_namespace )
+    #set( $bottomCssClass = $chanwReviveGlobalVariable + " nopadding-right" )
+#elseif( $siteHasTop && $pageHasTop ) ## no bottom right
+    #chanwReviveGlobalVariable( "TopLeftCssClass" $design_namespace )
+    #set( $topCssClass = $chanwReviveGlobalVariable )
+    #chanwReviveGlobalVariable( "MiddleCenterWithNoBottomRightCssClass" $design_namespace )
+    #set( $middleCssClass = $chanwReviveGlobalVariable + " nopadding-right" )
+#elseif( $siteHasBottom && $pageHasBottom ) ## no top left
+    #chanwReviveGlobalVariable( "MiddleCenterWithNoTopLeftCssClass" $design_namespace )
+    #set( $middleCssClass = $chanwReviveGlobalVariable )
+    #chanwReviveGlobalVariable( "BottomRightCssClass" $design_namespace )
+    #set( $bottomCssClass = $chanwReviveGlobalVariable + " nopadding-left" )
+#end
+#*
+《/macro》
+《documentation》
+《code》Page markups《/code》
+《p》Markups of the page content area.《/p》
+《/documentation》
+《macro id=“pagemarkups”》
+*#
+## local class for page background
+#chanwReviveGlobalVariable( "PageCssClass" $design_namespace )
+#set( $containerClass = "container nopadding " + $chanwReviveGlobalVariable )
+
+#chanwReviveGlobalVariable( "WrapperElement" $design_namespace )
+#set( $wrapperElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "WrapperId" $design_namespace )
+#set( $wrapperId = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "TopElement" $design_namespace )
+#set( $topElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "TopId" $design_namespace )
+#set( $topId = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "MiddleElement" $design_namespace )
+#set( $middleElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "MiddleId" $design_namespace )
+#set( $middleId = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "BottomElement" $design_namespace )
+#set( $bottomElement = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "BottomId" $design_namespace )
+#set( $BottomId = $chanwReviveGlobalVariable )
+
+#if( $wrapperId != "" )
+    #set( $wrapperIdAttribute = "id='$wrapperId'" )
+#else
+    #set( $wrapperIdAttribute = "" )
+#end
+
+#if( $topId != "" )
+    #set( $topIdAttribute = "id='$topId'" )
+#else
+    #set( $topIdAttribute = "" )
+#end
+
+#if( $middleId != "" )
+    #set( $middleIdAttribute = "id='$middleId'" )
+#else
+    #set( $middleIdAttribute = "" )
+#end
+
+#if( $bottomId != "" )
+    #set( $bottomIdAttribute = "id='$bottomId'" )
+#else
+    #set( $bottomIdAttribute = "" )
+#end
+
+<${wrapperElement} ${wrapperIdAttribute} class="${containerClass}">
+    #if( $siteHasTop && $pageHasTop )
+    <${topElement} ${topIdAttribute} class="${topCssClass}">
+        #chanwReviveGlobalVariable( "RenderFolderNav" $design_namespace )
+        
+        #if( $chanwReviveGlobalVariable )
+            #chanwReviveGlobalVariable( "FolderNavOnTopLeft" $design_namespace )
+
+            #if( $chanwReviveGlobalVariable ) ## set with true
+                #chanwReviveGlobalVariable( "FolderNav" $design_namespace )
+                #import( $chanwReviveGlobalVariable )
+            #end
+        #end
+        
+        ## process block choosers
+        #chanwReviveGlobalVariable( "RenderTopLeftGroup" $design_namespace )
+        
+        #if( $chanwReviveGlobalVariable )
+            #set( $topGroupChooserContent = $pageSystemDataStructure.getChild( "top-group"
+                ).getChild( "top-group-chooser" ).getChild( "content" ) )
+            
+            #if( $topGroupChooserContent )
+                #chanwProcessBlockChooser( $topGroupChooserContent )
+            #end
+        #end
+    </${topElement}>
+    #end
+
+    ## middle part
+    <${middleElement} ${middleIdAttribute} class="${middleCssClass}">
+        <div class="row">
+    #chanwReviveGlobalVariable( "RenderH1" $design_namespace )
+        
+    #if( $chanwReviveGlobalVariable )
+        #chanwReviveGlobalVariable( "H1AboveGrid" $design_namespace )
+        
+        #if( !$chanwReviveGlobalVariable && $renderH1 && !$pagesWithoutH1.contains( $currentPagePath ) )
+    <h1>$h1</h1>
+        #end
+    #end
+        
+    ## chooser before wysiwyg
+    #chanwReviveGlobalVariable( "RenderPreWysiwygChooser" $design_namespace )
+
+    #if( $chanwReviveGlobalVariable )
+        #set( $preWysiwygChooserContent = 
+            $pageSystemDataStructure.getChild( "pre-wysiwyg-chooser" ).getChild( "content" ) )
+    
+        #if( $preWysiwygChooserContent )
+            #chanwProcessBlockChooser( $preWysiwygChooserContent )
+        #end
+    #end
+    
+    ## the wysiwyg
+    $_SerializerTool.serialize( $pageSystemDataStructure.getChild( "wysiwyg" ), true )
+
+    ## process block choosers
+    #set( $postWysiwygChoosers = $pageSystemDataStructure.getChildren( "post-wysiwyg-chooser" ) )
+
+    #if( $postWysiwygChoosers.size() > 0 )
+        #foreach( $postWysiwygChooser in $postWysiwygChoosers )
+            #set( $postWysiwygChooserContent = $postWysiwygChooser.getChild( "content" ) )
+            
+            #if( $postWysiwygChooserContent )
+                #chanwProcessBlockChooser( $postWysiwygChooserContent )
+            #end
+        #end
+    #end
+        </div>
+    </${middleElement}>
+
+    #if( $siteHasBottom && $pageHasBottom )    
+    <${bottomElement} ${bottomIdAttribute} class="${bottomCssClass}">
+        #chanwReviveGlobalVariable( "RenderFolderNav" $design_namespace )
+
+        #if( $chanwReviveGlobalVariable )
+            #chanwReviveGlobalVariable( "FolderNavOnBottomRight" $design_namespace )
+
+            #if( $chanwReviveGlobalVariable ) ## set with true
+                #chanwReviveGlobalVariable( "FolderNav" $design_namespace )   
+                #import( $chanwReviveGlobalVariable )
+            #end
+        #end
+        
+        ## process block choosers
+        #chanwReviveGlobalVariable( "RenderBottomRightGroup" $design_namespace )
+        
+        #if( $chanwReviveGlobalVariable )
+            #set( $bottomGroupChoosers = $pageSystemDataStructure.getChild( "bottom-group"
+                ).getChildren( "bottom-group-chooser" ) )
+        
+            #if( $bottomGroupChoosers.size() > 0 )
+                #foreach( $bottomGroupChooser in $bottomGroupChoosers )
+                    #set( $bottomGroupChooserContent = $bottomGroupChooser.getChild( "content" ) )
+            
+                    #if( $bottomGroupChooserContent )
+                        <div class="padbottom5">
+                        #chanwProcessBlockChooser( $bottomGroupChooserContent )
+                        </div>
+                    #end
+                #end
+            #end
+        #end
+    </${bottomElement}>
+    #end
+</${wrapperElement}>
+#*
+《/macro》
+《documentation id=“bottom”》
+《/documentation》
+《/code》
+*#
