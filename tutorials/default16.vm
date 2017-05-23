@@ -28,8 +28,10 @@
     #set( $master_site_name = "_chan_master" )
     #import( "site://${master_site_name}/formats/${MASTER_SETUP_FORMAT_NAME}" )
     
-    #* --- the design setup format --- *#
+    #* ---  global variables --- *#
     #import( "site://${core_site_name}/formats/library/velocity/${MASTER_SETUP_GLOBAL_VARIABLES}" )
+
+    #* --- the design setup format --- *#
     #chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )
     
     #* --- the site setup format --- *#
