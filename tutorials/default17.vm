@@ -2,6 +2,9 @@
 <html lang="en-US">
 <!-- step 17: add html and head attributes
 page-level overriding the master setup
+see master-override17 for an example of a script block overriding
+the master setup; this block is to be attached to the block chooser named
+master-level-override
 -->
 <head>
 #upstateProcessHead
