@@ -18,7 +18,7 @@ and use library macros to display all xpaths -->
 #*===  page content   === *#
 
 #set( $data = $_XPathTool.selectNodes( $contentRoot, "calling-page/system-page/system-data-structure" )[0] )
-#chanwProcessSystemDataStructure( $data [ 'wysiwg' ] )
+#chanwProcessSystemDataStructure( $data [ 'wysiwyg' ] )
 #chanwDisplayMapKeys( $chanwXmlXPathTextMap true )
 
 #*===  end page content   === *#
