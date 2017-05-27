@@ -2,7 +2,7 @@
 
 In this repository, I am posting my newest implementation files of the one-region template, multiple-design master site approach.
 
-_core.csse last modified: 04/08/2017 
+_core.csse last modified: 04/08/2017
 
 All the code I can post used in the implementation of the multiple-design master site can be found here. What are not included here:
 
@@ -10,6 +10,9 @@ All the code I can post used in the implementation of the multiple-design master
 2. PHP code used to generate CSS
 
 _core.csse: The core containing only Velocity library code<br />
+
+<h3>The tutorials Folder</h3>
+<p>This folder contains different versions of the default format and other supporting formats, showing the steps on how to build these formats.</p> 
 
 <h3>Documentation</h3>
 <ul>
