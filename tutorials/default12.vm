@@ -20,7 +20,7 @@ see setup12 for an example of a design setup format
     #import( "site://${master_site_name}/formats/${MASTER_SETUP_FORMAT_NAME}" )
     
     #import( "site://${core_site_name}/formats/library/velocity/${MASTER_SETUP_GLOBAL_VARIABLES}" )
-    #chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )    
+    #import( "site://${master_site_name}/formats/${design_namespace}/${DESIGN_SETUP_FORMAT_NAME}" )
 #end
 
 #macro( upstateProcessBodyPart1 ) ## before page contents
