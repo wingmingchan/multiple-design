@@ -19,12 +19,9 @@ see site-title14 for new code using the new parameter
     #import( "site://${core_site_name}/formats/library/velocity/chanw_library_import" )
     #set( $master_site_name = "_chan_master" )
     #import( "site://${master_site_name}/formats/${MASTER_SETUP_FORMAT_NAME}" )
-    
     #import( "site://${core_site_name}/formats/library/velocity/${MASTER_SETUP_GLOBAL_VARIABLES}" )
-    #chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )
-    
-    #chanwImportScript( "/" $currentPageSiteName $SITE_SETUP_FORMAT_NAME )
-    #set( $siteSetupFormatExists = $chanwImportScript )
+    #import( "site://${master_site_name}/formats/${design_namespace}/${DESIGN_SETUP_FORMAT_NAME}" )
+    #import( "site://${currentPageSiteName}/${SITE_SETUP_FORMAT_NAME}" )
 #end
 
 #macro( upstateProcessBodyPart1 ) ## before page contents
