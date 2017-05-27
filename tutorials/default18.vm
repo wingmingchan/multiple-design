@@ -115,11 +115,10 @@ in the desired XHTML markups.《/p》
     #import( "site://${core_site_name}/formats/library/velocity/${MASTER_SETUP_GLOBAL_VARIABLES}" )
 
     #* --- the design setup format --- *#
-    #chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )
+    #import( "site://${master_site_name}/formats/${design_namespace}/${DESIGN_SETUP_FORMAT_NAME}" )
     
     #* --- the site setup format --- *#
-    #chanwImportScript( "/" $currentPageSiteName $SITE_SETUP_FORMAT_NAME )
-    #set( $siteSetupFormatExists = $chanwImportScript )
+    #import( "site://${currentPageSiteName}/${SITE_SETUP_FORMAT_NAME}" )
     
     #* --- the folder setup format --- *#
     #set( $folderSetupFormatExists = false )
