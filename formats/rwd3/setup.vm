@@ -41,6 +41,9 @@
 #chanwSetVariable( "${design_namespace}BreadcrumbsHomeString"      "Home" )
 #chanwSetVariable( "${design_namespace}BreadcrumbsSeparatorString" ">" )
 
+## top image
+#chanwSetVariable( "${design_namespace}PagesWithImageAboveH1"      [] )
+
 ## h2 in row block
 #chanwSetVariable( "${design_namespace}RowCenterHeaderClasses" "centerobject" )
 
