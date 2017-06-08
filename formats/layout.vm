@@ -5,6 +5,8 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+6/8/2017 Added code to process multiple choosers right below h1.
+Also added a config parameter to allow top image appearing right above h1.
 5/22/2017 Added middle variable for element, ids for top, middle, and bottom.
 5/10/2017 Added wrapper, top, and bottom variables for elements.
 《/copyright》
@@ -24,6 +26,8 @@ area of a page.《/p》
 #set( $siteHasTop = $chanwReviveGlobalVariable )
 #chanwReviveGlobalVariable( "HasBottomRowRightCol" $design_namespace )
 #set( $siteHasBottom = $chanwReviveGlobalVariable )
+#chanwReviveGlobalVariable( "PagesWithImageAboveH1" $design_namespace )
+#set( $imageAboveH1 = $chanwReviveGlobalVariable.contains( $currentPagePath ) )
 
 ## page-specific layout
 #if( $siteHasTop && $siteHasBottom && $pageHasTop && $pageHasBottom )
@@ -133,7 +137,7 @@ area of a page.《/p》
     #if( $chanwReviveGlobalVariable )
         #chanwReviveGlobalVariable( "H1AboveGrid" $design_namespace )
         
-        #if( !$chanwReviveGlobalVariable && $renderH1 && !$pagesWithoutH1.contains( $currentPagePath ) )
+        #if( !$chanwReviveGlobalVariable && $renderH1 && !$pagesWithoutH1.contains( $currentPagePath ) && !$imageAboveH1 )
     <h1>$h1</h1>
         #end
     #end
@@ -142,12 +146,21 @@ area of a page.《/p》
     #chanwReviveGlobalVariable( "RenderPreWysiwygChooser" $design_namespace )
 
     #if( $chanwReviveGlobalVariable )
-        #set( $preWysiwygChooserContent = 
-            $pageSystemDataStructure.getChild( "pre-wysiwyg-chooser" ).getChild( "content" ) )
+        #set( $preWysiwygChoosers = $pageSystemDataStructure.getChildren( "pre-wysiwyg-chooser" ) )
+        
+        #if( $preWysiwygChoosers.size() > 0 )
+            #foreach( $preWysiwygChooser in $preWysiwygChoosers )
+                #set( $preWysiwygChooserContent = $preWysiwygChooser.getChild( "content" ) )
     
-        #if( $preWysiwygChooserContent )
-            #chanwProcessBlockChooser( $preWysiwygChooserContent )
+                #if( $preWysiwygChooserContent )
+                    #chanwProcessBlockChooser( $preWysiwygChooserContent )
+                #end
+            #end
         #end
+    #end
+    
+    #if( $imageAboveH1 )
+        <h1>$h1</h1>
     #end
     
     ## the wysiwyg
