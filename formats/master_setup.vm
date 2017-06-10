@@ -14,8 +14,8 @@ associate sites with designs.《/p》
 *#
 ## Except the first part, do not hard-code any site name or design name here
 ## lists to associate sites with designs
-#set( $rwd3 = [ "cascade-admin" ] )
-#set( $rwd4 = [ "about" ] )
+#set( $rwd3 = [ "cascade-admin",  "about", "homepage" ] )
+#set( $rwd4 = [ "" ] )
 
 #if( $rwd4.contains( $currentPageSiteName ) )
     #set( $design_namespace = "rwd4" )
