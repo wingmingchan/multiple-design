@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+6/9/2017 Removed nopadding from containers.
 5/13/2017 Added parameters and logic to allow for generation of external file.
 《/copyright》
 《documentation id=“top”》
@@ -41,7 +42,7 @@ a site nav.《/p》
     #end
 
 <div id="site-menu-bar-div">
-<div class="container nopadding-left" id="site-menu-div">
+<div class="container" id="site-menu-div">
 <nav id="site-menu">
 ## this is the base folder of the site
 #set( $base_folder = $_.locateFolder( "/", $upstateBaseFolderSiteName ) )
@@ -55,7 +56,7 @@ a site nav.《/p》
 <ul>
 #foreach( $child in $children )##
     #if( !$child.ShouldBeIndexed && $child.Identifier.Type != "symlink" )##
-        #break##
+        ##break##
     #elseif( $child.Identifier.Type == "folder" )
         #chanwGetMetadataData( $child.Metadata )
         
