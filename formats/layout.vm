@@ -32,21 +32,21 @@ area of a page.《/p》
 ## page-specific layout
 #if( $siteHasTop && $siteHasBottom && $pageHasTop && $pageHasBottom )
     #chanwReviveGlobalVariable( "TopLeftCssClass" $design_namespace )
-    #set( $topCssClass = $chanwReviveGlobalVariable + " nopadding-left" )
+    #set( $topCssClass = $chanwReviveGlobalVariable )
     #chanwReviveGlobalVariable( "MiddleCenterCssClass" $design_namespace )
     #set( $middleCssClass = $chanwReviveGlobalVariable )
     #chanwReviveGlobalVariable( "BottomRightCssClass" $design_namespace )
-    #set( $bottomCssClass = $chanwReviveGlobalVariable + " nopadding-right" )
+    #set( $bottomCssClass = $chanwReviveGlobalVariable )
 #elseif( $siteHasTop && $pageHasTop ) ## no bottom right
     #chanwReviveGlobalVariable( "TopLeftCssClass" $design_namespace )
     #set( $topCssClass = $chanwReviveGlobalVariable )
     #chanwReviveGlobalVariable( "MiddleCenterWithNoBottomRightCssClass" $design_namespace )
-    #set( $middleCssClass = $chanwReviveGlobalVariable + " nopadding-right" )
+    #set( $middleCssClass = $chanwReviveGlobalVariable )
 #elseif( $siteHasBottom && $pageHasBottom ) ## no top left
     #chanwReviveGlobalVariable( "MiddleCenterWithNoTopLeftCssClass" $design_namespace )
     #set( $middleCssClass = $chanwReviveGlobalVariable )
     #chanwReviveGlobalVariable( "BottomRightCssClass" $design_namespace )
-    #set( $bottomCssClass = $chanwReviveGlobalVariable + " nopadding-left" )
+    #set( $bottomCssClass = $chanwReviveGlobalVariable )
 #end
 #*
 《/macro》
@@ -58,7 +58,7 @@ area of a page.《/p》
 *#
 ## local class for page background
 #chanwReviveGlobalVariable( "PageCssClass" $design_namespace )
-#set( $containerClass = "container nopadding " + $chanwReviveGlobalVariable )
+#set( $containerClass = "container " + $chanwReviveGlobalVariable )
 
 #chanwReviveGlobalVariable( "WrapperElement" $design_namespace )
 #set( $wrapperElement = $chanwReviveGlobalVariable )
@@ -102,6 +102,7 @@ area of a page.《/p》
 #end
 
 <${wrapperElement} ${wrapperIdAttribute} class="${containerClass}">
+<div class="row">
     #if( $siteHasTop && $pageHasTop )
     <${topElement} ${topIdAttribute} class="${topCssClass}">
         #chanwReviveGlobalVariable( "RenderFolderNav" $design_namespace )
@@ -132,6 +133,7 @@ area of a page.《/p》
     ## middle part
     <${middleElement} ${middleIdAttribute} class="${middleCssClass}">
         <div class="row">
+        <div class="col-xs-12">
     #chanwReviveGlobalVariable( "RenderH1" $design_namespace )
         
     #if( $chanwReviveGlobalVariable )
@@ -178,7 +180,8 @@ area of a page.《/p》
             #end
         #end
     #end
-        </div>
+        </div>## col-xs-12
+        </div>## row
     </${middleElement}>
 
     #if( $siteHasBottom && $pageHasBottom )    
@@ -215,6 +218,7 @@ area of a page.《/p》
         #end
     </${bottomElement}>
     #end
+</div>
 </${wrapperElement}>
 #*
 《/macro》
