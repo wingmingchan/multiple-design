@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+6/9/2017 Removed the class nopadding from all containers.
 5/18/2017 Added chanwDefaultGlobalVariables.
 5/13/2017 Added code to toggle the use of external site nav.
 5/10/2017 Moved link code to design; added attributes to html, head and body.
@@ -170,11 +171,10 @@ in the desired XHTML markups.《/p》
     #import( "site://${core_site_name}/formats/library/velocity/${MASTER_SETUP_GLOBAL_VARIABLES}" )
 
     #* --- the design setup format --- *#
-    #chanwImportScript( "formats/${design_namespace}" $master_site_name $DESIGN_SETUP_FORMAT_NAME )
-
+    #import( "site://${master_site_name}/formats/${design_namespace}/${DESIGN_SETUP_FORMAT_NAME}" )
+    
     #* --- the site setup format --- *#
-    #chanwImportScript( $siteSetupFormatFolderPath $siteSetupFormatSiteName $siteSetupFormatName )
-    #set( $siteSetupFormatExists = $chanwImportScript )
+    #import( "site://${currentPageSiteName}/${SITE_SETUP_FORMAT_NAME}" )
 
     #* --- the folder setup format --- *#
     #set( $folderSetupFormatExists = false )
@@ -318,6 +318,7 @@ $E_SYSTEM_VIEW_INTERNAL
     #* ==================== block processing ==================== *#
     ## import required formats for processing blocks
     #import( "site://${master_site_name}/formats/process_block" )
+    
     ## meta
     #chanwReviveGlobalVariable( "Meta" $design_namespace )
     #import( $chanwReviveGlobalVariable )
@@ -378,7 +379,7 @@ $E_SYSTEM_VIEW_INTERNAL
     #if( $renderH1 && !$pagesWithoutH1.contains( $currentPagePath ) )
         #chanwReviveGlobalVariable( "H1AboveGrid" $design_namespace )
         #if( $chanwReviveGlobalVariable ) 
-        <div class="container nopadding-left"><h1>$h1</h1></div>
+        <div class="container"><h1>$h1</h1></div>
         #end
     #end
     
