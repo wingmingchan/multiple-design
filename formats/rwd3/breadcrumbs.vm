@@ -5,6 +5,7 @@ Authors: Wing Ming Chan
 Copyright (c) 2017 Wing Ming Chan <chanw@upstate.edu>
 MIT Licensed
 Modification history:
+6/9/2017 Removed nopadding from containers.
 5/19/2017 Added documentation.
 《/copyright》
 《documentation id=“top”》
@@ -28,8 +29,9 @@ not display names of index pages, are used in the breadcrumbs.《/p》
 #set( $separatorString = $chanwReviveGlobalVariable )
     
 <div id="breadcrumb-div">
-<div class="container nopadding clearfix" id="breadcrumb-site-search-div">
-<nav class="col-sm-9 nopadding-left" id="breadcrumb">
+<div class="container" id="breadcrumb-site-search-div">
+<div class="row">
+<nav class="col-sm-9" id="breadcrumb">
     ## root-level pages, generate Home, possibly a link
     #if( $page.getParent().name == "system-index-block" )
         #if( $currentPage.name == $defaultPage )
@@ -57,8 +59,9 @@ not display names of index pages, are used in the breadcrumbs.《/p》
         #end
     #end
 </nav>
-</div>
-</div>
+</div>## row
+</div>## container
+</div>## breadcrumb-div
 #end
 #*
 《/code》
