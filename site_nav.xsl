@@ -1,10 +1,12 @@
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="xalan java" version="1.0"
-    xmlns:java="http://xml.apache.org/xalan/java" xmlns:me="stylesheet"
+<xsl:stylesheet
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="xalan java" version="1.0"
+    xmlns:java="http://xml.apache.org/xalan/java"
+    xmlns:me="stylesheet"
     xmlns:node="http://www.upstate.edu/chanw/node"
     xmlns:xalan="http://xml.apache.org/xalan">
     <xsl:include href="site://_common/formats/Upstate/library/node-processing"/>
     <xsl:output encoding="UTF-8" indent="yes" method="html"/>
+    <!-- this format is used by pages generated for external site nav -->
     <!-- change href of a elements 
     the names of the non-intra site and intra site must contain a common part like hr and hrintra, 
     the latter having the suffix 'intra'
@@ -17,7 +19,7 @@
                 </xsl:variable>
                 <xsl:variable name="href-modified">
                     <xsl:choose>
-                        <xsl:when test="java:toString(java:java.lang.Boolean.new(contains($href,'intra')))='true'">
+                        <xsl:when test="java:toString(java:java.lang.Boolean.new(contains($href,'intra') and (not(contains($href,'/intra')))))='true'">
                             <xsl:value-of select="java:replaceFirst($href,'intra','/intra')"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -31,7 +33,7 @@
         </a>
     </xsl:template>
     <!-- default -->
-    <xsl:template match="@*|node()" priority="-1">  
+    <xsl:template match="@*|node()" priority="-1">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
