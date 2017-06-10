@@ -48,9 +48,9 @@
 #chanwSetVariable( "${design_namespace}RowCenterHeaderClasses" "centerobject" )
 
 ## layouts
-#chanwSetVariable( "${design_namespace}TopLeftCssClass"                       "col-md-3 nopadding" )
+#chanwSetVariable( "${design_namespace}TopLeftCssClass"                       "col-md-3" )
 #chanwSetVariable( "${design_namespace}MiddleCenterCssClass"                  "col-md-6" )
-#chanwSetVariable( "${design_namespace}BottomRightCssClass"                   "col-md-3 nopadding" )
+#chanwSetVariable( "${design_namespace}BottomRightCssClass"                   "col-md-3" )
 #chanwSetVariable( "${design_namespace}MiddleCenterWithNoTopLeftCssClass"     "col-md-9" )
 #chanwSetVariable( "${design_namespace}MiddleCenterWithNoBottomRightCssClass" "col-md-9" )
 #chanwSetVariable( "${design_namespace}PageCssClass"                          "bg-white" )
