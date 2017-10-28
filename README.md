@@ -1,26 +1,14 @@
-# multiple-design
+# Brisk: Tree-Driven Multiple-Design Master Site by the Upstate Team
 
-In this repository, I am posting my newest implementation files of the one-region template, multiple-design master site approach.
+In this repository, I am posting my newest implementation files of the tree-driven multiple-design master site approach.
 
-_core.csse last modified: 07/06/2017
+_core.csse last modified: 10/27/2017
 
-All the code I can post used in the implementation of the multiple-design master site can be found here. What are not included here:
+All the code I can post used in the implementation of the tree-driven multiple-design master site can be found here. What are not included here are the library Velocity formats, which are posted under https://github.com/wingmingchan/velocity
 
-1. Velocity formats, which are posted under https://github.com/wingmingchan/velocity
-2. PHP code used to generate CSS
-
-_core.csse: The core containing only Velocity library code<br />
-
-<h3>The tutorials Folder</h3>
-<p>This folder contains different versions of the default format and other supporting formats, showing the steps on how to build these formats.</p> 
+_wing: The site containing only Velocity library code<br />
 
 <h3>Documentation</h3>
 <ul>
-<li><a href="http://www.upstate.edu/cascade-admin/standard-model/index.php">The Standard Model</a></li>
-</ul>
-
-<h3>Tutorial Recordings</h3>
-<ul>
-<li><a href="https://www.youtube.com/playlist?list=PL5FL7lAbKiG-AYX35qK8y0FN7RgJl9ISD">Velocity and More</a> recordings</li>
-<li><a href="https://www.youtube.com/playlist?list=PLiPcpR6GRx5dN3Z5-tAAMLgFX59Njkv6f">One Template, One Region, and Lots of Velocity Tricks</a></li>
+<li><a href="http://www.upstate.edu/standard-model/index.php">The Standard Model</a></li>
 </ul>
