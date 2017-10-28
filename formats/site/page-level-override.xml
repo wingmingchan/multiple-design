@@ -1,6 +1,0 @@
-<scripts>
-    <code>
-## override whatever needed for this page
-#chanwSetVariable( "${design_namespace}RenderGlobalNav" false )
-    </code>
-</scripts>

@@ -1,9 +1,0 @@
-<div id="hide-search-form">
-$S_SYSTEM_VIEW_INTERNAL<div class="col-sm-3" id="search-div">
-<div id="search-form-div"><form action="http://www.upstate.edu/intra/search/index.php" id="search-form" method="get" name="search-form"><label class="hidden" for="terms"><span>Search</span></label>
-<div id="web-people-radio"><input checked="checked" id="web-radio" name="tab" type="radio" value="web"/><label for="web-radio">Web Pages</label> <span id="web-people-radio-pad"></span> <input id="people-radio" name="tab" type="radio" value="people"/> <label for="people-radio">People</label></div>
-<input name="sp" type="hidden" value="0"/> <input name="sy" type="hidden" value="0"/> <input name="ul" type="hidden" value="http://www.upstate.edu/"/> <input name="ul" type="hidden" value="http://library.upstate.edu/"/> <input name="o" type="hidden" value="long"/> <input type="hidden" value="submit"/> <input class="searchbox" id="terms" name="q" onblur="if(this.value=='') this.value='Search Upstate\'s Intranet';" onfocus="if(this.value=='Search Upstate\'s Intranet') this.value='';" size="30" type="text" value="Search Upstate's Intranet"/><!--<a href="http://www.upstate.edu/ipage/intra/search/index.php"><img alt="Search button" height="24" id="search-button" src="site://Upstate-Globals/assets/images/search.gif?path=site://Upstate-Globals/assets/images/search.gif" width="24"/></a>--></form></div>
-</div>$E_SYSTEM_VIEW_INTERNAL$S_SYSTEM_VIEW_EXTERNAL
-$S_PHP_PASSTHROUGH
-createSearchForm( $localflag );
-$E_PHP_PASSTHROUGH$E_SYSTEM_VIEW_EXTERNAL</div>

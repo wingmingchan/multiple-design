@@ -1,6 +1,0 @@
-<div id="global-menu-search-div">
-<div class="container" id="global-menu-search-container">
-#chanwImportScript( "formats/${design_namespace}" $master_site_name "global-menu" )
-#chanwImportScript( "formats/${design_namespace}" $master_site_name "search" )
-</div>
-</div>

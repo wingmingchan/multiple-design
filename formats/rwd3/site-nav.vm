@@ -1,2 +1,0 @@
-#chanwImportScript( "formats/${design_namespace}" $master_site_name "site-nav-macro" )
-#createSiteNav( false ) ## not using external site nav

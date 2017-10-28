@@ -1,8 +1,0 @@
-<scripts>
-    <code>
-#chanwSetVariable( "${design_namespace}SiteThemeCSS"  "" )
-#chanwSetVariable( "${design_namespace}SiteLogoFormatName"     "logo" )
-#chanwSetVariable( "${design_namespace}FolderNavOnTopLeft"     false )
-#chanwSetVariable( "${design_namespace}FolderNavOnBottomRight" true )
-    </code>
-</scripts>

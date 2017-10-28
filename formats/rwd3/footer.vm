@@ -1,4 +1,0 @@
-<footer id="footer" role="contentinfo">
-#chanwImportScript( "formats/${design_namespace}" $master_site_name "footer-content" )
-#chanwImportScript( "formats/${design_namespace}" $master_site_name "last-modified" )
-</footer>

@@ -1,4 +1,0 @@
-<div id="copyright">All contents copyright © 1988-${S_SYSTEM_VIEW_INTERNAL}${chanwCurrentYearInt}$E_SYSTEM_VIEW_INTERNAL
-$S_SYSTEM_VIEW_EXTERNAL$S_PHP_PASSTHROUGH $date = getdate(); $thisyear = $date['year']; echo "$thisyear, "; $E_PHP_PASSTHROUGH$E_SYSTEM_VIEW_EXTERNAL
-<a class="footer" href="http://www.upstate.edu/">SUNY Upstate Medical University</a>, Syracuse, NY<br />
-$S_SYSTEM_VIEW_EXTERNAL$S_PHP_PASSTHROUGH createPolicyLinks(); $E_PHP_PASSTHROUGH${E_SYSTEM_VIEW_EXTERNAL}</div>
