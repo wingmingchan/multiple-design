@@ -6,7 +6,7 @@ _wing.csse last modified: 10/27/2017
 
 All the code I can post used in the implementation of the tree-driven multiple-design master site can be found here. What are not included here are the library Velocity formats, which are posted under https://github.com/wingmingchan/velocity
 
-_wing: The site containing the Velocity library and a few more assets of other type<br />
+_wing: The site containing the Velocity library and a few more assets of other types<br />
 
 <h3>Documentation</h3>
 <ul>
