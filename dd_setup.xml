@@ -1,0 +1,63 @@
+<system-data-structure>
+	<!--#*doc
+<documentation><div id="introduction"><h2>Introduction</h2><p>This data definition defines a setup block. The set of identifiers:</p><pre>
+array(17) {
+  [0]=>
+  string(11) "setup-group"
+  [1]=>
+  string(19) "setup-group;contact"
+  [2]=>
+  string(37) "setup-group;contact;siteContactPerson"
+  [3]=>
+  string(36) "setup-group;contact;siteContactEmail"
+  [4]=>
+  string(20) "setup-group;siteInfo"
+  [5]=>
+  string(36) "setup-group;siteInfo;siteTitleString"
+  [6]=>
+  string(41) "setup-group;siteInfo;mul-pagesWithoutH1;0"
+  [7]=>
+  string(50) "setup-group;siteInfo;mul-pagesWithoutBreadcrumbs;0"
+  [8]=>
+  string(33) "setup-group;siteInfo;siteThemeCSS"
+  [9]=>
+  string(37) "setup-group;siteInfo;siteLogoSiteName"
+  [10]=>
+  string(39) "setup-group;siteInfo;siteLogoFolderPath"
+  [11]=>
+  string(39) "setup-group;siteInfo;siteLogoFormatName"
+  [12]=>
+  string(33) "setup-group;siteInfo;siteLocalCSS"
+  [13]=>
+  string(20) "setup-group;advanced"
+  [14]=>
+  string(38) "setup-group;advanced;siteNavHomeString"
+  [15]=>
+  string(47) "setup-group;advanced;breadcrumbsSeparatorString"
+  [16]=>
+  string(42) "setup-group;advanced;breadcrumbsHomeString"
+}
+</pre></div></documentation>
+doc*###-->
+	<group identifier="setup-group" label="Setup">
+		<group collapsed="true" identifier="contact" label="Contact Information">
+			<text help-text="Enter the full name to be displayed in the footer" identifier="siteContactPerson" label="Contact Person Name"/>
+			<text help-text="Enter the first part of the email; e.g. doej" identifier="siteContactEmail" label="Contact Person Email"/>
+		</group>
+		<group collapsed="true" identifier="siteInfo" label="Site Information">
+			<text help-text="Site Title" identifier="siteTitleString" label="Site Title"/>
+			<asset identifier="mul-pagesWithoutH1" label="Pages without H1" multiple="true" type="page"/>
+			<asset identifier="mul-pagesWithoutBreadcrumbs" label="Pages without Breadcrumbs" multiple="true" type="page"/>
+			<asset identifier="siteThemeCSS" label="Site Theme CSS" type="file"/>
+			<text help-text="The site name where the logo format resides; defaulted to _brisk" identifier="siteLogoSiteName" label="Logo Site Name"/>
+			<text help-text="The path of the folder containing the format; defaulted to site://Upstate-Globals/assets/css" identifier="siteLogoFolderPath" label="Logo Parent Folder Path"/>
+			<text help-text="The name of the format" identifier="siteLogoFormatName" label="Logo Format Name"/>
+			<asset identifier="siteLocalCSS" label="Local CSS" type="file"/>
+		</group>
+		<group collapsed="true" identifier="advanced" label="Advanced Settings">
+			<text identifier="siteNavHomeString" label="Site Nav Home String"/>
+			<text help-text="A character like &gt;" identifier="breadcrumbsSeparatorString" label="Breadcrumbs Separator"/>
+			<text identifier="breadcrumbsHomeString" label="Breadcrumbs Home String"/>
+		</group>
+	</group>
+</system-data-structure>
