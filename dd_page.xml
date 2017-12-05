@@ -1,0 +1,73 @@
+<system-data-structure>
+	<!--#*doc
+<documentation><h2>Introduction</h2><p>This data definition defines a page.</p><h2>Content Width</h2><p>Concerning widths for choosers in various groups:</p><ul><li>Pre Main Content: full width</li><li>Main Content: all contents are in a container with left and right gutters</li><li>Post Main Content: full width</li></ul><h2>Settings</h2><h2>Identifiers</h2><p>The set of identifiers:</p><pre>
+array(18) {
+  [0]=>
+  string(14) "pre-main-group"
+  [1]=>
+  string(37) "pre-main-group;mul-pre-main-chooser;0"
+  [2]=>
+  string(10) "main-group"
+  [3]=>
+  string(31) "main-group;mul-pre-h1-chooser;0"
+  [4]=>
+  string(13) "main-group;h1"
+  [5]=>
+  string(32) "main-group;mul-post-h1-chooser;0"
+  [6]=>
+  string(58) "main-group;float-pre-content-blocks-around-wysiwyg-content"
+  [7]=>
+  string(18) "main-group;wysiwyg"
+  [8]=>
+  string(37) "main-group;mul-post-wysiwyg-chooser;0"
+  [9]=>
+  string(15) "post-main-group"
+  [10]=>
+  string(39) "post-main-group;mul-post-main-chooser;0"
+  [11]=>
+  string(9) "top-group"
+  [12]=>
+  string(33) "top-group;mul-top-group-chooser;0"
+  [13]=>
+  string(12) "bottom-group"
+  [14]=>
+  string(39) "bottom-group;mul-bottom-group-chooser;0"
+  [15]=>
+  string(11) "admin-group"
+  [16]=>
+  string(33) "admin-group;master-level-override"
+  [17]=>
+  string(31) "admin-group;page-level-override"
+}
+</pre></documentation>
+doc*###-->
+	<!-- pre main -->
+	<group identifier="pre-main-group" label="Pre Main Content">
+		<asset help-text="Block contents, by default, will be full width." identifier="mul-pre-main-chooser" label="Pre-main Blocks" multiple="true" render-content-depth="5" type="block"/>
+	</group>
+	<!-- main -->
+	<group identifier="main-group" label="Main Content">
+		<asset identifier="mul-pre-h1-chooser" label="Above-the-H1 Blocks" multiple="true" render-content-depth="5" type="block"/>
+		<text identifier="h1" label="H1 Page Title" required="true"/>
+		<asset identifier="mul-post-h1-chooser" label="Pre-content Blocks" multiple="true" render-content-depth="5" type="block"/>
+		<text identifier="float-pre-content-blocks-around-wysiwyg-content" label="Float Content around Pre-content Blocks?" type="checkbox">
+			<checkbox-item value="yes"/>
+		</text>
+		<text identifier="wysiwyg" label="Content" wysiwyg="true"/>
+		<asset identifier="mul-post-wysiwyg-chooser" label="Content Blocks" multiple="true" render-content-depth="5" type="block"/>
+	</group>
+	<!-- post main -->
+	<group collapsed="true" identifier="post-main-group" label="Post Main Content">
+		<asset identifier="mul-post-main-chooser" label="Post-main Blocks" multiple="true" render-content-depth="5" type="block"/>
+	</group>
+	<group collapsed="true" identifier="top-group" label="Top Row/Left Column Group">
+		<asset identifier="mul-top-group-chooser" label="Top/Left Blocks" multiple="true" render-content-depth="5" type="block"/>
+	</group>
+	<group collapsed="true" identifier="bottom-group" label="Bottom Row/Right Column Group">
+		<asset identifier="mul-bottom-group-chooser" label="Bottom/Right Blocks" multiple="true" render-content-depth="5" type="block"/>
+	</group>
+	<group collapsed="true" identifier="admin-group" label="Admin Group" restrict-to-groups="Administrators,CWT-Designers,library-administrator">
+		<asset help-text="Attach a script block here to override the design." identifier="master-level-override" label="Master Level Override" render-content-depth="5" restrict-to-groups="Administrators,library-administrator" type="block"/>
+		<asset help-text="Attach a script block here to override the site and folder settings." identifier="page-level-override" label="Page Level Override" render-content-depth="5" restrict-to-groups="Administrators,library-administrator" type="block"/>
+	</group>
+</system-data-structure>
