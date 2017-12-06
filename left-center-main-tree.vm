@@ -1,0 +1,12 @@
+#chanwCreateNode( {
+    $TREE_NODE_NAME : "main",
+    $TREE_NODE_START_TAG : "<${wrapperElement} ${wrapperIdAttribute} class=""${containerClass}""><div class=""row"">",
+    $TREE_NODE_END_TAG : "</div></${wrapperElement}>"
+} )
+
+## possible values for $leftClass: col-md-3, col-md-4, etc.
+##{ $TREE_NODE_NAME : "h1", $TREE_NODE_CODE : '#generateH1' },
+#chanwAddChildren( $chanwObjectNodeMap[ "main" ] [
+    { $TREE_NODE_NAME : "topElement",    $TREE_NODE_CODE : '#outputPageElement(''topElement'')' },
+    { $TREE_NODE_NAME : "middleElement", $TREE_NODE_CODE : '#outputPageElement(''middleElement'')' }
+] )
