@@ -89,25 +89,9 @@
     #set( $siteConfigMap[ 'middleCenterWithNoBottomRightCssClass' ] = "col-md-9" )
     #set( $siteConfigMap[ 'footerElement' ]                         = "footer" )
     #set( $siteConfigMap[ 'pageCssClass' ]                          = "bg-white" )
-    
-    #set( $tree_name = "left-center" )
 ##
-    #*doc
-        《/stepcode》
-    《/step》
-    《step id=“87g3g83bguier7823bf”》
-        《title》
-            Load site/folder specific formats named "setup"
-        《/title》
-        《content》
-            Some sites are still overwriting 《code》$siteConfigMap《/code》
-            values using formats which directly alter this variable.
-        《/content》
-        《content》
-            This methodology will be phased out in favor of a block-based approach.
-        《/content》
-        《stepcode》
-    doc*###
+    ## the default layout of this design
+    #set( $tree_name = "left-center" )
 ##
     #********************************
      *
