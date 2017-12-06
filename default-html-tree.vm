@@ -1,0 +1,29 @@
+#chanwCreateNode( {
+    $TREE_NODE_NAME :      "html",
+    $TREE_NODE_START_TAG : "<html $!siteConfigMap['htmlAttributes']>",
+    $TREE_NODE_END_TAG :   "</html>",
+    $TREE_NODE_CODE :      '#initialize'
+} )
+#chanwAddChildren( $chanwObjectNodeMap[ "html" ] [ 
+    { $TREE_NODE_NAME : "head", $TREE_NODE_START_TAG : "<head $!siteConfigMap['headAttributes']>",  $TREE_NODE_END_TAG : "</head>" },
+    { $TREE_NODE_NAME : "body", $TREE_NODE_START_TAG : "<body $!siteConfigMap['bodyAttributes']>",  $TREE_NODE_END_TAG : "</body>" }
+] )
+#chanwAddChildren( $chanwObjectNodeMap[ "head" ] [
+    { $TREE_NODE_NAME : "meta", $TREE_NODE_CODE :  '#outputPageElement(''meta'')' }, 
+    { $TREE_NODE_NAME : "title", $TREE_NODE_CODE : '#outputPageElement(''title'')' }, 
+    { $TREE_NODE_NAME : "link", $TREE_NODE_CODE :  '#outputPageElement(''link'')' }
+] )
+#chanwAddChildren( $chanwObjectNodeMap[ "body" ] [
+    { $TREE_NODE_NAME : "header",      $TREE_NODE_CODE : '#outputPageElement(''header'')' },
+    { $TREE_NODE_NAME : "siteNav",     $TREE_NODE_CODE : '#outputPageElement(''siteNavForPageRender'')' },
+    { $TREE_NODE_NAME : "breadcrumbs", $TREE_NODE_CODE : '#outputPageElement(''breadcrumbs'')' },
+    { $TREE_NODE_NAME : "preMain",     $TREE_NODE_CODE : '#outputPageElement(''preMain'')' },
+    { $TREE_NODE_NAME : "postMain",    $TREE_NODE_CODE : '#outputPageElement(''postMain'')' },
+    { $TREE_NODE_NAME : "footer",      $TREE_NODE_CODE : '#outputPageElement(''footer'')' },
+    { $TREE_NODE_NAME : "script",      $TREE_NODE_CODE : '#outputPageElement(''script'')' },
+    { $TREE_NODE_NAME : "cd-top",      $TREE_NODE_TEXT : "<a class=""cd-top"" href=""#0"">Top</a>" }
+] )
+
+#import( "site://_brisk/app/scaffolds/default-main-tree" )
+#set( $postMainIndex = $chanwObjectNodeMap[ "body" ].getIndex( $chanwObjectNodeMap[ "postMain" ] ) )
+#set( $void = $chanwObjectNodeMap[ "body" ].insert( $chanwObjectNodeMap[ "main" ], $postMainIndex ) ) ## always before postMain
