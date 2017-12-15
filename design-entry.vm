@@ -1,0 +1,291 @@
+#*doc
+《documentationautoflow》
+《step id=“designEntryEntryPoint”》
+    《title》rwd4Tree entry point《/title》
+    《autostep》《/autostep》
+《/step》
+《step id=“designEntryMasterLevelOverride”》
+    《title》
+        Process master-level-override chooser if a block is attached to it
+    《/title》
+    《content》
+A script block can be attached to the master-level-override chooser 
+in the Admin Group section of a page. Typically this script block 
+changes the value of 《code》$design_namespace《/code》 
+to a different design so this format will load that design 
+and then 《code》#stop《/code》 because it assumes that the 
+other design is taking over 100% from this point forward.
+    《/content》
+    《stepcode》
+doc*###
+##
+## get page contents
+#set( $page = $_XPathTool.selectNodes( $contentRoot, "calling-page/system-page" )[ 0 ] )
+## process page XML
+#chanwProcessSystemPage( $page )
+## get page data structure
+#set( $pageSystemDataStructure = $_XPathTool.selectNodes( $page, "system-data-structure" )[ 0 ] )
+##
+## process master-level chooser, overriding the variable $design_namespace
+#set( $masterLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "master-level-override" ).getChild( "content" ) )
+#if( $masterLevelOverrideContent.Class )
+    #evaluate( $masterLevelOverrideContent.Value )
+#end
+##
+## We are in this format because $design_namespace was originally set to rwd4Tree
+## If we are not continuing with rwd4Tree, then load the other design's base loader and stop processing
+#if( $design_namespace != 'rwd4Tree' )
+    #if( !$_PropertyTool.isNull( $site_designs[ $design_namespace ] ) )
+        ## Load up the entry point for this design
+        #chanwImportScript(
+            $site_designs[ $design_namespace ][ $BRISK_BASE_LOADER ][ $BRISK_FOLDER_PATH ]
+            $site_designs[ $design_namespace ][ $BRISK_BASE_LOADER ][ $BRISK_SITE_NAME ]
+            $site_designs[ $design_namespace ][ $BRISK_BASE_LOADER ][ $BRISK_FILE_NAME ]
+        )
+        #drulykgCleanupAndStop
+    #end
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadBaseAssets”》
+    《title》
+        Load the base assets required by this design
+    《/title》
+    《content》
+This design has global CSS and JS assets which are 
+required regardless of the design.
+    《/content》
+    《goto》pageElementMacrosAddBaseAssets《/goto》
+    《stepcode》
+doc*###
+##
+#import( 'app/components/page_element_macros' )
+#addBaseAssets()
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadFormatsOfLibrary”》
+    《title》
+        Load formats required by the Library sites
+    《/title》
+    《content》
+If we are processing a page from one of the 
+SUNY Upstate Library sites then recursively import 
+their folder of formats.
+    《/content》
+    《stepcode》
+doc*###
+##
+#if(
+    $currentPageSiteName == 'librarydev' ||
+    $currentPageSiteName == 'library' ||
+    $currentPageSiteName == 'library-archives'
+)
+    #if( $currentPage.Name == 'drulykg-testing' )
+        #drulykgImportFolderFormats( '_cascade/formats2' 'librarydev' {'recursive': true} )
+    #else
+    ## Loop through and import all of the library's formats
+    #import( 'site://librarydev/_cascade/formats/custom_macros' )
+    #end
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadDesignConstants”》
+    《title》
+        Load rwd4Tree constants
+    《/title》
+    《goto》rwd4TreeConstantsSetConstants《/goto》
+    《stepcode》
+doc*###
+##
+#chanwImportScript( "${_brisk[$BRISK_SITE_DESIGNS_FOLDER_PATH_NTS]}/${design_namespace}" $_brisk[ $BRISK_SITE_NAME ] "${design_namespace}_constants" )
+#setRwd4TreeConstants()
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryProcessSiteSetup”》
+    《title》
+        Load setup formats and blocks which alter 《code》$siteConfigMap《/code》
+    《/title》
+    《goto》setupProcessSiteSetup《/goto》
+    《stepcode》
+doc*###
+## Load the design namespace's setup file if it exists
+## The design's setup file contains code to deal with
+## site/folder-specific setup files needed by setup
+#chanwImportScript( "${_brisk[$BRISK_SITE_DESIGNS_FOLDER_PATH_NTS]}/${design_namespace}" $_brisk[ $BRISK_SITE_NAME ] $APP_SETUP_FORMAT_NAME )
+#processSiteSetup()
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadBlockProcessingFormats”》
+    《title》
+        Load all formats used to process blocks
+    《/title》
+    《stepcode》
+doc*###
+## Import all block-processing formats
+#drulykgImportFolderFormats( 'app/components/block_macros' '_brisk' { 'recursive' : true } )
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadCustomMacros”》
+    《title》
+        Load the format containing custom macros
+    《/title》
+    《stepcode》
+doc*###
+## app custom_macros
+#chanwImportScript( $APP_COMPONENTS_FOLDER_PATH $_brisk[ $BRISK_SITE_NAME ] $APP_CUSTOM_MACROS_FORMAT_NAME )
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadCSSAndJs”》
+    《title》
+        Load CSS and JS from 《code》$siteConfigMap《/code》
+    《/title》
+    《content》
+Support site-specific CSS and JS file includes which 
+may have been defined in the 《goto》setupProcessSiteSetup《/goto》 
+step.
+    《/content》
+    《stepcode》
+doc*###
+##
+#********************************
+ *
+ * Explicitly use 'assetPosition': 2
+ * to control their load order
+ *
+ *###
+## Check if any sitewide CSS was declared in the setup files
+## Site theme CSS
+#if( $siteConfigMap[ 'siteThemeCSS' ].Class.Name && $siteConfigMap[ 'siteThemeCSS' ] != "" )
+    #if( $siteConfigMap[ 'siteThemeCSS' ].startsWith( 'site://' ) )
+        #drulykgHtmlAssetAdd( $siteConfigMap[ 'siteThemeCSS' ] { 'assetPosition' : 2 } )
+    #else
+        #drulykgHtmlAssetAdd( "site://Upstate-Globals/${siteConfigMap[ 'siteThemeCSS' ]}" { 'assetPosition' : 2 } )
+    #end
+#end
+##
+## Local CSS
+#if( $siteConfigMap[ 'siteLocalCSS' ].Class.Name && $siteConfigMap[ 'siteLocalCSS' ] != "" )
+    #if( $siteConfigMap[ 'siteLocalCSS' ].startsWith( 'site://' ) )
+        #drulykgHtmlAssetAdd( $siteConfigMap[ 'siteLocalCSS' ] { 'assetPosition' : 2 } )
+    #else
+        #drulykgHtmlAssetAdd( "site://${currentPageSiteName}/${siteConfigMap[ 'siteLocalCSS' ]}" { 'assetPosition' : 2 } )
+    #end
+#end
+##
+## Check if any sitewide JS was declared in the setup files
+## Site theme JS
+#if( $siteConfigMap[ 'siteThemeJS' ].Class.Name && $siteConfigMap[ 'siteThemeJS' ] != "" )
+    #if( $siteConfigMap[ 'siteThemeJS' ].startsWith( 'site://' ) )
+        #drulykgHtmlAssetAdd( $siteConfigMap[ 'siteThemeJS' ] { 'assetPosition' : 2 } )
+    #else
+        #drulykgHtmlAssetAdd( "site://Upstate-Globals/${siteConfigMap[ 'siteThemeJS' ]}" { 'assetPosition' : 2 } )
+    #end
+#end
+##
+## Local JS
+#if( $siteConfigMap[ 'siteLocalJS' ].Class.Name && $siteConfigMap[ 'siteLocalJS' ] != "" )
+    #if( $siteConfigMap[ 'siteLocalJS' ].startsWith( 'site://' ) )
+        #drulykgHtmlAssetAdd( $siteConfigMap[ 'siteLocalJS' ] { 'assetPosition' : 2 } )
+    #else
+        #drulykgHtmlAssetAdd( "site://${currentPageSiteName}/${siteConfigMap[ 'siteLocalJS' ]}" { 'assetPosition' : 2 } )
+    #end
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryProcessPageLevelOverride”》
+    《title》
+Process page-level-override chooser
+    《/title》
+    《content》
+Process page-level-override chooser to bypass the execution 
+of the default tree or custom code specific for the page
+    《/content》
+    《stepcode》
+doc*###
+## process page-level override for locally defined tree or code
+#upstateProcessBlockChooser( $pageSystemDataStructure "admin-group/page-level-override" '<div id="hide-page-level-override">' '</div>' ) 
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryOutputPageContent”》
+    《title》
+Output page content
+    《/title》
+    《content》
+Output the page content depending on whether either 《code》$executeLocallyDefinedCode《/code》 
+or 《code》$importLocallyDefinedTree《/code》 is defined:
+《ul》
+《li》If 《code》$executeLocallyDefinedCode《/code》 is defined, then only this code is executed《/li》
+《li》Else if 《code》$importLocallyDefinedTree《/code》 is defined, then the variables 
+related to 《code》pre-main《/code》, 《code》main《/code》 and 《code》post-main《/code》 
+will be resolved and the locally defined tree displayed《/li》
+《li》Else the 《goto》rwd4TreeDesignTree《/goto》 will be displayed《/li》
+《/ul》
+    《/content》
+    《stepcode》
+doc*###
+## output contents, depending on tree or code
+## resolve variables embedded in the tree
+#getTopMiddleBottomInfo
+#resolveRowColumnCssClass
+#if( !$executeLocallyDefinedCode.Class )
+##
+    #if( !$importLocallyDefinedTree.Class )
+        ## $tree_name is defined in setup
+        ## processSiteSetup reads in site or folder specific $tree_name
+        #import( "app/scaffolds/rwd4Tree/design-tree" )
+        ## page-level $tree_name
+        #resolvePageTreeName
+##
+        ## special case
+        #if( $tree_name != "inherited" )
+            #set( $mainIndex = $chanwObjectNodeMap[ "body" ].getIndex( $chanwObjectNodeMap[ "main" ] ) )
+            #set( $void = $chanwObjectNodeMap[ "body" ].remove( $chanwObjectNodeMap[ "main" ] ) )
+            #chanwImportScript( $APP_SCAFFOLDS_FOLDER_PATH $BRISK[ 'SITE_NAME' ] "${tree_name}-main-tree" )
+            #set( $void = $chanwObjectNodeMap[ "body" ].insert( $chanwObjectNodeMap[ "main" ], $mainIndex ) )
+            ## innermain
+            #import( "site://_brisk/app/scaffolds/innermain-tree" )
+            #set( $void = $chanwObjectNodeMap[ "middleElement" ].add( $chanwObjectNodeMap[ "innermain" ] ) )
+        #end
+#*
+$S_PRE#chanwDisplayTree( $chanwObjectNodeMap[ 'html' ] )$E_PRE
+*#
+        #set( $markup = "#chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'html' ] )" )
+        #if( $siteConfigMap[ 'displayHtmlCode' ] == true )
+            $S_PRE$_EscapeTool.xml( $markup )$E_PRE
+        #else
+            $markup
+        #end
+    #else
+        $importLocallyDefinedTree
+    #end
+#else
+    $executeLocallyDefinedCode
+#end
+##
+## Cleanup any resources which might be open and stop
+## because we are done anyways
+#drulykgCleanupAndStop
+##
+#*doc
+    《/stepcode》
+《/step》
+《/documentationautoflow》
+doc*###
