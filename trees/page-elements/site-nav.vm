@@ -1,0 +1,31 @@
+<div>
+<nav>
+    <div class="navbar navbar-default hidden-xs hidden-sm suny-upstate-mega-menu classic-edition" role="navigation">
+        <div class="container"><div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+<li class="dropdown"><a href="/about/index.php">Home</a></li>
+<li class="separator"></li>
+<li class="dropdown"><a href="/about/mission.php">Our Mission, Vision &amp; Values</a></li>
+<li class="separator"></li>
+<li class="dropdown"><a href="http://www.upstate.edu/president/">President's Office</a></li>
+<li class="separator"></li>
+<li class="dropdown"><a href="http://www.upstate.edu/strategicplan/">Strategic Plan</a></li>
+<li class="separator"></li>
+<li class="dropdown"><a href="/about/leadership.php">Leadership</a></li>
+<li class="separator"></li>
+<li class="dropdown"><a href="/about/join.php">Join Upstate</a></li>
+<li class="separator"></li>
+<li class="dropdown"><a href="/about/contact.php">Contact</a></li>
+</ul></div></div></div></nav><!-- Mobile Mega Menu --><nav class="main-nav hidden-md hidden-lg" role="navigation"><!-- Mobile menu toggle button (hamburger/x icon) -->
+<input id="main-menu-state" type="checkbox"><label class="main-menu-btn" for="main-menu-state"><span class="main-menu-btn-icon"></span> Toggle main menu visibility</label></input><!-- /Mobile menu toggle button (hamburger/x icon) -->
+<h2 class="nav-brand"><a href="/about/index.php">About Upstate</a></h2>
+<!-- Mobile Navigation Stuff --><ul class="sm sm-blue" id="main-menu">
+<li><a href="/about/mission.php">Our Mission, Vision &amp; Values</a></li>
+<li><a href="http://www.upstate.edu/president/">President's Office</a></li>
+<li><a href="http://www.upstate.edu/strategicplan/">Strategic Plan</a></li>
+<li><a href="/about/leadership.php">Leadership</a></li>
+<li><a href="/about/join.php">Join Upstate</a></li>
+<li><a href="/about/contact.php">Contact</a></li>
+</ul>
+<!-- /Mobile Navigation Stuff --></nav><!-- /Mobile Mega Menu -->
+</div>
