@@ -1,0 +1,109 @@
+<footer id="footer" role="contentinfo">
+<div class="container" id="footer-content">
+
+
+    <div class="nav-accordion clearfix">
+<h2 class="footer-nav-more text-gray bold col-sm-12">More Upstate Information</h2>
+        
+<div>
+        
+    <div class="col-sm-3 marginbottom9">
+        <div class="footer-links-header">Upstate Medical University</div> 
+        <a class="footer" href="http://www.upstate.edu/about/leadership.php">Upstate Leadership</a><br /> 
+        <a class="footer" href="http://www.upstate.edu/about/mission.php">Mission, Vision, Values</a><br /> 
+        <a class="footer" href="http://www.upstate.edu/com/">College of Medicine</a><br /> 
+        <a class="footer" href="http://www.upstate.edu/con/">College of Nursing</a><br /> 
+        <a class="footer" href="http://www.upstate.edu/chp/">College of Health Professions</a><br /> 
+        <a class="footer" href="http://www.upstate.edu/grad/">College of Graduate Studies</a><br /> 
+        <a class="footer" href="http://library.upstate.edu/">Health Sciences Library</a><br />
+        <a class="footer" href="http://www.upstate.edu/education/alumni-friends.php">Alumni &amp; Friends</a><br /> 
+        <a class="footer" href="http://www.upstate.edu/about/visitors/index.php">Visitor's Guide</a>
+    </div>
+    
+    <div class="col-sm-3 marginbottom9">
+        <div class="footer-links-header">Patient Care</div> 
+        <a class="footer" href="http://www.upstate.edu/hospital/">Upstate University Hospital</a><br />
+        <a class="footer" href="http://www.upstate.edu/gch/">Upstate Golisano Children's Hospital</a><br />
+        <a class="footer" href="http://www.upstate.edu/community/">Upstate University Hospital at Community</a><br /> 
+        <a class="footer" href="http://www.upstate.edu/cancer/">Upstate Cancer Center</a><br /> 
+        <a class="footer" href="http://www.upstate.edu/whn/">Women's Health</a><br />
+        <a class="footer" href="http://www.upstate.edu/healthcare/providers/">Find a Doctor</a><br />
+        <a class="footer" href="http://www.upstate.edu/healthcare/mychart.php">MyChart</a><br />
+            </div>
+
+    
+    <div class="col-sm-3 marginbottom9">
+        <div class="footer-links-header">More Links</div>
+        <a class="footer" href="http://www.upstate.edu/news/">Upstate News</a><br />
+        <a class="footer" href="http://www.upstate.edu/about/">About Upstate</a><br />
+        <a class="footer" href="http://www.upstate.edu/directions/">Maps &amp; Directions</a><br />
+        <a class="footer" href="http://www.upstate.edu/webcal/main.php">Upstate Calendars</a><br />
+        <a class="footer" href="http://www.upstate.edu/search/index.php?tab=people">Search Upstate</a><br />
+        <a class="footer" href="http://www.upstate.edu/hr/jobs/">Jobs</a><br /><a class="footer" href="http://www.upstate.edu/volunteers/">Volunteer</a><br />        <a class="footer" href="http://www.upstatefoundation.org">Give to Upstate</a><br />
+        <a class="footer" href="http://www.upstate.edu/about/contact.php">Contact</a><br />
+        <a class="footer" href="http://libproxy.upstate.edu/login?url=http://www.upstate.edu/ipage/intra/">iPage</a>
+    </div>
+
+    <div class="col-sm-3 marginbottom9">
+        <div class="footer-links-header">Social Media</div>
+        <div class="padbottom9">
+            <a class="footer" href="http://www.upstate.edu/publicaffairs/socialmedia.php">Upstate Social Media</a>
+        </div>
+        <div class="clearfix">
+            <div class="leftobject width65px">
+                <a href="https://www.facebook.com/UpstateMedicalUniversity ">
+                    <img src="/assets/images/facebook-rwd.gif" class="img-responsive" alt="Upstate on Facebook"/>
+                </a>
+            </div>
+            <div class="leftobject width65px">
+                <a href="https://twitter.com/UpstateNews">
+                    <img src="/assets/images/twitter-rwd.gif" class="img-responsive" alt="Upstate on Twitter"/>
+                </a>
+            </div> 
+        </div>
+        <div class="padbottom9 padtop9 clearfix clr">
+            <div class="leftobject width65px">
+                <a href="https://www.youtube.com/user/UpstateMedicalUniv">
+                    <img src="/assets/images/youtube-rwd.gif" class="img-responsive" alt="Upstate on Youtube"/>
+                </a>
+            </div>
+            <div class="leftobject width65px">
+                <a href="https://www.instagram.com/upstatemedical/">
+                    <img src="/assets/images/icons/instagram-64.gif" class="img-responsive" alt="Upstate on Instagram"/>
+                </a>
+            </div>
+        </div>
+        <div class="padbottom9 padtop9 clearfix clr">
+            <div class="leftobject width65px">
+                <a href="https://whatsupatupstate.wordpress.com/">
+                    <img src="/assets/images/wordpress-rwd.gif" class="img-responsive" alt="What's up at Upstate"/>
+                </a>
+            </div>  
+          <div class="leftobject width65px">
+                <a href="https://www.linkedin.com/school/21681/">
+                    <img src="/assets/images/icons/linkedin-64.gif" class="img-responsive" alt="Upstate on LinkedIn"/>
+                </a>
+            </div>
+        </div>
+            <div class="pad5"></div>
+         
+    </div>
+</div>
+<div class="clr"></div>
+
+
+    </div>
+<hr class="width100 thin text_lightgray bg_lightgray"/>
+    
+</div><div id="last-modified">
+<div id="copyright">All contents copyright © 1988-
+2018, <a class="footer" href="http://www.upstate.edu/">SUNY Upstate Medical University</a>, Syracuse, NY<br/>
+<div class="centerobject">
+	<a href="http://www.upstate.edu/privacy.php">Privacy Policy</a> | <a href="http://www.upstate.edu/hospital/patients/admitting/privacypractices.php">Notice of Privacy Practices</a> | <a href="http://www.upstate.edu/emergencyinfo/">Emergency Information</a> | <a href="http://www.upstate.edu/foil/">Freedom of Information</a> | <a href="https://get.adobe.com/reader/">Acrobat Reader</a> | 
+		<a href="http://www.upstate.edu/healthcare/nondiscrimination.php">Non-discrimination Statement</a>
+</div></div>
+
+<div id="contact">Last Modified:
+December 04, 2017.
+ Contact <a href='http://www.upstate.edu/email_form.php?name=Wing+Ming+Chan&amp;to=Y2hhbndAdXBzdGF0ZS5lZHU=' class='footer'>Wing Ming Chan</a> with questions about the content of this page.</div>
+</div></footer>
