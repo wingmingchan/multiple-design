@@ -1,0 +1,3 @@
+<div class="col-md-3" id="left-menu-div">
+<nav class="hidden-xs hidden-sm" id="left-menu"><ul><li id="menu-label"><a href="index.php">Formats</a></li><li><a href="velocity/index.php">Velocity</a></li><li><a href="xslt/index.php">XSLT</a></li><li><a href="http://www.upstate.edu/cascade-admin/index.php">Cascade Administration</a></li></ul>
+</nav></div>
