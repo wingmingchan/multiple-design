@@ -1,0 +1,3 @@
+#chanwAddChildren( $chanwObjectNodeMap[ "middleElement" ] [
+    { $TREE_NODE_NAME : "innermain" }
+] )
