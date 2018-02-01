@@ -1,0 +1,10 @@
+#set( $mapping = {
+    "create-html"                 : "site://_tree/_cascade/formats/tree-components/html",
+    "add-head-children"           : "site://_tree/_cascade/formats/tree-components/head-children",
+    "add-body-children"           : "site://_tree/_cascade/formats/tree-components/body-children",
+    "add-main-children"           : "site://_tree/_cascade/formats/tree-components/main-top-middle",
+    "add-middle-element-children" : "site://_tree/_cascade/formats/tree-components/middle-element-children",
+    "add-innermain-children"      : "site://_tree/_cascade/formats/tree-components/innermain-children"
+} )
+
+#chanwAssembleTree( $mapping )
