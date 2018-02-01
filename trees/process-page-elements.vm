@@ -1,0 +1,36 @@
+#macro( generateBreadcrumbs )
+    #import( "site://_tree/_cascade/formats/page-elements/breadcrumbs" )
+#end
+#macro( generateCD )
+    #import( "site://_tree/_cascade/formats/page-elements/cd" )
+#end
+#macro( generateFooter )
+    #import( "site://_tree/_cascade/formats/page-elements/footer" )
+#end
+#macro( generateHeader )
+    #import( "site://_tree/_cascade/formats/page-elements/header" )
+#end
+#macro( generateH1 )
+    <h1>$h1</h1>
+#end
+#macro( generateLink )
+    #import( "site://_tree/_cascade/formats/page-elements/link" )
+#end
+#macro( generateMeta )
+    #import( "site://_tree/_cascade/formats/page-elements/meta" )
+#end
+#macro( generateScript )
+    #import( "site://_tree/_cascade/formats/page-elements/script" )
+#end
+#macro( generateSiteNav )
+    #import( "site://_tree/_cascade/formats/page-elements/site-nav" )
+#end
+#macro( generateTitle )
+    #import( "site://_tree/_cascade/formats/page-elements/title" )
+#end
+#macro( generateTopElement )
+    #import( "site://_tree/_cascade/formats/page-elements/folder-nav" )
+#end
+#macro( generateWysiwyg )
+    $wysiwyg_content
+#end
