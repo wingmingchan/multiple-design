@@ -1,0 +1,4 @@
+#chanwAddChildren( $chanwObjectNodeMap[ "innermain" ] [
+    { $TREE_NODE_NAME : "h1",                    $TREE_NODE_CODE : '#generateH1' },
+    { $TREE_NODE_NAME : "wysiwyg",               $TREE_NODE_CODE : '#generateWysiwyg' }
+] )
