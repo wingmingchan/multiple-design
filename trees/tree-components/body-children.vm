@@ -1,0 +1,12 @@
+#chanwAddChildren( $chanwObjectNodeMap[ "body" ] [
+    { $TREE_NODE_NAME : "header",      $TREE_NODE_CODE : '#generateHeader' },
+    { $TREE_NODE_NAME : "siteNav",     $TREE_NODE_CODE : '#generateSiteNav' },
+    { $TREE_NODE_NAME : "breadcrumbs", $TREE_NODE_CODE : '#generateBreadcrumbs' },
+    { $TREE_NODE_NAME : "main" },
+    { $TREE_NODE_NAME : "footer",      $TREE_NODE_CODE : '#generateFooter' },
+    { $TREE_NODE_NAME : "script",      $TREE_NODE_CODE : '#generateScript' },
+    { $TREE_NODE_NAME : "cd-top",      $TREE_NODE_CODE : '#generateCD' }
+] )
+#set( $chanwObjectNodeMap[ "main" ].UserObject[ $TREE_NODE_START_TAG ] =
+    "<${siteConfigMap['wrapperElement'].trim()} ${siteConfigMap['wrapperIdAttribute'].trim()} class=""${siteConfigMap['containerClass'].trim()}""><div class=""row"">" )
+#set( $chanwObjectNodeMap[ "main" ].UserObject[ $TREE_NODE_END_TAG ] = "</div></${siteConfigMap['wrapperElement'].trim()}>" )
