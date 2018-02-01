@@ -1,0 +1,14 @@
+<header><div class="header-container"><div class="container"><div class="row header-row"><div class="col-md-3 header-logo-div"><a class="header-logo-link" href="http://www.upstate.edu/"><img alt="Upstate Logo" src="http://www.upstate.edu/assets/images/rwd-upstate-logo.jpg"/></a></div><a class="header-site-title-link hidden-xs hidden-sm" href="index.php">Formats</a><a class="sidebar-toggle-btn" href="javascript:;"><span aria-hidden="true" class="glyphicon glyphicon-search"></span><span class="hidden-xs sidebar-menu-text">MENU</span><span aria-hidden="true" class="glyphicon glyphicon-menu-hamburger"></span></a></div></div><div class="sidebar"><div class="sidebar-wrapper" role="navigation"><div class="sidebar-header"><a class="sidebar-close-btn" href="javascript:;"><span class="glyphicon glyphicon-remove"></span> Close</a><form class="sidebar-search-form" action="http://www.upstate.edu/search/intra/index.php" method="get" name="search-form">
+  <label for="search_upstate_textbox" class="sr-only">SEARCH UPSTATE'S INTRANET</label>
+  <input class="form-control" type="text" id="search_upstate_textbox" value="SEARCH UPSTATE'S INTRANET" data-default_value="SEARCH UPSTATE'S INTRANET" name="q"/>
+</form></div><ul class="nav nav-pills nav-stacked sidebar-nav">
+<li><a href="http://www.upstate.edu/search/intra/index.php?tab=people&amp;q=">People Finder</a></li>    <li><a href="http://www.upstate.edu/">Upstate</a></li>
+    <li><a href="http://www.upstate.edu/healthcare/">Patient Care</a></li>
+    <li><a href="http://www.upstate.edu/education">Academics</a></li>
+    <li><a href="http://www.upstate.edu/research">Research</a></li>
+    <li><a href="http://www.upstate.edu/healthcare/providers/">Find a Doctor</a></li>
+    <li><a href="http://library.upstate.edu/">Library</a></li>
+    <li><a href="http://www.upstate.edu/directions">Locations</a></li>
+    <li><a href="http://www.upstate.edu/webcal/main.php">Calendar</a></li>
+    <li><a href="http://www.upstate.edu/hr/jobs">Jobs</a></li>
+    <li><a href="http://libproxy.upstate.edu/login?url=http://www.upstate.edu/ipage/intra/">iPage</a></li></ul></div></div></div></header>
