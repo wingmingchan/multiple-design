@@ -1,0 +1,7 @@
+#chanwAddChildren( $chanwObjectNodeMap[ "main" ] [
+    { $TREE_NODE_NAME : "topElement",    $TREE_NODE_CODE : '#generateTopElement' },
+    { $TREE_NODE_NAME : "middleElement",
+        $TREE_NODE_START_TAG : "<${siteConfigMap['middleElement'].trim()} ${siteConfigMap['middleIdAttribute'].trim()} class=""${siteConfigMap['middleCssClass'].trim()}"">",
+        $TREE_NODE_END_TAG   : "</${siteConfigMap['middleElement'].trim()}>"
+    }
+] )
