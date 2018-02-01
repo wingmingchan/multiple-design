@@ -1,0 +1,5 @@
+#chanwAddChildren( $chanwObjectNodeMap[ "head" ] [
+    { $TREE_NODE_NAME : "meta",   $TREE_NODE_CODE : '#generateMeta' }, 
+    { $TREE_NODE_NAME : "title",  $TREE_NODE_CODE : '#generateTitle' },
+    { $TREE_NODE_NAME : "link",   $TREE_NODE_CODE : '#generateLink' }
+] )
