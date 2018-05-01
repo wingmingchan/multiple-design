@@ -1,5 +1,7 @@
 #chanwAddChildren( $chanwObjectNodeMap[ "head" ] [
-    { $TREE_NODE_NAME : "meta",   $TREE_NODE_CODE : '#generateMeta' }, 
-    { $TREE_NODE_NAME : "title",  $TREE_NODE_CODE : '#generateTitle' },
-    { $TREE_NODE_NAME : "link",   $TREE_NODE_CODE : '#generateLink' }
+    { $TREE_NODE_NAME : "meta",   $TREE_NODE_CODE : '#outputPageElement(''meta'')' }, 
+    { $TREE_NODE_NAME : "title",  $TREE_NODE_CODE : '#outputPageElement(''title'')' },
+    { $TREE_NODE_NAME : "google", $TREE_NODE_CODE : '#outputPageElement(''googleTagManager'')' },
+    { $TREE_NODE_NAME : "link",   $TREE_NODE_CODE : '#outputPageElement(''link'')' },
+    { $TREE_NODE_NAME : "head-code" }
 ] )
