@@ -1,0 +1,10 @@
+## This format defines the three children in the row of <header>
+#chanwAddChildren( $chanwObjectNodeMap[ "header-row" ] [
+    { $TREE_NODE_NAME : "logo" },
+    { $TREE_NODE_NAME : "site-title" },
+    { $TREE_NODE_NAME : "global-nav-button" }
+] )
+## behaviors of children
+#set( $chanwObjectNodeMap[ "logo" ].UserObject[ $TREE_NODE_CODE ] =              '#outputPageElement(''logo'')' )
+#set( $chanwObjectNodeMap[ "site-title" ].UserObject[ $TREE_NODE_CODE ] =        '#outputPageElement(''siteTitle'')' )
+#set( $chanwObjectNodeMap[ "global-nav-button" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''globalNavButton'')' )
