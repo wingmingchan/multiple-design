@@ -1,4 +1,11 @@
+#* children of innermain, corresponding to fields defined in the Page data definition *#
+#if( !$chanwObjectNodeMap[ "innermain" ].Class.Name )
+#chanwCreateNode( { $TREE_NODE_NAME : "innermain" } )
+#end
 #chanwAddChildren( $chanwObjectNodeMap[ "innermain" ] [
-    { $TREE_NODE_NAME : "h1",                    $TREE_NODE_CODE : '#generateH1' },
-    { $TREE_NODE_NAME : "wysiwyg",               $TREE_NODE_CODE : '#generateWysiwyg' }
+    { $TREE_NODE_NAME : "pre-h1-choosers",       $TREE_NODE_CODE : '#outputPageElement(''preH1'')' },
+    { $TREE_NODE_NAME : "h1",                    $TREE_NODE_CODE : '#outputPageElement(''h1'')' },
+    { $TREE_NODE_NAME : "post-h1-choosers",      $TREE_NODE_CODE : '#outputPageElement(''postH1'')' },
+    { $TREE_NODE_NAME : "wysiwyg",               $TREE_NODE_CODE : '#outputPageElement(''wysiwyg'')' },
+    { $TREE_NODE_NAME : "post-wysiwyg-choosers", $TREE_NODE_CODE : '#outputPageElement(''postWysiwyg'')' }
 ] )
