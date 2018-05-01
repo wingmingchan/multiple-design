@@ -1,7 +1,21 @@
 ## This format defines the 2-column page layout (left-center)
 #if( !$chanwObjectNodeMap[ "main" ].Class.Name )
-#chanwCreateNode( { $TREE_NODE_NAME : "main" } )
+#chanwCreateNode( {
+    $TREE_NODE_NAME : "main",
+    $TREE_NODE_START_TAG : "<${siteConfigMap[ 'wrapperElement' ].trim()} ${wrapperIdAttribute} class=""${containerClass}""><div class=""row"">",
+    $TREE_NODE_END_TAG : "</div></${siteConfigMap[ 'wrapperElement' ].trim()}>"
+} )
 #end
+#if( $chanwObjectNodeMap[ "topElement" ].Class.Name )
+    #set( $void = $chanwObjectNodeMap[ "main" ].remove( $chanwObjectNodeMap[ "topElement" ] ) )
+#end
+#if( $chanwObjectNodeMap[ "middleElement" ].Class.Name )
+    #set( $void = $chanwObjectNodeMap[ "main" ].remove( $chanwObjectNodeMap[ "middleElement" ] ) )
+#end
+#if( $chanwObjectNodeMap[ "bottomElement" ].Class.Name )
+    #set( $void = $chanwObjectNodeMap[ "main" ].remove( $chanwObjectNodeMap[ "bottomElement" ] ) )
+#end
+
 #chanwAddChildren( $chanwObjectNodeMap[ "main" ] [
     { $TREE_NODE_NAME : "topElement",    $TREE_NODE_CODE : '#outputPageElement(''topElement'')' },
     { $TREE_NODE_NAME : "middleElement",
