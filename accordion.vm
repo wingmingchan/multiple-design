@@ -1,0 +1,25 @@
+#macro( processAccordionGroup $map )
+    #chanwInvokeMacro( "${design_namespace}ProcessAccordionGroup" [ "map" ] )
+
+    #macro( rwd4ProcessAccordionGroup $map )
+        #set( $expandAll       = "" )
+        #if( $map[ "accordion-group;show-expand-all" ][ $KEY_DATA ].Class.Name && $map[ "accordion-group;show-expand-all" ][ $KEY_DATA ].size() > 0 )
+            #set( $expandAll = $map[ "accordion-group;show-expand-all" ][ $KEY_DATA ][ 0 ] )
+        #end
+        #if( $expandAll == "Yes" )
+            <a href="#" id="expand_all">Expand all</a>
+        #end
+    <div class="accordion">
+        #foreach( $num in [ 1..$map[ "accordion-group;mul-accordion-h2-wysiwyg-group;0" ][ $KEY_SIZE ] ] )
+            <h2>$map[ "accordion-group;mul-accordion-h2-wysiwyg-group;${foreach.index};accordion-h2" ][ $KEY_DATA ]</h2>
+            <div>
+            $map[ "accordion-group;mul-accordion-h2-wysiwyg-group;${foreach.index};accordion-wysiwyg" ][ $KEY_DATA ] 
+            </div>
+        #end
+    </div>
+    #end
+
+    #macro( rwd4TreeProcessAccordionGroup $map )
+        #rwd4ProcessAccordionGroup( $map )
+    #end
+#end
