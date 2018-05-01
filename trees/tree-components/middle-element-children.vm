@@ -1,3 +1,5 @@
+## This format defines the innermain for the center column of a page
+## dependency: the main node and middleElement node must be created first
 #chanwAddChildren( $chanwObjectNodeMap[ "middleElement" ] [
     { $TREE_NODE_NAME : "innermain" }
 ] )
