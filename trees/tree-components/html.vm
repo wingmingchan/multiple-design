@@ -1,8 +1,15 @@
+#* Use this format to create a tree rooted at html *#
 #chanwCreateNode( {
     $TREE_NODE_NAME :      "html",
-    $TREE_NODE_START_TAG : "<html $!siteConfigMap['htmlAttributes']>",
-    $TREE_NODE_END_TAG :   "</html>" } )
+    $TREE_NODE_START_TAG : "<html $!siteConfigMap['htmlAttributes']><!--#passthrough-top<?php
+${_EscapeTool.d}responsive = true;
+define( 'CASCADE_DESIGN_NAMESPACE', '$!{design_namespace.replaceAll( ""'"", ""\'"" )}' );
+define( 'CASCADE_SITE_NAME', '$!{currentPageSiteName.replaceAll( ""'"", ""\'"" )}' );
+require_once('cascade/cascade_global.php');
+?><!DOCTYPE html>#passthrough-top-->",
+    $TREE_NODE_END_TAG :   "</html>",
+    $TREE_NODE_CODE :      '#initialize' } )
 #chanwAddChildren( $chanwObjectNodeMap[ "html" ] [ 
-    { $TREE_NODE_NAME : "head", $TREE_NODE_START_TAG : "<head $!siteConfigMap['headAttributes']>",  $TREE_NODE_END_TAG : "</head>" },
-    { $TREE_NODE_NAME : "body", $TREE_NODE_START_TAG : "<body $!siteConfigMap['bodyAttributes']>",  $TREE_NODE_END_TAG : "</body>" }
+    { $TREE_NODE_NAME : "head", $TREE_NODE_START_TAG : "<head $!siteConfigMap[ 'headAttributes' ]>",  $TREE_NODE_END_TAG : "</head>" },
+    { $TREE_NODE_NAME : "body", $TREE_NODE_START_TAG : "<body $!siteConfigMap[ 'bodyAttributes' ]>",  $TREE_NODE_END_TAG : "</body>" }
 ] )
