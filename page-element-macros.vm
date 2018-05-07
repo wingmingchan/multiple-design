@@ -281,7 +281,7 @@ doc*###
     #chanwInvokeMacro( "${design_namespace}GenerateFolderNav" )
 ##
     #macro( rwd4GenerateFolderNav )
-#import( 'site://_rebuilt/app/components/siteNavHtmlShell' )
+#import( 'app/components/siteNavHtmlShell' )
 <nav id="left-menu" class="hidden-xs hidden-sm">
     #siteNavHtmlShell( $currentPage.ParentFolder {
         'excludeMetadataName': 'exclude-from-left-folder-nav',
@@ -390,7 +390,7 @@ $E_SYSTEM_VIEW_INTERNAL
 ##
 #if( $contactName.trim() != "" && $contactEmail )
 <div id="contact">Last Modified:
-#set( $lastModifiedDayObj = $_DateTool.getDate( $systemPageLastModified ) )$_DateTool.format( "MMMMM dd, yyyy", $lastModifiedDayObj ).
+#set( $lastModifiedDayObj = $currentPage.LastModified )$_DateTool.format( "MMMMM dd, yyyy", $lastModifiedDayObj ).
 $S_SYSTEM_VIEW_EXTERNAL$S_PHP_PASSTHROUGH
 echo " Contact <a href='http://www.upstate.edu/email_form.php?name=" . urlencode('${contactName}') . 
 "&to=" . base64_encode('${contactEmail}') . 
@@ -461,16 +461,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     《/content》
     《stepcode》
 doc*###
-#*
-#macro( generateH1 )
-    #set( $h1Elements = $_XPathTool.selectNodes( $pageSystemDataStructure, "main-group/h1" ) )
-    #if( $h1Elements.Class && $h1Elements.size() > 0 )
-<h1>$_EscapeTool.xml( $h1Elements[ 0 ].Value.trim() )</h1>
-    #else
-<h1>An H1 Is Required</h1>
-    #end
-#end
-*#
+
+
 ##
 #*doc
     《/stepcode》
@@ -759,7 +751,7 @@ doc*###
     #if( $innermainTreePath_generateMiddleContent.Class.Name && $innermainTreePath_generateMiddleContent.trim() != "" )
         #set( $chanwInnermainTreeName = $innermainTreePath_generateMiddleContent.trim() )
     #else
-        #set( $chanwInnermainTreeName = "site://_rebuilt/app/scaffolds/innermain-tree" )
+        #set( $chanwInnermainTreeName = "app/scaffolds/innermain-tree" )
     #end
 ##
     #import( $chanwInnermainTreeName )
@@ -780,7 +772,6 @@ doc*###
         #if( !$siteConfigMap[ 'skipPageElement' ][ 'h1' ].contains( $currentPagePath ) && !$currentPage.Name.endsWith( "-profile" ) )
     #if( $chanwWithRow )<div class="row">#end
     <div class="col-xs-12">
-            ##set( $h1Elements = $_XPathTool.selectNodes( $pageSystemDataStructure, "main-group/h1" ) )
             #set( $h1String = $currentPage.getStructuredDataNode( "main-group/h1" ).TextValue )
             #if( $h1String.trim() != "" )
 <h1>$_EscapeTool.xml( $h1String.trim() )</h1>
@@ -796,8 +787,6 @@ doc*###
         #set( $generatePostH1Invoked = true )
         ## post-h1 choosers
         ## User has the option of floating these to the right of the WYSIWYG
-
-        ##if( $_XPathTool.selectNodes( $pageSystemDataStructure, "main-group/float-pre-content-blocks-around-wysiwyg-content" )[ 0 ].Value != 'yes' )
         #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue != 'yes' )
             #upstateProcessBlockChooser( $currentPage "main-group/mul-post-h1-chooser" '<div class="row"><div class="col-xs-12">' '</div></div>' )
         #end
@@ -811,7 +800,7 @@ doc*###
         #end
         #end
     ##
-        #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue != 'yes' )
+        #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue == 'yes' )
             <div class="rightobject width50">
                 #upstateProcessBlockChooser( $currentPage "main-group/mul-post-h1-chooser" )
             </div>
@@ -823,11 +812,6 @@ doc*###
             #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue != 'yes' )
                 <div>
             #end
-            ##if( $design_namespace == "rwd4" )
-            ##$_SerializerTool.serialize( $_XPathTool.selectNodes( $pageSystemDataStructure, "main-group/wysiwyg" )[ 0 ], true )
-            ##else
-            ##$_SerializerTool.serialize( $_XPathTool.selectNodes( $pageSystemDataStructure, "main-group/wysiwyg" )[ 0 ], true )
-            ##end
             #if( $currentPage.getStructuredDataNode( "main-group/wysiwyg" ).TextValue.Class.Name )
                 $currentPage.getStructuredDataNode( "main-group/wysiwyg" ).TextValue.trim()
             #end
