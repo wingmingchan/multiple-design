@@ -18,29 +18,33 @@ other design is taking over 100% from this point forward.
     《/content》
     《stepcode》
 doc*###
+#drulykgImportPassThrough( "${BRISK[ 'APP_PATH' ]}app_constants" )
 ##
-## get page contents
-#set( $page = $_XPathTool.selectNodes( $contentRoot, "calling-page/system-page" )[ 0 ] )
-## process page XML
-#chanwProcessSystemPage( $page )
 ## get page data structure
-#set( $pageSystemDataStructure = $_XPathTool.selectNodes( $page, "system-data-structure" )[ 0 ] )
+#set( $pageSystemDataStructure = $currentPage.StructuredData )
 ##
 ## process master-level chooser, overriding the variable $design_namespace
-#set( $masterLevelOverrideContent = $pageSystemDataStructure.getChild( "admin-group" ).getChild( "master-level-override" ).getChild( "content" ) )
-#if( $masterLevelOverrideContent.Class )
-    #evaluate( $masterLevelOverrideContent.Value )
+#if( !$deferredEvaluationOfMasterLevelOverride.Class.Name )
+#set( $masterLevelOverrideBlock = $currentPage.getStructuredDataNode( "admin-group/master-level-override" ).Asset )
+#if( $masterLevelOverrideBlock.Class.Name )
+    #if( $masterLevelOverrideBlock.Class.Name == "com.hannonhill.cascade.api.adapters.XMLBlockAPIAdapter" )
+        #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.XML )
+    #elseif( $masterLevelOverrideBlock.Class.Name == "com.hannonhill.cascade.api.adapters.TextBlockAPIAdapter" )
+        #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.Text )
+    #end
+    #evaluate( $masterLevelOverrideBlockCode )
+#end
 #end
 ##
 ## We are in this format because $design_namespace was originally set to rwd4Tree
 ## If we are not continuing with rwd4Tree, then load the other design's base loader and stop processing
 #if( $design_namespace != 'rwd4Tree' )
-    #if( !$_PropertyTool.isNull( $site_designs[ $design_namespace ] ) )
+    #if( $site_designs[ $design_namespace ].Class.Name )
         ## Load up the entry point for this design
         #chanwImportScript(
-            $site_designs[ $design_namespace ][ $BRISK_BASE_LOADER ][ $BRISK_FOLDER_PATH ]
-            $site_designs[ $design_namespace ][ $BRISK_BASE_LOADER ][ $BRISK_SITE_NAME ]
-            $site_designs[ $design_namespace ][ $BRISK_BASE_LOADER ][ $BRISK_FILE_NAME ]
+            $site_designs[ $design_namespace ][ 'baseLoader' ][ 'folderPath' ]
+            $site_designs[ $design_namespace ][ 'baseLoader' ][ 'siteName' ]
+            $site_designs[ $design_namespace ][ 'baseLoader' ][ 'fileName' ]
         )
         #drulykgCleanupAndStop
     #end
@@ -80,15 +84,15 @@ their folder of formats.
 doc*###
 ##
 #if(
-    $currentPageSiteName == 'librarydev' ||
     $currentPageSiteName == 'library' ||
-    $currentPageSiteName == 'library-archives'
+    $currentPageSiteName == 'library-archives' ||
+    $currentPageSiteName == 'librarydev' ||
+    $currentPageSiteName == 'librarydev-archives'
 )
-    #if( $currentPage.Name == 'drulykg-testing' )
-        #drulykgImportFolderFormats( '_cascade/formats2' 'librarydev' {'recursive': true} )
+    #if( $currentPageSiteName.startsWith( 'librarydev' ) )
+        #import( 'site://librarydev/_cascade/formats/custom_macros' )
     #else
-    ## Loop through and import all of the library's formats
-    #import( 'site://librarydev/_cascade/formats/custom_macros' )
+        #import( 'site://library/_cascade/formats/custom_macros' )
     #end
 #end
 ##
@@ -103,7 +107,7 @@ doc*###
     《stepcode》
 doc*###
 ##
-#chanwImportScript( "${_brisk[$BRISK_SITE_DESIGNS_FOLDER_PATH_NTS]}/${design_namespace}" $_brisk[ $BRISK_SITE_NAME ] "${design_namespace}_constants" )
+#chanwImportScript( "${BRISK[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'SITE_NAME' ] "${design_namespace}_constants" )
 #setRwd4TreeConstants()
 ##
 #*doc
@@ -119,8 +123,57 @@ doc*###
 ## Load the design namespace's setup file if it exists
 ## The design's setup file contains code to deal with
 ## site/folder-specific setup files needed by setup
-#chanwImportScript( "${_brisk[$BRISK_SITE_DESIGNS_FOLDER_PATH_NTS]}/${design_namespace}" $_brisk[ $BRISK_SITE_NAME ] $APP_SETUP_FORMAT_NAME )
+#chanwImportScript( "${BRISK[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'SITE_NAME' ] $APP_SETUP_FORMAT_NAME )
 #processSiteSetup()
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntrySetHtmlTagSettings”》
+    《title》
+        Set #drulykgHtmlTag() options which should be persistent
+    《/title》
+    《content》
+#drulykgHtmlTag is able to automatically set the
+srcset for an image so let's enable this for all images.
+    《/content》
+    《stepcode》
+doc*###
+##
+#drulykgHtmlTag( $nullllllllllllllll {
+    'persistentSettings': {
+        'absoluteUrlPageExtension': $siteConfigMap[ 'sitePagePublicFileExtension' ],
+        'autoSrcSetDimensions': {
+            '2500w': [ '' ],
+            '1200w': [ '-1000x500', '-1000x333' ],
+            '750w': [ '-700x350', '-700x233' ],
+            '460w': [ '-400x200', '-400x133' ]
+        },
+        'siteRootPageNameOfFolder': $siteConfigMap[ 'siteRootPageNameOfFolder' ]
+    }
+} )
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntrySetCascadeAssetSettings”》
+    《title》
+        Set #drulykgGetCascadeAssetUrl() and #drulykgGetCascadeAssetLink() options which should be persistent.
+    《/title》
+    《stepcode》
+doc*###
+##
+#drulykgGetCascadeAssetLink( $nullllllllllllllll {
+    'persistentSettings': {
+        'siteRootPageNameOfFolder': $siteConfigMap[ 'siteRootPageNameOfFolder' ]
+    }
+} )
+#drulykgGetCascadeAssetUrl( $nullllllllllllllll {
+    'persistentSettings': {
+        'pageExtension': $siteConfigMap[ 'sitePagePublicFileExtension' ],
+        'siteRootPageNameOfFolder': $siteConfigMap[ 'siteRootPageNameOfFolder' ]
+    }
+} )
 ##
 #*doc
     《/stepcode》
@@ -132,7 +185,7 @@ doc*###
     《stepcode》
 doc*###
 ## Import all block-processing formats
-#drulykgImportFolderFormats( 'app/components/block_macros' '_brisk' { 'recursive' : true } )
+#import( 'app/components/block_macros/_import_all_block_macros' )
 ##
 #*doc
     《/stepcode》
@@ -144,7 +197,7 @@ doc*###
     《stepcode》
 doc*###
 ## app custom_macros
-#chanwImportScript( $APP_COMPONENTS_FOLDER_PATH $_brisk[ $BRISK_SITE_NAME ] $APP_CUSTOM_MACROS_FORMAT_NAME )
+#chanwImportScript( $APP_COMPONENTS_FOLDER_PATH $BRISK[ 'SITE_NAME' ] $APP_CUSTOM_MACROS_FORMAT_NAME )
 ##
 #*doc
     《/stepcode》
@@ -219,7 +272,18 @@ of the default tree or custom code specific for the page
     《stepcode》
 doc*###
 ## process page-level override for locally defined tree or code
-#upstateProcessBlockChooser( $pageSystemDataStructure "admin-group/page-level-override" '<div id="hide-page-level-override">' '</div>' ) 
+#upstateProcessBlockChooser( $pageSystemDataStructure "admin-group/page-level-override" '<div id="hide-page-level-override">' '</div>' )
+## added 4/13/2018 to replace page-level-override
+#if( $deferredEvaluationOfMasterLevelOverride.Class.Name && $deferredEvaluationOfMasterLevelOverride == true )
+#if( $masterLevelOverrideBlock.Class.Name )
+    #if( $masterLevelOverrideBlock.Class.Name == "com.hannonhill.cascade.api.adapters.XMLBlockAPIAdapter" )
+        #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.XML )
+    #elseif( $masterLevelOverrideBlock.Class.Name == "com.hannonhill.cascade.api.adapters.TextBlockAPIAdapter" )
+        #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.Text )
+    #end
+    #evaluate( $masterLevelOverrideBlockCode )
+#end
+#end
 ##
 #*doc
     《/stepcode》
@@ -248,30 +312,52 @@ doc*###
 #if( !$executeLocallyDefinedCode.Class )
 ##
     #if( !$importLocallyDefinedTree.Class )
+        ## $html_name is defined in setup
+        #if( $html_name.Class.Name && $html_name != "" && $html_name != "inherited" )
+            #if( $html_name.startsWith( "site://", 0 ) )
+                #chanwImportScriptByFullPath( $html_name )
+            #else
+                #chanwImportScript( $BRISK_APP[ 'SCAFFOLDS_PATH_NTS' ] $BRISK[ 'SITE_NAME' ] $html_name )
+            #end
+        #else
+            #import( "app/scaffolds/rwd4Tree/design-tree" )
+        #end
+
         ## $tree_name is defined in setup
         ## processSiteSetup reads in site or folder specific $tree_name
-        #import( "app/scaffolds/rwd4Tree/design-tree" )
         ## page-level $tree_name
         #resolvePageTreeName
+        ##<h1>$tree_name</h1>
 ##
         ## special case
         #if( $tree_name != "inherited" )
             #set( $mainIndex = $chanwObjectNodeMap[ "body" ].getIndex( $chanwObjectNodeMap[ "main" ] ) )
             #set( $void = $chanwObjectNodeMap[ "body" ].remove( $chanwObjectNodeMap[ "main" ] ) )
-            #chanwImportScript( $APP_SCAFFOLDS_FOLDER_PATH $BRISK[ 'SITE_NAME' ] "${tree_name}-main-tree" )
+            #chanwImportScript( $BRISK_APP[ 'SCAFFOLDS_PATH_NTS' ] $BRISK[ 'SITE_NAME' ] "${tree_name}-main-tree" )
             #set( $void = $chanwObjectNodeMap[ "body" ].insert( $chanwObjectNodeMap[ "main" ], $mainIndex ) )
             ## innermain
-            #import( "site://_brisk/app/scaffolds/innermain-tree" )
+            #drulykgImportPassThrough( "${BRISK[ 'APP_SITEPATH' ]}scaffolds/innermain-tree" )
             #set( $void = $chanwObjectNodeMap[ "middleElement" ].add( $chanwObjectNodeMap[ "innermain" ] ) )
         #end
 #*
 $S_PRE#chanwDisplayTree( $chanwObjectNodeMap[ 'html' ] )$E_PRE
 *#
-        #set( $markup = "#chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'html' ] )" )
         #if( $siteConfigMap[ 'displayHtmlCode' ] == true )
+            #set( $markup = "#chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'html' ] )" )
+            $S_PRE$_EscapeTool.xml( $markup )$E_PRE
+        #elseif( $siteConfigMap[ 'displayMainCode' ] == true )
+            #set( $markup = "#chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'main' ] )" )
             $S_PRE$_EscapeTool.xml( $markup )$E_PRE
         #else
-            $markup
+            #set( $markup = "#chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'html' ] )" )
+            #drulykgApplyBricks(
+                $markup
+                {
+                    'local_bricks_feed_file': $_.locateBlock( 'app/components/blocks/feed/bricks-feed', $BRISK[ 'SITE_NAME' ] ),
+                    'subkey': $design_namespace
+                }
+            )
+            $drulykgApplyBricks
         #end
     #else
         $importLocallyDefinedTree
@@ -282,7 +368,9 @@ $S_PRE#chanwDisplayTree( $chanwObjectNodeMap[ 'html' ] )$E_PRE
 ##
 ## Cleanup any resources which might be open and stop
 ## because we are done anyways
+#if( $currentPageSiteName != "web-services" )
 #drulykgCleanupAndStop
+#end
 ##
 #*doc
     《/stepcode》
