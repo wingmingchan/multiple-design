@@ -2,34 +2,20 @@
 	<!--#*doc
 <documentation><p>This data definition defines a row block. Multiple choosers are provided
 to create a row of block contents. The set of identifiers:</p><pre>
-array(13) {
-  [0]=>
-  string(7) "display"
-  [1]=>
-  string(9) "row-group"
-  [2]=>
-  string(32) "row-group;customize-column-width"
-  [3]=>
-  string(31) "row-group;use-custom-attributes"
-  [4]=>
-  string(24) "row-group;row-attributes"
-  [5]=>
-  string(30) "row-group;mul-block-choosers;0"
-  [6]=>
-  string(48) "row-group;mul-block-choosers;0;row-block-chooser"
-  [7]=>
-  string(54) "row-group;mul-block-choosers;0;row-block-chooser-width"
-  [8]=>
-  string(48) "row-group;mul-block-choosers;0;column-attributes"
-  [9]=>
-  string(28) "row-group;container-settings"
-  [10]=>
-  string(43) "row-group;container-settings;container-type"
-  [11]=>
-  string(44) "row-group;container-settings;wrapped-div-yes"
-  [12]=>
-  string(51) "row-group;container-settings;wrapped-div-attributes"
-}</pre></documentation>
+display
+row-group
+row-group;customize-column-width
+row-group;use-custom-attributes
+row-group;row-attributes
+row-group;mul-block-choosers;0
+row-group;container-settings
+row-group;mul-block-choosers;0;row-block-chooser
+row-group;mul-block-choosers;0;row-block-chooser-width
+row-group;mul-block-choosers;0;column-attributes
+row-group;container-settings;container-type
+row-group;container-settings;wrapped-div-yes
+row-group;container-settings;wrapped-div-attributes
+</pre></documentation>
 doc*###-->
 	<text default="yes" help-text="Select yes to display" identifier="display" label="Display" type="radiobutton">
 		<radio-item value="yes"/>
