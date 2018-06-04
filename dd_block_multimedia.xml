@@ -2,82 +2,43 @@
 	<!--#*doc
 <documentation><div id="introduction"><h2>Introduction</h2><p>This data definition defines a multimedia block. Currently, this block type provides
 5 different services. The set of identifiers:</p><pre>
-array(37) {
-  [0]=>
-  string(7) "display"
-  [1]=>
-  string(11) "choose-type"
-  [2]=>
-  string(18) "single-image-group"
-  [3]=>
-  string(24) "single-image-group;style"
-  [4]=>
-  string(30) "single-image-group;selectimage"
-  [5]=>
-  string(26) "single-image-group;altText"
-  [6]=>
-  string(30) "single-image-group;subheadline"
-  [7]=>
-  string(30) "single-image-group;caption-yes"
-  [8]=>
-  string(29) "single-image-group;image-link"
-  [9]=>
-  string(13) "gallery-group"
-  [10]=>
-  string(39) "gallery-group;mul-gallery-image-group;0"
-  [11]=>
-  string(61) "gallery-group;mul-gallery-image-group;0;gallery-image-chooser"
-  [12]=>
-  string(61) "gallery-group;mul-gallery-image-group;0;gallery-image-caption"
-  [13]=>
-  string(18) "random-image-group"
-  [14]=>
-  string(24) "random-image-group;style"
-  [15]=>
-  string(30) "random-image-group;caption-yes"
-  [16]=>
-  string(30) "random-image-group;mul-image;0"
-  [17]=>
-  string(42) "random-image-group;mul-image;0;selectimage"
-  [18]=>
-  string(38) "random-image-group;mul-image;0;altText"
-  [19]=>
-  string(42) "random-image-group;mul-image;0;subheadline"
-  [20]=>
-  string(41) "random-image-group;mul-image;0;image-link"
-  [21]=>
-  string(16) "slide-show-group"
-  [22]=>
-  string(22) "slide-show-group;style"
-  [23]=>
-  string(28) "slide-show-group;caption-yes"
-  [24]=>
-  string(28) "slide-show-group;mul-image;0"
-  [25]=>
-  string(40) "slide-show-group;mul-image;0;selectimage"
-  [26]=>
-  string(36) "slide-show-group;mul-image;0;altText"
-  [27]=>
-  string(40) "slide-show-group;mul-image;0;subheadline"
-  [28]=>
-  string(39) "slide-show-group;mul-image;0;image-link"
-  [29]=>
-  string(28) "slide-show-group;mul-image;1"
-  [30]=>
-  string(40) "slide-show-group;mul-image;1;selectimage"
-  [31]=>
-  string(36) "slide-show-group;mul-image;1;altText"
-  [32]=>
-  string(40) "slide-show-group;mul-image;1;subheadline"
-  [33]=>
-  string(39) "slide-show-group;mul-image;1;image-link"
-  [34]=>
-  string(19) "youtube-video-group"
-  [35]=>
-  string(28) "youtube-video-group;video-id"
-  [36]=>
-  string(33) "youtube-video-group;video-caption"
-}
+display
+choose-type
+single-image-group
+gallery-group
+random-image-group
+slide-show-group
+youtube-video-group
+single-image-group;style
+single-image-group;selectimage
+single-image-group;altText
+single-image-group;subheadline
+single-image-group;caption-yes
+single-image-group;image-link
+gallery-group;mul-gallery-image-group;0
+random-image-group;style
+random-image-group;caption-yes
+random-image-group;mul-image;0
+slide-show-group;style
+slide-show-group;caption-yes
+slide-show-group;mul-image;0
+slide-show-group;mul-image;1
+youtube-video-group;video-id
+youtube-video-group;video-caption
+gallery-group;mul-gallery-image-group;0;gallery-image-chooser
+gallery-group;mul-gallery-image-group;0;gallery-image-caption
+random-image-group;mul-image;0;selectimage
+random-image-group;mul-image;0;altText
+random-image-group;mul-image;0;subheadline
+random-image-group;mul-image;0;image-link
+slide-show-group;mul-image;0;selectimage
+slide-show-group;mul-image;0;altText
+slide-show-group;mul-image;0;subheadline
+slide-show-group;mul-image;0;image-link
+slide-show-group;mul-image;1;selectimage
+slide-show-group;mul-image;1;altText
+slide-show-group;mul-image;1;subheadline
+slide-show-group;mul-image;1;image-link
 </pre></div><div id="single-image"><h2>Single Image</h2><p>Purpose: Displays a single image, indeed.</p><p>Usage: ...</p></div><div id="gallery"><h2>Gallery</h2><p>Purpose: Displays a gallery of images.</p><p>Usage: ...</p></div><div id="random-image"><h2>Random Image</h2><p>Purpose: Displays a single image selected from a collection of images.</p><p>Usage: ...</p></div><div id="slide-show"><h2>Slideshow</h2><p>Purpose: Displays a slideshow, possibly with text overlay and links.</p><p>Usage: ...</p></div><div id="youtube-video"><h2>YouTube Video</h2><p>Purpose: Displays a YouTube video.</p><p>Usage: ...</p></div></documentation>
 doc*###-->
 	<text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
@@ -94,7 +55,7 @@ doc*###-->
 	<!-- singleimage -->
 	<group identifier="single-image-group" label="Single Image">
 		<text default="Classic" identifier="style" label="Style" restrict-to-groups="CWT-Designers,Administrators" type="radiobutton">
-			<radio-item value="Classic"/>
+			<radio-item show-fields="single-image-group/caption-yes" value="Classic"/>
 			<radio-item show-fields="single-image-group/subheadline" value="Homepage"/>
 		</text>
 		<asset help-text="If part of a set, select largest image" identifier="selectimage" label="Select Largest Image" required="true" type="file"/>
