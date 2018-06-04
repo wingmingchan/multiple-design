@@ -1,3 +1,6 @@
+#*
+{ $TREE_NODE_NAME : "body-placeholder" },
+*#
 #chanwAddChildren( $chanwObjectNodeMap[ "body" ] [
     { $TREE_NODE_NAME : "google-noscript" },
     { $TREE_NODE_NAME : "header" },
