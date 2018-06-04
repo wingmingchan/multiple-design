@@ -1,0 +1,320 @@
+#macro( processSiteSetup )
+##
+    ## Set some internal vars
+    #set( $processSiteSetupVars = {
+        'void': $nulllll
+    } )
+##
+    ## Set the site config map so that it can be populated
+    #resetSiteConfigMap()
+##
+    ## Build the list of setup blocks and/or formats
+    #getSiteSetupBlocksFormatsList( $currentPage.ParentFolder )
+##
+    ## Prepend the legacy _cascade/setup format to the list
+    ## It's OK if .locate() fails to find it because nulls in
+    ## $getSiteSetupBlocksFormatsList are ignored
+    #set( $processSiteSetupVars[ 'void' ] = $getSiteSetupBlocksFormatsList.add( 0, $_.locate( '_cascade/setup', $_FieldTool.in( 'com.hannonhill.cascade.model.dom.identifier.EntityTypes' ).TYPE_FORMAT, $currentPageSiteName ) ) )
+##
+    ## Loop the blocks/formats and process accordingly
+    #foreach( $setup in $getSiteSetupBlocksFormatsList )
+        #if( $setup.AssetType == 'block' )
+            #processSetupBlock( $setup )
+        #elseif( $setup.AssetType == 'format' )
+            #evaluate( $setup.Script )
+        #end
+    #end
+##
+##
+    ## Some of the $siteConfigMap settings needs to be translated/massaged into real values
+##
+    ## Declare the supported themes and their class name translation
+    #set( $setupAllowedThemeClasses = {
+        'inherited': 'upstate-dark-blue',
+        'Upstate Dark Blue': 'upstate-dark-blue',
+        'Upstate White': 'upstate-white'
+    } )
+##
+    ## If siteColorTheme is not valid then default to Upstate Dark Blue
+    #if( !$setupAllowedThemeClasses[ $siteConfigMap[ 'siteColorTheme' ] ].Class.Name )
+        #set( $siteConfigMap[ 'siteColorTheme' ] = 'inherited' )
+    #end
+##
+    ## Set the bodyAttributes to have a class
+    #set( $siteConfigMap[ 'bodyAttributes' ] = 'class="' + $setupAllowedThemeClasses[ $siteConfigMap[ 'siteColorTheme' ] ] + '"' )
+##
+    ## Determine where the logo needs to send the user
+    ##
+    ## Root of the current page's site
+    #if( $siteConfigMap[ 'siteLogoClickDestination' ] == 'Root of current site' )
+        #set( $siteConfigMap[ 'siteLogoClickDestination' ] = $_.locateFolder( '/', $currentPageSiteName ) )
+##
+    ## The host of the current site
+    ## We can only retrieve the URL from site settings and use that
+    ## since we have no efficient way of determining into which site
+    ## a site might be publishing
+    #elseif( $siteConfigMap[ 'siteLogoClickDestination' ] == 'Domain root of current site' )
+##
+        #set( $siteConfigMap[ 'siteLogoClickDestination' ] = '' )
+##
+        ## Get the current page's site's root URL and break it into pieces
+        #drulykgGetCascadeAssetUrl( $_.locateFolder( '/', $currentPageSiteName ) )
+        #drulykgParseUrl( $drulykgGetCascadeAssetUrl )
+##
+        ## We are only interested in everything before the path starts
+        #if( $drulykgParseUrl[ 'host' ] != '' )
+            #if( $drulykgParseUrl[ 'protocol' ] != '' )
+                #drulykgAppendVar( "siteConfigMap[ 'siteLogoClickDestination' ]" "${drulykgParseUrl[ 'protocol' ]}://" )
+            #end
+            #drulykgAppendVar( "siteConfigMap[ 'siteLogoClickDestination' ]" $drulykgParseUrl[ 'host' ] )
+            #if( $drulykgParseUrl[ 'port' ] != '' )
+                #drulykgAppendVar( "siteConfigMap[ 'siteLogoClickDestination' ]" ":${drulykgParseUrl[ 'port' ]}" )
+            #end
+##
+        ## No host? just send user to root-relative root
+        #else
+            #drulykgAppendVar( "siteConfigMap[ 'siteLogoClickDestination' ]" '/' )
+        #end
+##
+    ## The homepage site is the Upstate root so just grab it's root folder
+    #else
+        #set( $siteConfigMap[ 'siteLogoClickDestination' ] = $_.locateFolder( '/', 'homepage' ) )
+    #end
+##
+    ## Handle siteLogoClickDestinationOverride
+    #if( $siteConfigMap[ 'siteLogoClickDestinationOverride' ] != '' )
+        #drulykgGetCascadeAssetLink( $siteConfigMap[ 'siteLogoClickDestinationOverride' ] )
+        #drulykgParseCascadePath( $drulykgGetCascadeAssetLink )
+        #set( $siteConfigMap[ 'siteLogoClickDestination' ] = $_.locateFolder( $drulykgParseCascadePath[ 'path' ], $drulykgParseCascadePath[ 'siteName' ] ) )
+    #end
+#end
+##
+##
+##
+#macro( getSiteSetupBlocksFormatsList $folder_getSiteSetupBlocksFormatsList )
+##
+    ## Set some internal vars
+    #if( $getSiteSetupBlocksFormatsListVars.Class.Name != 'java.util.LinkedHashMap' )
+        #set( $getSiteSetupBlocksFormatsListVars = {
+            'i': 0,
+            'setupBlockFormat': $nulllll,
+            'setupPath': $nulllll,
+            'void': $nulllll
+        } )
+    #end
+##
+    ## Make sure this variable is reset upon user-invokation of this macro
+    ## Recursed calls will not fall into this #if() statement
+    ## because i will be 1 or larger in recursion
+    #if( $getSiteSetupBlocksFormatsListVars[ 'i' ] == 0 )
+        #set( $getSiteSetupBlocksFormatsList = [] )
+    #end
+##
+    ## Increment the counter
+    #set( $getSiteSetupBlocksFormatsListVars[ 'i' ] = $getSiteSetupBlocksFormatsListVars[ 'i' ] + 1 )
+##
+    ## Make sure we have received a folder object
+    #if( $folder_getSiteSetupBlocksFormatsList.AssetType == 'folder' )
+##
+        ## Setup and normalize the path to the setup block/format
+        #set( $getSiteSetupBlocksFormatsListVars[ 'setupPath' ] = $folder_getSiteSetupBlocksFormatsList.Path )
+##
+        ## Append a forward-slash if needed
+        #if( !$folder_getSiteSetupBlocksFormatsList.Path.endsWith( '/' ) )
+            #drulykgAppendVar( "getSiteSetupBlocksFormatsListVars[ 'setupPath' ]" '/' )
+        #end
+##
+        ## Append the name of the setup block/format
+        #drulykgAppendVar( "getSiteSetupBlocksFormatsListVars[ 'setupPath' ]" 'setup' )
+##
+        ## Try and locate this as a block
+        #set( $getSiteSetupBlocksFormatsListVars[ 'void' ] = $getSiteSetupBlocksFormatsListVars.put( 'setupBlockFormat', $_.locateBlock( $getSiteSetupBlocksFormatsListVars[ 'setupPath' ], $folder_getSiteSetupBlocksFormatsList.SiteName ) ) )
+##
+        ## If block location failed then check if a format exists
+        #if( !$getSiteSetupBlocksFormatsListVars[ 'setupBlockFormat' ].Class.Name )
+            #set( $getSiteSetupBlocksFormatsListVars[ 'void' ] = $getSiteSetupBlocksFormatsListVars.put( 'setupBlockFormat', $_.locate( $getSiteSetupBlocksFormatsListVars[ 'setupPath' ], $_FieldTool.in("com.hannonhill.cascade.model.dom.identifier.EntityTypes").TYPE_FORMAT, $folder_getSiteSetupBlocksFormatsList.SiteName ) ) )
+        #end
+##
+        ## If we have a setup block or format then add it to the beginning of the list
+        ## This will automatically produce the correct specificity from root to the current page
+        #if( $getSiteSetupBlocksFormatsListVars[ 'setupBlockFormat' ].Class.Name )
+            #set( $getSiteSetupBlocksFormatsListVars[ 'void' ] = $getSiteSetupBlocksFormatsList.add( 0, $getSiteSetupBlocksFormatsListVars[ 'setupBlockFormat' ] ) )
+        #end
+##
+        ## If this is not the root folder of the site then keep traversing
+        #if( $folder_getSiteSetupBlocksFormatsList.Path != '/' )
+            #getSiteSetupBlocksFormatsList( $folder_getSiteSetupBlocksFormatsList.ParentFolder )
+        #end
+    #end
+##
+    ## Decrement the counter
+    #set( $getSiteSetupBlocksFormatsListVars[ 'i' ] = $getSiteSetupBlocksFormatsListVars[ 'i' ] - 1 )
+##
+#end
+##
+##
+##
+#macro( processSetupBlock $block_processSetupBlock )
+    ## block_html_name
+    #set( $block_html_name = $block_processSetupBlock.Metadata.getDynamicField( "html-tree-picker" ).Value.trim() )
+    #if( !$siteConfigMap[ 'htmlName' ].Class || $block_html_name != "" )
+        #set( $siteConfigMap[ 'htmlName' ] = $block_html_name )
+    #end
+##
+    ## $block_tree_name and $siteConfigMap[ 'treeName' ], are always defined here
+    #set( $block_tree_name = $block_upstateProcessSetupBlock.Metadata.getDynamicField( "main-tree-picker" ).Value )
+    #if( !$siteConfigMap[ 'treeName' ].Class || $block_tree_name != "inherited" )
+        #set( $siteConfigMap[ 'treeName' ] = $block_tree_name )
+    #end
+##
+    #chanwGetFQINodeMap( $block_processSetupBlock.StructuredData )
+    #set( $mapKeySet = $chanwGetFQINodeMap.keySet() )
+##
+    #foreach( $key in $mapKeySet )
+        ## remove prefix mul-
+        #set( $siteConfigMapKey = $chanwGetFQINodeMap[ $key ][ $KEY_NODE ].Identifier.replaceAll( 'mul\-', '' ) )
+##
+        #set( $pagesWithout = "pagesWithout" )
+        #if( $siteConfigMapKey.contains( $pagesWithout ) )
+            #set( $siteConfigMapKey = $siteConfigMapKey.substring( $pagesWithout.length() ).toLowerCase() )
+            #if( !$siteConfigMap[ 'skipPageElement' ][ $siteConfigMapKey ] )
+                #set( $siteConfigMap[ 'skipPageElement' ][ $siteConfigMapKey ] = [] )
+            #end
+            #set( $void = $siteConfigMap[ 'skipPageElement' ][ $siteConfigMapKey ].add( $chanwGetFQINodeMap[ $key ][ $KEY_NODE ].Asset.Path ) )
+        #end
+##
+        #if(
+            ( $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_PLAIN_TEXT ||
+              $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_DROPDOWN ) &&
+            $chanwGetFQINodeMap[ $key ][ $KEY_DATA ]
+        )
+            #if(
+                ( $siteConfigMapKey != 'siteColorTheme' && $siteConfigMapKey != 'siteLogoClickDestination' ) ||
+                (
+                    ( $siteConfigMapKey == 'siteColorTheme' || $siteConfigMapKey == 'siteLogoClickDestination' ) &&
+                    $chanwGetFQINodeMap[ $key ][ $KEY_DATA ] != 'inherited'
+                )
+            )
+                #set( $siteConfigMap[ $siteConfigMapKey ] = $chanwGetFQINodeMap[ $key ][ $KEY_DATA ] )
+            #end
+        #elseif( $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_PAGE || $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_FILE )
+            #if( $siteConfigMapKey == "siteThemeCSS" || $siteConfigMapKey == "siteLocalCSS" )
+                #set( $assetPath = "site://" + $chanwGetFQINodeMap[ $key ][ $KEY_NODE ].Asset.Site.Name + "/" + $chanwGetFQINodeMap[ $key ][ $KEY_DATA ] )
+                #set( $siteConfigMap[ $siteConfigMapKey ] = $assetPath )
+            #elseif( $siteConfigMapKey == 'siteLogoFile' || $siteConfigMapKey == 'siteLogoClickDestinationOverride' )
+                #set( $siteConfigMap[ $siteConfigMapKey ] = $chanwGetFQINodeMap[ $key ][ $KEY_NODE ].Asset )
+            #else
+                #set( $dummy = $siteConfigMap[ $siteConfigMapKey ].add( $chanwGetFQINodeMap[ $key ][ $KEY_DATA ] ) )
+            #end
+        #end
+    #end
+#end
+##
+##
+##
+#macro( resetSiteConfigMap )
+##
+    #set( $siteConfigMap = {} )
+##
+    ## special page functionality
+    ## there are two blocks in app/components/blocks/script to turn these flags on
+    #set( $siteConfigMap[ 'displayHtmlCode' ]   = false ) ## app/components/blocks/script/set-display-html-code-script
+    #set( $siteConfigMap[ 'displayMainCode' ]   = false ) ## app/components/blocks/script/set-display-main-code-script
+##
+    ## page elements; for partial pages, put names of variables referencing elements in the list
+    ## a page using this list must exist in _extra; if the list is empty, the page will be blank
+    #set( $siteConfigMap[ "includeElements" ] = [] )
+##
+    ## theme and local stylesheet
+    #set( $siteConfigMap[ 'siteThemeCSS' ]   = "" )
+    #set( $siteConfigMap[ 'siteLocalCSS' ]   = "" )
+    #set( $siteConfigMap[ 'siteColorTheme' ] = 'inherited' )
+##
+    ## sitewide info
+    #set( $siteConfigMap[ 'siteTitleString' ]   = "" )
+    #set( $siteConfigMap[ 'siteContactPerson' ] = "" )
+    #set( $siteConfigMap[ 'siteContactEmail' ]  = "" )
+##
+    ## attributes of html, head, body
+    #set( $siteConfigMap[ 'htmlAttributes' ]    = "" )
+    #set( $siteConfigMap[ 'headAttributes' ]    = "" )
+    #set( $siteConfigMap[ 'bodyAttributes' ]    = "" )
+##
+    ## default rendering behaviors of page components
+    #set( $siteConfigMap[ 'renderBreadcrumbs' ]      = true )
+    #set( $siteConfigMap[ 'renderFolderNav' ]        = true )
+    #set( $siteConfigMap[ 'renderGlobalNav' ]        = true )
+    #set( $siteConfigMap[ 'renderPageContents' ]     = true )
+    #set( $siteConfigMap[ 'renderSiteNav' ]          = true )
+    #set( $siteConfigMap[ 'renderSiteTitle' ]        = true )
+    #set( $siteConfigMap[ 'renderTopLeftGroup' ]     = true )
+    #set( $siteConfigMap[ 'renderBottomRightGroup' ] = true )
+    #set( $siteConfigMap[ 'folderNavOnTopLeft' ]     = true )
+    #set( $siteConfigMap[ 'folderNavOnBottomRight' ] = !$siteConfigMap[ 'folderNavOnTopLeft' ] )
+##
+    ## lists to contain exceptions
+    #set( $siteConfigMap[ 'skipPageElement' ] = {} )
+    #set( $siteConfigMap[ 'skipPageElement' ][ 'breadcrumbs' ] = [] )
+    #set( $siteConfigMap[ 'skipPageElement' ][ 'folderNav' ]   = [] )
+    #set( $siteConfigMap[ 'skipPageElement' ][ 'h1' ]          = [] )
+    #set( $siteConfigMap[ 'skipPageElement' ][ 'siteTitle' ]   = [] )
+    #set( $siteConfigMap[ 'skipPageElement' ][ 'pageContent' ] = [] )
+    
+#*
+    #set( $siteConfigMap[ 'pagesWithoutBreadcrumbs' ] = [] )
+    #set( $siteConfigMap[ 'pagesWithoutFolderNav' ]   = [] )
+    #set( $siteConfigMap[ 'pagesWithoutH1' ]          = [] )
+    #set( $siteConfigMap[ 'pagesWithoutPageContent' ] = [] )
+    #set( $siteConfigMap[ 'pagesWithoutSiteTitle' ]   = [] )
+    #set( $siteConfigMap[ 'pagesWithoutWysiwyg' ]     = [] )
+*#
+##
+    ## logo
+    #set( $siteConfigMap[ 'siteLogoFile' ]                      = '' )
+    #set( $siteConfigMap[ 'siteLogoFile' ]                      = $_.locateFile( 'assets/images/rwd-upstate-logo.jpg', 'Upstate-Globals' ) )
+    #set( $siteConfigMap[ 'siteLogoAltText' ]                   = 'Upstate Logo' )
+    #set( $siteConfigMap[ 'siteLogoClickDestination' ]          = 'Upstate root' )
+    #set( $siteConfigMap[ 'siteLogoClickDestinationOverride' ]  = '' )
+    #set( $siteConfigMap[ 'siteLogoSiteName' ]                  = $BRISK[ 'APP_SITE_NAME' ] )
+    #set( $siteConfigMap[ 'siteLogoFolderPath' ]                = "${BRISK_APP[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}/page_elements" )
+    #set( $siteConfigMap[ 'siteLogoFormatName' ]                = "logo" )
+    ## site nav
+    #set( $siteConfigMap[ 'sitePagePublicFileExtension' ] = '.php' )
+    #set( $siteConfigMap[ 'siteRootPageNameOfFolder' ]    = 'index' )
+    #set( $siteConfigMap[ 'siteNavHomeString' ]           = 'Home' )
+    #set( $siteConfigMap[ 'siteNavPath' ]                 = '/_extra/site-nav' + $siteConfigMap[ 'sitePagePublicFileExtension' ] )
+##
+    ## breadcrumbs
+    #set( $siteConfigMap[ 'breadcrumbsHomeString' ]      = "Home" )
+    #set( $siteConfigMap[ 'breadcrumbsSeparatorString' ] = "&gt;" )
+##
+    ## layouts
+    #set( $siteConfigMap[ 'headerElement' ]        = "header" )
+    #set( $siteConfigMap[ 'wrapperElement' ]       = "main" )
+    #set( $siteConfigMap[ 'wrapperId' ]            = "main-div-wrapper" )
+    #set( $siteConfigMap[ 'topElement' ]           = "div" )
+    #set( $siteConfigMap[ 'topId' ]                = "left-menu-div" )
+    #set( $siteConfigMap[ 'middleElement' ]        = "div" )
+    #set( $siteConfigMap[ 'middleId' ]             = "page-content-div" )
+    #set( $siteConfigMap[ 'bottomElement' ]        = "aside" )
+    #set( $siteConfigMap[ 'bottomId' ]             = "" )
+    #set( $siteConfigMap[ 'middleCenterWithNoTopLeftNoBottomRightCssClass' ] = "col-lg-12" )
+    #set( $siteConfigMap[ 'hasTopRowLeftCol' ]                      = true )
+    #set( $siteConfigMap[ 'hasBottomRowRightCol' ]                  = true )
+    #set( $siteConfigMap[ 'topLeftCssClass' ]                       = "col-md-3" )
+    #set( $siteConfigMap[ 'middleCenterCssClass' ]                  = "col-md-6" )
+    #set( $siteConfigMap[ 'bottomRightCssClass' ]                   = "col-md-3" )
+    #set( $siteConfigMap[ 'middleCenterWithNoTopLeftCssClass' ]     = "col-md-9" )
+    #set( $siteConfigMap[ 'middleCenterWithNoBottomRightCssClass' ] = "col-md-9" )
+    #set( $siteConfigMap[ 'footerElement' ]                         = "footer" )
+    #set( $siteConfigMap[ 'pageCssClass' ]                          = "bg-white" )
+##
+    ## the default layout of this design
+    #set( $siteConfigMap[ 'treeName' ] = 'left-center' )
+    #set( $siteConfigMap[ 'htmlName' ] = '' )
+#end
+##
+##
+#macro( showSiteConfigMap )
+    #drulykgSimpleKeysAndValues( $siteConfigMap )
+#end
