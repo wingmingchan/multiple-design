@@ -1,61 +1,60 @@
 <system-data-structure>
 	<!--#*doc
 <documentation><div id="introduction"><h2>Introduction</h2><p>This data definition defines a content block. Currently, this block type provides
-6 different services. The set of identifiers:</p><pre>LinkedHashMap$LinkedKeySet(array)(53) [
-    [0] == String(7)( "display" )
-    [1] == String(11)( "choose-type" )
-    [2] == String(15)( "accordion-group" )
-    [3] == String(13)( "contact-group" )
-    [4] == String(17)( "quick-links-group" )
-    [5] == String(18)( "simple-table-group" )
-    [6] == String(10)( "tabs-group" )
-    [7] == String(13)( "wysiwyg-group" )
-    [8] == String(31)( "accordion-group;show-expand-all" )
-    [9] == String(48)( "accordion-group;mul-accordion-h2-wysiwyg-group;0" )
-    [10] == String(32)( "contact-group;contact-intro-text" )
-    [11] == String(26)( "contact-group;contact-name" )
-    [12] == String(27)( "contact-group;contact-title" )
-    [13] == String(40)( "contact-group;contact-keep-contact-label" )
-    [14] == String(30)( "contact-group;contact-location" )
-    [15] == String(36)( "contact-group;mul-contact-af-group;0" )
-    [16] == String(27)( "contact-group;contact-phone" )
-    [17] == String(25)( "contact-group;contact-fax" )
-    [18] == String(27)( "contact-group;contact-email" )
-    [19] == String(35)( "quick-links-group;quick-links-class" )
-    [20] == String(35)( "quick-links-group;quick-links-title" )
-    [21] == String(46)( "quick-links-group;mul-quick-links-list-group;0" )
-    [22] == String(32)( "simple-table-group;table-summary" )
-    [23] == String(32)( "simple-table-group;column-number" )
-    [24] == String(27)( "simple-table-group;heading1" )
-    [25] == String(27)( "simple-table-group;heading2" )
-    [26] == String(27)( "simple-table-group;heading3" )
-    [27] == String(27)( "simple-table-group;heading4" )
-    [28] == String(31)( "simple-table-group;column1-type" )
-    [29] == String(31)( "simple-table-group;column2-type" )
-    [30] == String(31)( "simple-table-group;column3-type" )
-    [31] == String(31)( "simple-table-group;column4-type" )
-    [32] == String(29)( "simple-table-group;mul-rows;0" )
-    [33] == String(32)( "tabs-group;mul-tab-panel-group;0" )
-    [34] == String(29)( "wysiwyg-group;wysiwyg-content" )
-    [35] == String(27)( "wysiwyg-group;admin-options" )
-    [36] == String(35)( "wysiwyg-group;wrapped-block-chooser" )
-    [37] == String(61)( "accordion-group;mul-accordion-h2-wysiwyg-group;0;accordion-h2" )
-    [38] == String(66)( "accordion-group;mul-accordion-h2-wysiwyg-group;0;accordion-wysiwyg" )
-    [39] == String(53)( "contact-group;mul-contact-af-group;0;contact-af-label" )
-    [40] == String(55)( "contact-group;mul-contact-af-group;0;contact-af-content" )
-    [41] == String(63)( "quick-links-group;mul-quick-links-list-group;0;quick-links-text" )
-    [42] == String(67)( "quick-links-group;mul-quick-links-list-group;0;quick-links-linkable" )
-    [43] == String(46)( "simple-table-group;mul-rows;0;column-1-textbox" )
-    [44] == String(46)( "simple-table-group;mul-rows;0;column-1-wysiwyg" )
-    [45] == String(46)( "simple-table-group;mul-rows;0;column-2-textbox" )
-    [46] == String(46)( "simple-table-group;mul-rows;0;column-2-wysiwyg" )
-    [47] == String(46)( "simple-table-group;mul-rows;0;column-3-textbox" )
-    [48] == String(46)( "simple-table-group;mul-rows;0;column-3-wysiwyg" )
-    [49] == String(46)( "simple-table-group;mul-rows;0;column-4-textbox" )
-    [50] == String(46)( "simple-table-group;mul-rows;0;column-4-wysiwyg" )
-    [51] == String(42)( "tabs-group;mul-tab-panel-group;0;tab-label" )
-    [52] == String(44)( "tabs-group;mul-tab-panel-group;0;tab-content" )
-] 
+6 different services. The set of identifiers:</p><pre>display
+choose-type
+accordion-group
+contact-group
+quick-links-group
+simple-table-group
+tabs-group
+wysiwyg-group
+accordion-group;show-expand-all
+accordion-group;mul-accordion-h2-wysiwyg-group;0
+contact-group;contact-intro-text
+contact-group;contact-name
+contact-group;contact-title
+contact-group;contact-keep-contact-label
+contact-group;contact-location
+contact-group;mul-contact-af-group;0
+contact-group;contact-phone
+contact-group;contact-fax
+contact-group;contact-email
+quick-links-group;quick-links-class
+quick-links-group;quick-links-title
+quick-links-group;mul-quick-links-list-group;0
+simple-table-group;table-summary
+simple-table-group;column-number
+simple-table-group;heading1
+simple-table-group;heading2
+simple-table-group;heading3
+simple-table-group;heading4
+simple-table-group;column1-type
+simple-table-group;column2-type
+simple-table-group;column3-type
+simple-table-group;column4-type
+simple-table-group;vertical-alignment
+simple-table-group;mul-rows;0
+tabs-group;mul-tab-panel-group;0
+wysiwyg-group;wysiwyg-content
+wysiwyg-group;admin-options
+wysiwyg-group;wrapped-block-chooser
+accordion-group;mul-accordion-h2-wysiwyg-group;0;accordion-h2
+accordion-group;mul-accordion-h2-wysiwyg-group;0;accordion-wysiwyg
+contact-group;mul-contact-af-group;0;contact-af-label
+contact-group;mul-contact-af-group;0;contact-af-content
+quick-links-group;mul-quick-links-list-group;0;quick-links-text
+quick-links-group;mul-quick-links-list-group;0;quick-links-linkable
+simple-table-group;mul-rows;0;column-1-textbox
+simple-table-group;mul-rows;0;column-1-wysiwyg
+simple-table-group;mul-rows;0;column-2-textbox
+simple-table-group;mul-rows;0;column-2-wysiwyg
+simple-table-group;mul-rows;0;column-3-textbox
+simple-table-group;mul-rows;0;column-3-wysiwyg
+simple-table-group;mul-rows;0;column-4-textbox
+simple-table-group;mul-rows;0;column-4-wysiwyg
+tabs-group;mul-tab-panel-group;0;tab-label
+tabs-group;mul-tab-panel-group;0;tab-content
 </pre></div><div id="accordion"><h2>Accordion</h2><p>Purpose: Displays an accordion.</p><p>Usage: ...</p></div><div id="contact"><h2>Contact</h2><p>Purpose: Displays a contact.</p><p>Usage: ...</p></div><div id="quick-links"><h2>Quick Links</h2><p>Purpose: Displays a box containing quick links.</p><p>Usage: ...</p></div><div id="simple-table"><h2>Simple Table</h2><p>Purpose: Displays a simple table.</p><p>Usage: ...</p></div><div id="tabs"><h2>Tabs</h2><p>Purpose: Displays a tabbed panel.</p><p>Usage: ...</p></div><div id="wysiwyg"><h2>Wysiwyg</h2><p>Purpose: Displays a wysiwyg.</p><p>Usage: ...</p></div></documentation>
 doc*###-->
 	<text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
