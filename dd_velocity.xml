@@ -1,0 +1,17 @@
+<system-data-structure>
+	<!--#*doc
+<documentation><p>This data definition defines a velocity block.
+The multiline field can contain any Velocity code to be evaluated. The set of identifiers:</p><pre>
+display
+velocity-group
+velocity-group;velocity
+</pre></documentation>
+doc*###-->
+	<text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
+		<radio-item value="yes"/>
+		<radio-item value="no"/>
+	</text>
+	<group identifier="velocity-group" label="Velocity Group" restrict-to-groups="Administrators">
+		<text identifier="velocity" multi-line="true"/>
+	</group>
+</system-data-structure>
