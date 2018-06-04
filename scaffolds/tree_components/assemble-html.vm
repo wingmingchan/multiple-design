@@ -1,12 +1,12 @@
 #set( $mapping = {
-    "create-html"                 : "site://_brisk/app/scaffolds/tree-components/html",
-    "add-head-children"           : "site://_brisk/app/scaffolds/tree-components/head-children",
-    "add-body-children"           : "site://_brisk/app/scaffolds/tree-components/body-children",
-    "add-header-children"         : "site://_brisk/app/scaffolds/tree-components/header-children",
-    "add-header-row-children"     : "site://_brisk/app/scaffolds/tree-components/header-row-children",
-    "add-main-children"           : "site://_brisk/app/scaffolds/tree-components/main-top-middle",
-    "add-middle-element-children" : "site://_brisk/app/scaffolds/tree-components/middle-element-children",
-    "add-innermain-children"      : "site://_brisk/app/scaffolds/tree-components/innermain-children"
+    "create-html"                 : "app/scaffolds/tree_components/html",
+    "add-head-children"           : "app/scaffolds/tree_components/head-children",
+    "add-body-children"           : "app/scaffolds/tree_components/body-children",
+    "add-header-children"         : "app/scaffolds/tree_components/header-children",
+    "add-header-row-children"     : "app/scaffolds/tree_components/header-row-children",
+    "add-main-children"           : "app/scaffolds/tree_components/main-top-middle",
+    "add-middle-element-children" : "app/scaffolds/tree_components/middle-element-children",
+    "add-innermain-children"      : "app/scaffolds/tree_components/innermain-children"
 } )
 
 #chanwAssembleTree( $mapping )
