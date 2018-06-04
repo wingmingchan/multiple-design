@@ -281,7 +281,7 @@ doc*###
     #chanwInvokeMacro( "${design_namespace}GenerateFolderNav" )
 ##
     #macro( rwd4GenerateFolderNav )
-#import( 'app/components/siteNavHtmlShell' )
+#import( 'site://_brisk/app/components/siteNavHtmlShell' )
 <nav id="left-menu" class="hidden-xs hidden-sm">
     #siteNavHtmlShell( $currentPage.ParentFolder {
         'excludeMetadataName': 'exclude-from-left-folder-nav',
@@ -316,7 +316,7 @@ doc*###
 doc*###
 #macro( generateFooter )
     #if( $siteConfigMap[ 'footer' ].Class.Name )
-        #chanwImportScript( "${BRISK[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'SITE_NAME' ] $siteConfigMap[ 'footer' ] )
+        #chanwImportScript( "${BRISK_APP[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'footer' ] )
     #else
          #chanwInvokeMacro( "${design_namespace}GenerateFooter" )
     #end
@@ -420,7 +420,7 @@ ${S_SYSTEM_VIEW_INTERNAL}Contact $contactName with questions about the content o
 doc*###
 #macro( generateGoogleTagManager )
     #if( $siteConfigMap[ 'google-tag-manager' ].Class.Name )
-        #chanwImportScript( $APP_COMPONENTS_FOLDER_PATH $BRISK[ 'SITE_NAME' ] $siteConfigMap[ 'google-tag-manager' ] )
+        #chanwImportScript( $BRISK_APP[ 'COMPONENTS_PATH_NTS' ] $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'google-tag-manager' ] )
     #else
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -443,7 +443,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
 doc*###
 #macro( generateGoogleTagManagerNoscript )
     #if( $siteConfigMap[ 'google-tag-manager' ].Class.Name )
-        #chanwImportScript( $APP_COMPONENTS_FOLDER_PATH $BRISK[ 'SITE_NAME' ] $siteConfigMap[ 'google-tag-manager-noscript' ] )
+        #chanwImportScript( $BRISK_APP[ 'COMPONENTS_PATH_NTS' ] $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'google-tag-manager-noscript' ] )
     #else
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MJNRN6"
@@ -455,39 +455,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 #*doc
     《/stepcode》
 《/step》
-《step id=“pageElementMacrosGenerateH1”》
-    《title》Generate H1《/title》
-    《content》
-    《/content》
-    《stepcode》
-doc*###
-
-
-##
-#*doc
-    《/stepcode》
-《/step》
 《step id=“pageElementMacrosGenerateHeader”》
     《title》Generate header《/title》
     《content》
     《/content》
     《stepcode》
 doc*###
-#macro( generateLogo )
-    #chanwInvokeMacro( "${design_namespace}GenerateLogo" )
-#end
-#macro( generateSiteTitle )
-    #chanwInvokeMacro( "${design_namespace}GenerateSiteTitle" )
-#end
-#macro( generateGlobalNavButton )
-    #chanwInvokeMacro( "${design_namespace}GenerateGlobalNavButton" )
-#end
-#macro( generateGlobalNavSidebar )
-    #chanwInvokeMacro( "${design_namespace}GenerateGlobalNavSidebar" )
-#end
 #macro( generateHeader )
     #if( $siteConfigMap[ 'header' ].Class.Name )
-        #chanwImportScript( "${BRISK[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'SITE_NAME' ] $siteConfigMap[ 'header' ] )
+        #chanwImportScript( "${BRISK_APP[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'header' ] )
     #else
         #chanwInvokeMacro( "${design_namespace}GenerateHeader" )
     #end
@@ -601,6 +577,18 @@ doc*###
     #macro( rwd4TreeGenerateHeader )
         #rwd4GenerateHeader
     #end
+    #macro( generateLogo )
+        #chanwInvokeMacro( "${design_namespace}GenerateLogo" )
+    #end
+    #macro( generateSiteTitle )
+        #chanwInvokeMacro( "${design_namespace}GenerateSiteTitle" )
+    #end
+    #macro( generateGlobalNavButton )
+        #chanwInvokeMacro( "${design_namespace}GenerateGlobalNavButton" )
+    #end
+    #macro( generateGlobalNavSidebar )
+        #chanwInvokeMacro( "${design_namespace}GenerateGlobalNavSidebar" )
+    #end
 #end
 ##
 #*doc
@@ -614,7 +602,7 @@ doc*###
 doc*###
 #macro( generateLink )
     #if( $siteConfigMap[ 'link' ].Class.Name )
-        #chanwImportScript( "${BRISK[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'SITE_NAME' ] $siteConfigMap[ 'link' ] )
+        #chanwImportScript( "${BRISK_APP[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'link' ] )
     #else
         #chanwInvokeMacro( "${design_namespace}GenerateLink" )
     #end
@@ -751,7 +739,7 @@ doc*###
     #if( $innermainTreePath_generateMiddleContent.Class.Name && $innermainTreePath_generateMiddleContent.trim() != "" )
         #set( $chanwInnermainTreeName = $innermainTreePath_generateMiddleContent.trim() )
     #else
-        #set( $chanwInnermainTreeName = "app/scaffolds/innermain-tree" )
+        #set( $chanwInnermainTreeName = "site://_brisk/app/scaffolds/innermain-tree" )
     #end
 ##
     #import( $chanwInnermainTreeName )
@@ -768,9 +756,9 @@ doc*###
         #else
             #set( $chanwWithRow = true )
         #end
-    
+##
         #if( !$siteConfigMap[ 'skipPageElement' ][ 'h1' ].contains( $currentPagePath ) && !$currentPage.Name.endsWith( "-profile" ) )
-    #if( $chanwWithRow )<div class="row">#end
+            #if( $chanwWithRow )<div class="row">#end
     <div class="col-xs-12">
             #set( $h1String = $currentPage.getStructuredDataNode( "main-group/h1" ).TextValue )
             #if( $h1String.trim() != "" )
@@ -779,7 +767,7 @@ doc*###
 <h1>An H1 Is Required</h1>
             #end
     </div>## col-xs-12
-    #if( $chanwWithRow )</div>#end
+            #if( $chanwWithRow )</div>#end
         #end
     #end
 ##
@@ -787,20 +775,22 @@ doc*###
         #set( $generatePostH1Invoked = true )
         ## post-h1 choosers
         ## User has the option of floating these to the right of the WYSIWYG
-        #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue != 'yes' )
+        #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues.size() == 0 )
             #upstateProcessBlockChooser( $currentPage "main-group/mul-post-h1-chooser" '<div class="row"><div class="col-xs-12">' '</div></div>' )
         #end
     ##
         #if( $generateMiddleContentInvoked.Class.Name && $generateMiddleContentInvoked == true )
         <div class="row">
-        #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue != 'yes' )
+        #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues.size() > 0 &&
+            $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues[ 0 ] != 'yes' )
             <div class="col-xs-12 clearfix">
         #else
             <div class="col-xs-12">
         #end
         #end
     ##
-        #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue == 'yes' )
+        #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues.size() > 0 &&
+            $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues[ 0 ] == 'yes' )
             <div class="rightobject width50">
                 #upstateProcessBlockChooser( $currentPage "main-group/mul-post-h1-chooser" )
             </div>
@@ -809,13 +799,15 @@ doc*###
 ##
     #macro( generateWysiwyg )
         #if( !$siteConfigMap[ 'pagesWithoutWysiwyg' ].contains( $currentPagePath ) )
-            #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue != 'yes' )
+            #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues.size() > 0 &&
+                $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues[ 0 ] != 'yes' )
                 <div>
             #end
             #if( $currentPage.getStructuredDataNode( "main-group/wysiwyg" ).TextValue.Class.Name )
                 $currentPage.getStructuredDataNode( "main-group/wysiwyg" ).TextValue.trim()
             #end
-            #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValue != 'yes' )
+            #if( $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues.size() > 0 &&
+                $currentPage.getStructuredDataNode( "main-group/float-pre-content-blocks-around-wysiwyg-content" ).TextValues[ 0 ] != 'yes' )
                 </div>
             #end
         #end
@@ -899,7 +891,7 @@ doc*###
 doc*###
 #macro( generateScript )
     #if( $siteConfigMap[ 'script' ].Class.Name )
-        #chanwImportScript( "${BRISK[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'SITE_NAME' ] $siteConfigMap[ 'script' ] )
+        #chanwImportScript( "${BRISK_APP[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'script' ] )
     #else
         #chanwInvokeMacro( "${design_namespace}GenerateScript" )
         ##set( $pageElementMap[ 'scriptContent' ] = "#chanwInvokeMacro(""${design_namespace}GenerateScript"")" )
@@ -1032,7 +1024,6 @@ doc*###
     #macro( rwd4GenerateSiteNavForExternalInclude )
         #drulykgHtmlTag( $nullllllll {
             'persistentSettings' : {
-                'absoluteUrlPageExtension' : $siteConfigMap[ 'sitePagePublicFileExtension' ],
                 'convertUrlsToAbsolutePath' : true,
                 'protectTagsWithUrlAttrs' : true
             }
@@ -1095,11 +1086,17 @@ doc*###
 ##
         $S_SYSTEM_VIEW_INTERNAL
 ##
+        #set( $INTERNAL_NAV_FOLDER_NAME     = '_extra' )
+        #set( $INTERNAL_NAV_FORMAT_NAME     = 'internal-nav' )
+        #set( $INTERNAL_NAV_PATH            = $INTERNAL_NAV_FOLDER_NAME + '/' + $INTERNAL_NAV_FORMAT_NAME )
+        #set( $INTERNAL_NAV_FEED_BLOCK_NAME = 'internal-nav-feed' )
+        #set( $INTERNAL_NAV_FEED_BLOCK_PATH = $INTERNAL_NAV_FOLDER_NAME + '/' + $INTERNAL_NAV_FEED_BLOCK_NAME )
+##
         ## Make sure we have an internal nav page
-        #if( $_.locatePage( $APP_INTERNAL_NAV_PATH, $currentPageSiteName ).Class.Name )
+        #if( $_.locatePage( $INTERNAL_NAV_PATH, $currentPageSiteName ).Class.Name )
 ##
             ## Make sure we have a feed block which is designed to consume the internal nav page from the server
-            #set( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block' ] = $_.locateBlock( $APP_INTERNAL_NAV_FEED_BLOCK_PATH, $currentPageSiteName ) )
+            #set( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block' ] = $_.locateBlock( $INTERNAL_NAV_FEED_BLOCK_PATH, $currentPageSiteName ) )
             #if( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block' ].Class.Name )
 ##
                 ## Make sure that the feed block has properly consumed internal nav page from the server
@@ -1110,27 +1107,27 @@ doc*###
                     #set( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ] = $_XPathTool.selectNodes( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml' ], "//nav" ) )
                     #if( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ].size() > 1 )
                         $_SerializerTool.serialize( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ][ 0 ], false )
-                        $_SerializerTool.serialize( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ][ 1 ], false )
+                        $_SerializerTool.serialize( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ][ 1 ], false )  
                     #else
                         ## <nav> tag is missing
-                        <div>Error: The nav tag is missing from the published site://${currentPageSiteName}/${APP_INTERNAL_NAV_PATH} page.</div>
+                        <div>Error: The nav tag is missing from the published site://${currentPageSiteName}/${INTERNAL_NAV_PATH} page.</div>
                     #end
                 #else
                     ## The internal nav feed block could not be consumed as XML
-                    <div>Error: site://${currentPageSiteName}/${APP_INTERNAL_NAV_FEED_BLOCK_PATH} is not working correctly. Possible issues include:</div>
+                    <div>Error: site://${currentPageSiteName}/${INTERNAL_NAV_FEED_BLOCK_PATH} is not working correctly. Possible issues include:</div>
                     <ul>
-                        <li>The URL is incorrect in the site://${currentPageSiteName}/${APP_INTERNAL_NAV_FEED_BLOCK_PATH} block</li>
-                        <li>The site://${currentPageSiteName}/${APP_INTERNAL_NAV_PATH} page needs to be published</li>
-                        <li>The HTML of the published site://${currentPageSiteName}/${APP_INTERNAL_NAV_PATH} page is malformed</li>
+                        <li>The URL is incorrect in the site://${currentPageSiteName}/${INTERNAL_NAV_FEED_BLOCK_PATH} block</li>
+                        <li>The site://${currentPageSiteName}/${INTERNAL_NAV_PATH} page needs to be published</li>
+                        <li>The HTML of the published site://${currentPageSiteName}/${INTERNAL_NAV_PATH} page is malformed</li>
                     </ul>
                 #end
             #else
                 ## Internal nav feed block is missing
-                <div>Error: site://${currentPageSiteName}/${APP_INTERNAL_NAV_FEED_BLOCK_PATH} block is missing. Please create a site://${currentPageSiteName}/${APP_INTERNAL_NAV_FEED_BLOCK_PATH} block and link it to the published destination of the site://${currentPageSiteName}/${APP_INTERNAL_NAV_PATH} page.</div>
+                <div>Error: site://${currentPageSiteName}/${INTERNAL_NAV_FEED_BLOCK_PATH} block is missing. Please create a site://${currentPageSiteName}/${INTERNAL_NAV_FEED_BLOCK_PATH} block and link it to the published destination of the site://${currentPageSiteName}/${INTERNAL_NAV_PATH} page.</div>
             #end
         #else
             ## Internal nav page is missing from Cascade
-            <div>Error: site://${currentPageSiteName}/${APP_INTERNAL_NAV_PATH} page is missing. Please create and publish a site://${currentPageSiteName}/${APP_INTERNAL_NAV_PATH} page.</div>
+            <div>Error: site://${currentPageSiteName}/${INTERNAL_NAV_PATH} page is missing. Please create and publish a site://${currentPageSiteName}/${INTERNAL_NAV_PATH} page.</div>
         #end
         $E_SYSTEM_VIEW_INTERNAL
 ##
@@ -1150,7 +1147,7 @@ doc*###
             #end
             #set( $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ] = $_DisplayTool.list( $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ], '/' ) )
         #end
-        includeFileWithoutRoot( ${_EscapeTool.d}_SERVER[ 'DOCUMENT_ROOT' ] . "/${rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ]}/${APP_EXTERNAL_NAV_FOLDER_NAME}/${APP_EXTERNAL_NAV_FORMAT_NAME}${siteConfigMap[ 'sitePagePublicFileExtension' ]}" );
+        includeFileWithoutRoot( ${_EscapeTool.d}_SERVER[ 'DOCUMENT_ROOT' ] . "/${rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ]}/_extra/external-nav${siteConfigMap[ 'sitePagePublicFileExtension' ]}" );
         $E_PHP_PASSTHROUGH
     #end
 ##
@@ -1373,11 +1370,11 @@ doc*###
     《stepcode》
 doc*###
 #macro( resolvePageTreeName )
-    ## this macro is called after upstateProcessSetupBlock, and $tree_name is already defined there
+    ## this macro is called after upstateProcessSetupBlock, and $siteConfigMap[ 'treeName' ] is already defined there
     ## $page_tree_name is always defined on the page
     #set( $page_tree_name = $currentPage.Metadata.getDynamicField( "tree-picker" ).Value )
     #if( $page_tree_name != "inherited" )
-        #set( $tree_name = $page_tree_name )
+        #set( $siteConfigMap[ 'treeName' ] = $page_tree_name )
     #end
     #resolveRowColumnCssClass
 #end
@@ -1392,15 +1389,15 @@ doc*###
     《stepcode》
 doc*###
 #macro( resolveRowColumnCssClass )
-    #if( $tree_name == "center" )
+    #if( $siteConfigMap[ 'treeName' ] == "center" )
         #set( $middleCssClass = $siteConfigMap[ 'middleCenterWithNoTopLeftNoBottomRightCssClass' ] )
-    #elseif( $tree_name == "left-center" )
+    #elseif( $siteConfigMap[ 'treeName' ] == "left-center" )
         #set( $topCssClass    = $siteConfigMap[ 'topLeftCssClass' ] )
 		#set( $middleCssClass = $siteConfigMap[ 'middleCenterWithNoBottomRightCssClass' ] )
-    #elseif( $tree_name == "center-right" )
+    #elseif( $siteConfigMap[ 'treeName' ] == "center-right" )
         #set( $middleCssClass = $siteConfigMap[ 'middleCenterWithNoTopLeftCssClass' ] )
 		#set( $bottomCssClass = $siteConfigMap[ 'bottomRightCssClass' ] )
-    #elseif( $tree_name == "3-column" )
+    #elseif( $siteConfigMap[ 'treeName' ] == "3-column" )
         #set( $topCssClass    = $siteConfigMap[ 'topLeftCssClass' ] )
 		#set( $middleCssClass = $siteConfigMap[ 'middleCenterCssClass' ] )
 		#set( $bottomCssClass = $siteConfigMap[ 'bottomRightCssClass' ] )
