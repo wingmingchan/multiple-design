@@ -1,0 +1,13 @@
+#chanwCreateNode( {
+    $TREE_NODE_NAME :      "html",
+    $TREE_NODE_START_TAG : "<html $!siteConfigMap['htmlAttributes']><!--#passthrough-top<!DOCTYPE html>#passthrough-top-->",
+    $TREE_NODE_END_TAG :   "</html>" } )
+## children of html
+#chanwAddChildren( $chanwObjectNodeMap[ "html" ] [ 
+    { $TREE_NODE_NAME    : "head", $TREE_NODE_START_TAG : "<head $!siteConfigMap['headAttributes']>", 
+      $TREE_NODE_END_TAG : "</head>"
+    },
+    { $TREE_NODE_NAME : "body", 
+      $TREE_NODE_START_TAG : "<body $!siteConfigMap['bodyAttributes']>",
+      $TREE_NODE_END_TAG : "</body>" }
+] )
