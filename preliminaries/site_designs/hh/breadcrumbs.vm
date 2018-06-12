@@ -1,0 +1,6 @@
+<!-- 2.4 breadcrumbs -->
+<div class="container breadcrumbs">
+<a href="../index.html">Home</a>
+&gt; <a href="index.html"> Our Customers </a>
+&gt; <a href="studio.html"> Design Studio </a>
+</div>
