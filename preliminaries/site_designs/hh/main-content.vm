@@ -1,0 +1,62 @@
+<!-- 2.5 mainContent -->
+<section id="mainContent">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Design Studio</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="active"><a data-toggle="tab" href="#tab1" role="tab" style="border:none;">Design Projects</a></li>
+        <li class=""><a data-toggle="tab" href="#tab2" role="tab" style="border:none;">Process</a></li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade in active" id="tab1">
+            <p dir="ltr"><span>Our award winning team is here to help. In addition to providing great software, we want to provide excellent service. We have an expert design and development team that is ready to help. We know the importance of a strong usable site, and it is our goal to help you create and deliver the best possible product to your audiences.</span>&#160;</p>
+        </div>
+        <div class="tab-pane fade in " id="tab2">
+            
+<h3 dir="ltr"><em class="fa fa-comments"></em> You Talk. We Listen.</h3>
+<p dir="ltr">We want to hear what your hopes and goals are for the project. During this time we discuss the needs, wants, and goals and details of the project.</p>
+<h3 dir="ltr"><em class="fa  fa-lightbulb-o"></em> Brainstorm</h3>
+<p dir="ltr">This is a good way to come up with new ideas and solutions that we would not have otherwise discovered.</p>
+<h3 dir="ltr"><em class="fa fa-edit"></em>Create &amp; Collaborate</h3>
+<p dir="ltr">This involves creating sketches, <g class="gr_ gr_21 gr-alert gr_gramm gr_inline_cards gr_run_anim Punctuation only-ins replaceWithoutSep" data-gr-id="21" id="21">wireframes</g> and design comps. We like to work closely with the client during this phase.</p>
+<h3 dir="ltr"><em class="fa fa-arrow-right"></em> Produce &amp; Deliver</h3>
+<p dir="ltr">We create the site or design in HTML/CSS. Depending on complexity we may team up with our expert developers. We test things out thoroughly and make sure things work on modern browsers.<br/><br/></p>
+<h4 dir="ltr">Lets Chat <br/><a href="mailto:design@hannonhill.com">design@hannonhill.com </a><br/>404-814-0057</h4>
+        </div>
+    </div> <!-- end myTabContent -->
+</div>
+<div class="col-xs-12 col-md-6">
+        <div class="carousel slide" data-ride="carousel" id="carousel">
+		<div class="carousel-inner">
+                    		<div class="item active">
+				<img alt="West Texas A &amp; M Information Technology" class="img-responsive" src="wtam_comp12.jpg"/>
+			</div>
+                        		<div class="item ">
+				<img alt="Macomb College" class="img-responsive" src="macomb_comp1.jpg"/>
+			</div>
+                        		<div class="item ">
+				<img alt="North Central Texas College" class="img-responsive" src="nctc_comp1.jpg"/>
+			</div>
+                    		</div>
+		<a class="left carousel-control" data-slide="prev" href="#carousel">
+			<span class="fa fa-chevron-left"> </span>
+		</a>
+		<a class="right carousel-control" data-slide="next" href="#carousel">
+			<span class="fa fa-chevron-right"> </span>
+		</a>
+</div>
+</div>
+
+<style>
+.calloutBlue p {
+    margin: 0px;
+}
+</style>
+</div>
+</div>
+</section>
