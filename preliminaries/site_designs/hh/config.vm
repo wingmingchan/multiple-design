@@ -1,0 +1,5 @@
+#set( $siteConfigMap = {
+    "htmlAttributes" : "xmlns=""http://www.w3.org/1999/xhtml"" lang=""en""",
+    "headAttributes" : "",
+    "bodyAttributes" : "data-offset=""100"" data-spy=""scroll"" data-target="".navbar-collapse"""
+} )
