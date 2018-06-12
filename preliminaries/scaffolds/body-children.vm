@@ -1,0 +1,11 @@
+## children of body
+#chanwAddChildren( $chanwObjectNodeMap[ "body" ] [
+    { $TREE_NODE_NAME : "google",        $TREE_NODE_CODE : '#generateGoogleTagManager' },
+    { $TREE_NODE_NAME : "navbar",        $TREE_NODE_CODE : '#generateNavbar' },
+    { $TREE_NODE_NAME : "title-section", $TREE_NODE_CODE : '#generateTitleSection' },
+    { $TREE_NODE_NAME : "breadcrumbs",   $TREE_NODE_CODE : '#generateBreadcrumbs' },
+    { $TREE_NODE_NAME : "main-content",  $TREE_NODE_CODE : '#generateMainContent' },
+    { $TREE_NODE_NAME : "contact",       $TREE_NODE_CODE : '#generateContact' },
+    { $TREE_NODE_NAME : "footer",        $TREE_NODE_CODE : '#generateFooter' },
+    { $TREE_NODE_NAME : "script",        $TREE_NODE_CODE : '#generateScript' }
+] )
