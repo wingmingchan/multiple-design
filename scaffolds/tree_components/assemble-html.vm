@@ -1,12 +1,18 @@
 #set( $mapping = {
-    "create-html"                 : "app/scaffolds/tree_components/html",
-    "add-head-children"           : "app/scaffolds/tree_components/head-children",
-    "add-body-children"           : "app/scaffolds/tree_components/body-children",
-    "add-header-children"         : "app/scaffolds/tree_components/header-children",
-    "add-header-row-children"     : "app/scaffolds/tree_components/header-row-children",
-    "add-main-children"           : "app/scaffolds/tree_components/main-top-middle",
-    "add-middle-element-children" : "app/scaffolds/tree_components/middle-element-children",
-    "add-innermain-children"      : "app/scaffolds/tree_components/innermain-children"
+    "create-html"                          : "app/scaffolds/tree_components/html",
+    "define-html-behaviors"                : "app/scaffolds/tree_components/html-behaviors",
+    "add-head-children"                    : "app/scaffolds/tree_components/head-children",
+    "define-head-children-behaviors"       : "app/scaffolds/tree_components/head-children-behaviors",
+    "add-body-children"                    : "app/scaffolds/tree_components/body-children",
+    "define-body-children-behaviors"       : "app/scaffolds/tree_components/body-children-behaviors",
+    "add-header-children"                  : "app/scaffolds/tree_components/header-children",
+    "define-header-children-behaviors"     : "app/scaffolds/tree_components/header-children-behaviors",
+    "add-header-row-children"              : "app/scaffolds/tree_components/header-row-children",
+    "define-header-row-children-behaviors" : "app/scaffolds/tree_components/header-row-children-behaviors",
+    "add-main-children"                    : "app/scaffolds/tree_components/main-top-middle",
+    "add-middle-element-children"          : "app/scaffolds/tree_components/middle-element-children",
+    "add-innermain-children"               : "app/scaffolds/tree_components/innermain-children",
+    "define-innermain-children-behaviors"  : "app/scaffolds/tree_components/innermain-children-behaviors"
 } )
 
 #chanwAssembleTree( $mapping )
