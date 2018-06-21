@@ -1,5 +1,11 @@
 ## This format defines the innermain for the center column of a page
 ## dependency: the main node and middleElement node must be created first
+#*
+Why the extra layer innermain:
+1. What can be found in innermain are 5 elements, and there is no root element containing these 5 elements
+2. These five elements can appear in a div whose class is row, or they can be used in an included environment
+3. In the latter case, the class row cannot be used.
+*#
 #chanwAddChildren( $chanwObjectNodeMap[ "middleElement" ] [
     { $TREE_NODE_NAME : "innermain" }
 ] )
