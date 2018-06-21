@@ -1,28 +1,17 @@
 #*
-{ $TREE_NODE_NAME : "body-placeholder" },
+Defines children of body
 *#
 #chanwAddChildren( $chanwObjectNodeMap[ "body" ] [
+    { $TREE_NODE_NAME : "body-placeholder1" },
     { $TREE_NODE_NAME : "google-noscript" },
     { $TREE_NODE_NAME : "header" },
-    { $TREE_NODE_NAME : "siteNav",     $TREE_NODE_CODE : '#outputPageElement(''siteNavForPageRender'')' },
+    { $TREE_NODE_NAME : "siteNav" },
     { $TREE_NODE_NAME : "breadcrumbs" },
-    { $TREE_NODE_NAME : "preMain",     $TREE_NODE_CODE : '#outputPageElement(''preMain'')' },
+    { $TREE_NODE_NAME : "preMain" },
     { $TREE_NODE_NAME : "main" },
-    { $TREE_NODE_NAME : "postMain",    $TREE_NODE_CODE : '#outputPageElement(''postMain'')' },
+    { $TREE_NODE_NAME : "postMain" },
     { $TREE_NODE_NAME : "footer" },
-    { $TREE_NODE_NAME : "script",      $TREE_NODE_CODE : '#outputPageElement(''script'')' },
-    { $TREE_NODE_NAME : "cd-top",      $TREE_NODE_TEXT : "<a class=""cd-top"" href=""#0"">Top</a>" }
+    { $TREE_NODE_NAME : "script" },
+    { $TREE_NODE_NAME : "cd-top" },
+    { $TREE_NODE_NAME : "body-placeholder2" }
 ] )
-## behaviors of children
-#set( $chanwObjectNodeMap[ "google-noscript" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''googleTagManagerNoscript'')' )
-#set( $chanwObjectNodeMap[ "header" ].UserObject[ $TREE_NODE_START_TAG ] =
-    "<$siteConfigMap[ 'headerElement' ]><div class=""header-container"">" )
-#set( $chanwObjectNodeMap[ "header" ].UserObject[ $TREE_NODE_END_TAG ] = 
-    "</div></$siteConfigMap[ 'headerElement' ]>" )
-#set( $chanwObjectNodeMap[ "breadcrumbs" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''breadcrumbs'')' )
-#set( $chanwObjectNodeMap[ "footer" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''footer'')' )
-#set( $chanwObjectNodeMap[ "main" ].UserObject[ $TREE_NODE_START_TAG ] =
-    "<${siteConfigMap[ 'wrapperElement' ].trim()}
- ${wrapperIdAttribute} class=""${containerClass}""><div class=""row"">" )
-#set( $chanwObjectNodeMap[ "main" ].UserObject[ $TREE_NODE_END_TAG ] = "</div></${siteConfigMap[ 'wrapperElement' ].trim()}
->" )
