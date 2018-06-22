@@ -1,0 +1,6 @@
+#* Defines the behaviors of children of head *#
+#set( $chanwObjectNodeMap[ "meta" ].UserObject[ $TREE_NODE_CODE ]        = '#outputPageElement(''meta'')' )
+#set( $chanwObjectNodeMap[ "title" ].UserObject[ $TREE_NODE_CODE ]       = '#outputPageElement(''title'')' )
+#set( $chanwObjectNodeMap[ "google" ].UserObject[ $TREE_NODE_CODE ]      = '#outputPageElement(''googleTagManager'')' )
+#set( $chanwObjectNodeMap[ "link" ].UserObject[ $TREE_NODE_CODE ]        = '#outputPageElement(''link'')' )
+#set( $chanwObjectNodeMap[ "head-script" ].UserObject[ $TREE_NODE_CODE ] = '' )
