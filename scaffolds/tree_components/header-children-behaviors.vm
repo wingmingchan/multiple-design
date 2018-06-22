@@ -1,0 +1,7 @@
+## This format defines behaviors of children of header
+#set( $chanwObjectNodeMap[ "header-row" ].UserObject[ $TREE_NODE_START_TAG ]    =
+    "<div class=""container""><div class=""row header-row"">" )
+#set( $chanwObjectNodeMap[ "header-row" ].UserObject[ $TREE_NODE_END_TAG ]      = 
+    "</div></div>" )
+#set( $chanwObjectNodeMap[ "global-nav-sidebar" ].UserObject[ $TREE_NODE_CODE ] = 
+    '#outputPageElement(''globalNavSidebar'')' )
