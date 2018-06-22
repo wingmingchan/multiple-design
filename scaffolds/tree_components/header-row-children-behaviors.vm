@@ -1,0 +1,4 @@
+## This format defines behaviors of children header-row
+#set( $chanwObjectNodeMap[ "logo" ].UserObject[ $TREE_NODE_CODE ]              = '#outputPageElement(''logo'')' )
+#set( $chanwObjectNodeMap[ "site-title" ].UserObject[ $TREE_NODE_CODE ]        = '#outputPageElement(''siteTitle'')' )
+#set( $chanwObjectNodeMap[ "global-nav-button" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''globalNavButton'')' )
