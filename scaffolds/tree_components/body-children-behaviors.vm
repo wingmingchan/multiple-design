@@ -1,0 +1,15 @@
+## behaviors of children of body
+#set( $chanwObjectNodeMap[ "google-noscript" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''googleTagManagerNoscript'')' )
+#set( $chanwObjectNodeMap[ "header" ].UserObject[ $TREE_NODE_START_TAG ]     =
+    "<$siteConfigMap[ 'headerElement' ]><div class=""header-container"">" )
+#set( $chanwObjectNodeMap[ "header" ].UserObject[ $TREE_NODE_END_TAG ]       = "</div></$siteConfigMap[ 'headerElement' ]>" )
+#set( $chanwObjectNodeMap[ "siteNav" ].UserObject[ $TREE_NODE_CODE ]         = '#outputPageElement(''siteNavForPageRender'')' )
+#set( $chanwObjectNodeMap[ "breadcrumbs" ].UserObject[ $TREE_NODE_CODE ]     = '#outputPageElement(''breadcrumbs'')' )
+#set( $chanwObjectNodeMap[ "preMain" ].UserObject[ $TREE_NODE_CODE ]         = '#outputPageElement(''preMain'')' )
+#set( $chanwObjectNodeMap[ "postMain" ].UserObject[ $TREE_NODE_CODE ]        = '#outputPageElement(''postMain'')' )
+#set( $chanwObjectNodeMap[ "footer" ].UserObject[ $TREE_NODE_CODE ]          = '#outputPageElement(''footer'')' )
+#set( $chanwObjectNodeMap[ "script" ].UserObject[ $TREE_NODE_CODE ]          = '#outputPageElement(''script'')' )
+#set( $chanwObjectNodeMap[ "cd-top" ].UserObject[ $TREE_NODE_TEXT ]          = "<a class=""cd-top"" href=""#0"">Top</a>" )
+#set( $chanwObjectNodeMap[ "main" ].UserObject[ $TREE_NODE_START_TAG ]       = "<${siteConfigMap[ 'wrapperElement' ].trim()}" +
+    " ${wrapperIdAttribute} class=""${containerClass}""><div class=""row"">" )
+#set( $chanwObjectNodeMap[ "main" ].UserObject[ $TREE_NODE_END_TAG ]         = "</div></${siteConfigMap[ 'wrapperElement' ].trim()}>" )
