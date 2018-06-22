@@ -1,0 +1,6 @@
+#* Defines the behaviors of children of innermain *#
+#set( $chanwObjectNodeMap[ "pre-h1-choosers" ].UserObject[ $TREE_NODE_CODE ]       = '#outputPageElement(''preH1'')' )
+#set( $chanwObjectNodeMap[ "h1" ].UserObject[ $TREE_NODE_CODE ]                    = '#outputPageElement(''h1'')' )
+#set( $chanwObjectNodeMap[ "post-h1-choosers" ].UserObject[ $TREE_NODE_CODE ]      = '#outputPageElement(''postH1'')' )
+#set( $chanwObjectNodeMap[ "wysiwyg" ].UserObject[ $TREE_NODE_CODE ]               = '#outputPageElement(''wysiwyg'')' )
+#set( $chanwObjectNodeMap[ "post-wysiwyg-choosers" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''postWysiwyg'')' )
