@@ -208,6 +208,11 @@
             #end
         #end
     #end
+##
+    #set( $tree_config_block = $block_processSetupBlock.getStructuredDataNode( "setup-group/advanced/tree-config-block" ).Asset )
+    #if( $tree_config_block.Class.Name )
+        #set( $siteConfigMap[ 'treeConfigBlock' ] = $tree_config_block )
+    #end
 #end
 ##
 ##
@@ -308,10 +313,29 @@
     #set( $siteConfigMap[ 'middleCenterWithNoBottomRightCssClass' ] = "col-md-9" )
     #set( $siteConfigMap[ 'footerElement' ]                         = "footer" )
     #set( $siteConfigMap[ 'pageCssClass' ]                          = "bg-white" )
+    #set( $siteConfigMap[ 'passThroughTopCode' ]                    = 
+"<!--#passthrough-top<?php
+${_EscapeTool.d}responsive = true;
+define( 'CASCADE_DESIGN_NAMESPACE', '$!{design_namespace.replaceAll( ""'"", ""\'"" )}' );
+define( 'CASCADE_SITE_NAME', '$!{currentPageSiteName.replaceAll( ""'"", ""\'"" )}' );
+require_once('cascade/cascade_global.php');
+?><!DOCTYPE html>#passthrough-top-->" )
+    #set( $siteConfigMap[ 'treeConfigBlock' ]                       = '' )
 ##
     ## the default layout of this design
     #set( $siteConfigMap[ 'treeName' ] = 'left-center' )
     #set( $siteConfigMap[ 'htmlName' ] = '' )
+##
+    ## override the default for designs
+    #chanwInvokeMacro( "${design_namespace}ResetSiteConfigMap" )
+##
+    #macro( rwd4ResetSiteConfigMap )
+        ##set( $siteConfigMap[ 'wrapperElement' ] = "div" )
+    #end
+##
+    #macro( rwd4TreeResetSiteConfigMap )
+        #rwd4ResetSiteConfigMap
+    #end
 #end
 ##
 ##
