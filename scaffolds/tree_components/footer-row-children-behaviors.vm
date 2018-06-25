@@ -1,0 +1,2 @@
+## This format defines the behaviors of children of footer-row
+#set( $chanwObjectNodeMap[ "footer-content" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''footerContent'')' )
