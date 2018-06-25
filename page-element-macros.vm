@@ -2,7 +2,7 @@
 《documentationautoflow》
 《step id=“pageElementMacrosInitialize”》
     《title》
-Set up the 《code》$pageElementMap《/code》 map 
+Set up the 《code》$pageElementMap《/code》 map
 and process preMain, main, and postMain.
     《/title》
     《content》
@@ -115,6 +115,7 @@ Generate the element wrapping the bottom contents
     《stepcode》
 doc*###
 #macro( generateBottomElement )
+    #resolvePageTreeName
     #chanwInvokeMacro( "${design_namespace}GenerateBottomElement" )
 ##
     #macro( rwd4GenerateBottomElement )
@@ -124,7 +125,6 @@ doc*###
     #end
 ##
     #macro( rwd4TreeGenerateBottomElement )
-        #resolvePageTreeName
         #rwd4GenerateBottomElement
     #end
 #end
@@ -318,17 +318,15 @@ doc*###
     #if( $siteConfigMap[ 'footer' ].Class.Name )
         #chanwImportScript( "${BRISK_APP[ 'SITE_DESIGNS_PATH_NTS' ]}/${design_namespace}" $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'footer' ] )
     #else
-         #chanwInvokeMacro( "${design_namespace}GenerateFooter" )
+         #chanwInvokeMacro( "${design_namespace}GenerateFooterContent" )
+         #chanwInvokeMacro( "${design_namespace}GenerateLastModified" )
     #end
+#end
 ##
-    #macro( rwd4GenerateFooter )
-<$siteConfigMap[ 'footerElement' ] id="footer" role="contentinfo">
-#rwd4OutputFooterContent
-#rwd4OutputLastModified
-</$siteConfigMap[ 'footerElement' ]>    
-    #end
+#macro( generateFooterContent )
+    #chanwInvokeMacro( "${design_namespace}GenerateFooterContent" )
 ##
-    #macro( rwd4OutputFooterContent )
+    #macro( rwd4GenerateFooterContent )
 <div class="container" id="footer-content">
 ##
 $S_SYSTEM_VIEW_INTERNAL
@@ -365,8 +363,15 @@ $E_PHP_PASSTHROUGH
 $E_SYSTEM_VIEW_EXTERNAL
 </div>    
     #end
+    #macro( rwd4TreeGenerateFooterContent )
+        #rwd4GenerateFooterContent
+    #end
+#end
 ##
-    #macro( rwd4OutputLastModified )
+#macro( generateLastModified )
+    #chanwInvokeMacro( "${design_namespace}GenerateLastModified" )
+##
+    #macro( rwd4GenerateLastModified )
 <div id="last-modified">
 <div id="copyright">All contents copyright © 1988-${S_SYSTEM_VIEW_INTERNAL}${chanwCurrentYearInt}$E_SYSTEM_VIEW_INTERNAL
 $S_SYSTEM_VIEW_EXTERNAL$S_PHP_PASSTHROUGH ${_EscapeTool.d}date = getdate(); ${_EscapeTool.d}thisyear = ${_EscapeTool.d}date['year']; echo "${_EscapeTool.d}thisyear, "; $E_PHP_PASSTHROUGH$E_SYSTEM_VIEW_EXTERNAL
@@ -404,8 +409,8 @@ ${S_SYSTEM_VIEW_INTERNAL}Contact $contactName with questions about the content o
 </div>
     #end
 ##
-    #macro( rwd4TreeGenerateFooter )
-        #rwd4GenerateFooter
+    #macro( rwd4TreeGenerateLastModified )
+        #rwd4GenerateLastModified
     #end
 #end
 ##
@@ -735,6 +740,7 @@ and the WYSIWYG
     《stepcode》
 doc*###
 #macro( generateMiddleContent $innermainTreePath_generateMiddleContent )
+    ## the innermain is generated here
     #set( $generateMiddleContentInvoked = true )
     #if( $innermainTreePath_generateMiddleContent.Class.Name && $innermainTreePath_generateMiddleContent.trim() != "" )
         #set( $chanwInnermainTreeName = $innermainTreePath_generateMiddleContent.trim() )
@@ -743,7 +749,7 @@ doc*###
     #end
 ##
     #import( $chanwInnermainTreeName )
-    ## this will invoke the five inner macros
+    ## this will invoke the 5 inner macros to generate 5 elements without a root
     #chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'innermain' ] )
 ##
     #macro( generatePreH1 )
@@ -1206,6 +1212,7 @@ Generate the element wrapping topContent
 doc*###
 #macro( generateTopElement )
     #getTopMiddleBottomInfo
+    #resolvePageTreeName
     #chanwInvokeMacro( "${design_namespace}GenerateTopElement" )
 ##
     #macro( rwd4GenerateTopElement )
@@ -1215,7 +1222,6 @@ doc*###
     #end
 ##
     #macro( rwd4TreeGenerateTopElement )
-        #resolvePageTreeName
         #rwd4GenerateTopElement
     #end
 #end
