@@ -23,14 +23,15 @@ setup-group;siteInfo;siteLocalCSS
 setup-group;advanced;siteNavHomeString
 setup-group;advanced;breadcrumbsSeparatorString
 setup-group;advanced;breadcrumbsHomeString
+setup-group;advanced;tree-config-block
 </pre></div></documentation>
 doc*###-->
-	<group identifier="setup-group" label="Setup">
+	<group identifier="setup-group" label="Setup" restrict-to-groups="CWT-Designers, Administrators">
 		<group collapsed="true" identifier="contact" label="Contact Information">
 			<text help-text="Enter the full name to be displayed in the footer" identifier="siteContactPerson" label="Contact Person Name"/>
 			<text help-text="Enter the first part of the email; e.g. doej" identifier="siteContactEmail" label="Contact Person Email"/>
 		</group>
-		<group collapsed="true" identifier="siteInfo" label="Site Information">
+		<group collapsed="true" identifier="siteInfo" label="Site Information" restrict-to-groups="Administrators,CWT-Designers">
 			<text help-text="Site Title" identifier="siteTitleString" label="Site Title"/>
 			<asset identifier="mul-pagesWithoutH1" label="Pages without H1" multiple="true" type="page"/>
 			<asset identifier="mul-pagesWithoutBreadcrumbs" label="Pages without Breadcrumbs" multiple="true" type="page"/>
@@ -54,10 +55,11 @@ doc*###-->
 			<text help-text="The name of the format" identifier="siteLogoFormatName" label="Logo Format Name"/>
 			<asset identifier="siteLocalCSS" label="Local CSS" type="file"/>
 		</group>
-		<group collapsed="true" identifier="advanced" label="Advanced Settings">
+		<group collapsed="true" identifier="advanced" label="Advanced Settings" restrict-to-groups="Administrators,CWT-Designers">
 			<text identifier="siteNavHomeString" label="Site Nav Home String"/>
 			<text help-text="A character like &gt;" identifier="breadcrumbsSeparatorString" label="Breadcrumbs Separator"/>
 			<text identifier="breadcrumbsHomeString" label="Breadcrumbs Home String"/>
+			<asset help-text="Attach a Velocity block here to configure the tree" identifier="tree-config-block" label="Tree Config Block" type="block"/>
 		</group>
 	</group>
 </system-data-structure>
