@@ -12,7 +12,11 @@
     "add-main-children"                    : "app/scaffolds/tree_components/main-top-middle",
     "add-middle-element-children"          : "app/scaffolds/tree_components/middle-element-children",
     "add-innermain-children"               : "app/scaffolds/tree_components/innermain-children",
-    "define-innermain-children-behaviors"  : "app/scaffolds/tree_components/innermain-children-behaviors"
+    "define-innermain-children-behaviors"  : "app/scaffolds/tree_components/innermain-children-behaviors",
+    "add-footer-children"                  : "app/scaffolds/tree_components/footer-children",
+    "add-footer-row-children"              : "app/scaffolds/tree_components/footer-row-children",
+    "define-footer-row-children-behaviors" : "app/scaffolds/tree_components/footer-row-children-behaviors",
+    "define-last-modified-behaviors"       : "app/scaffolds/tree_components/last-modified-behaviors"
 } )
 
 #chanwAssembleTree( $mapping )
