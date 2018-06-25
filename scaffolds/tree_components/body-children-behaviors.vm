@@ -7,7 +7,8 @@
 #set( $chanwObjectNodeMap[ "breadcrumbs" ].UserObject[ $TREE_NODE_CODE ]     = '#outputPageElement(''breadcrumbs'')' )
 #set( $chanwObjectNodeMap[ "preMain" ].UserObject[ $TREE_NODE_CODE ]         = '#outputPageElement(''preMain'')' )
 #set( $chanwObjectNodeMap[ "postMain" ].UserObject[ $TREE_NODE_CODE ]        = '#outputPageElement(''postMain'')' )
-#set( $chanwObjectNodeMap[ "footer" ].UserObject[ $TREE_NODE_CODE ]          = '#outputPageElement(''footer'')' )
+#set( $chanwObjectNodeMap[ "footer" ].UserObject[ $TREE_NODE_START_TAG ]     = "<$siteConfigMap[ 'footerElement' ] id=""footer"" role=""contentinfo"">" )
+#set( $chanwObjectNodeMap[ "footer" ].UserObject[ $TREE_NODE_END_TAG ]       = "</$siteConfigMap[ 'footerElement' ]>" )
 #set( $chanwObjectNodeMap[ "script" ].UserObject[ $TREE_NODE_CODE ]          = '#outputPageElement(''script'')' )
 #set( $chanwObjectNodeMap[ "cd-top" ].UserObject[ $TREE_NODE_TEXT ]          = "<a class=""cd-top"" href=""#0"">Top</a>" )
 #set( $chanwObjectNodeMap[ "main" ].UserObject[ $TREE_NODE_START_TAG ]       = "<${siteConfigMap[ 'wrapperElement' ].trim()}" +
