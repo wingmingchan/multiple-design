@@ -1,0 +1,2 @@
+## This format defines the behaviors of last-modified.
+#set( $chanwObjectNodeMap[ "last-modified" ].UserObject[ $TREE_NODE_CODE ] = '#outputPageElement(''lastModified'')' )
