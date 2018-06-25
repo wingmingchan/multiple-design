@@ -1,0 +1,5 @@
+## This format defines the children in the row of <footer>
+#chanwAddChildren( $chanwObjectNodeMap[ "footer-row" ] [
+    { $TREE_NODE_NAME : "footer-content" },
+    { $TREE_NODE_NAME : "footer-row-placeholder" }
+] )
