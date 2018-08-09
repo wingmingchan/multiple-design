@@ -1,0 +1,6 @@
+#* Use this format to create a tree rooted at innermain *#
+#if( !$chanwObjectNodeMap[ "innermain" ].Class.Name )
+#chanwCreateNode( { $TREE_NODE_NAME : "innermain" } )
+#end
+#set( $chanwObjectNodeMap[ "innermain" ].UserObject[ $TREE_NODE_START_TAG ] = '<div class="row"><div class="col-xs-12">' )
+#set( $chanwObjectNodeMap[ "innermain" ].UserObject[ $TREE_NODE_END_TAG ] = '</div></div>' )
