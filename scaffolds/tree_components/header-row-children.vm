@@ -2,5 +2,6 @@
 #chanwAddChildren( $chanwObjectNodeMap[ "header-row" ] [
     { $TREE_NODE_NAME : "logo" },
     { $TREE_NODE_NAME : "site-title" },
-    { $TREE_NODE_NAME : "global-nav-button" }
+    { $TREE_NODE_NAME : "global-nav-button" },
+    { $TREE_NODE_NAME : "header-row-placeholder" }
 ] )
