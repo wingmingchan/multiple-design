@@ -1,0 +1,6 @@
+#set( $mapping = {
+    "create-innermain"       : "app/scaffolds/tree_components/innermain",
+    "add-innermain-children" : "app/scaffolds/tree_components/innermain-children"
+} )
+
+#chanwAssembleTree( $mapping )
