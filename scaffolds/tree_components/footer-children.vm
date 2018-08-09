@@ -1,6 +1,5 @@
 ## This format defines the two children of <footer>
 #chanwAddChildren( $chanwObjectNodeMap[ "footer" ] [
     { $TREE_NODE_NAME : "footer-row" },
-    { $TREE_NODE_NAME : "last-modified" },
     { $TREE_NODE_NAME : "footer-placehoder" }
 ] )
