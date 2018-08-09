@@ -6,16 +6,7 @@
     $TREE_NODE_END_TAG : "</div></${siteConfigMap[ 'wrapperElement' ].trim()}>"
 } )
 #end
-#if( $chanwObjectNodeMap[ "topElement" ].Class.Name )
-    #set( $void = $chanwObjectNodeMap[ "main" ].remove( $chanwObjectNodeMap[ "topElement" ] ) )
-#end
-#if( $chanwObjectNodeMap[ "middleElement" ].Class.Name )
-    #set( $void = $chanwObjectNodeMap[ "main" ].remove( $chanwObjectNodeMap[ "middleElement" ] ) )
-#end
-#if( $chanwObjectNodeMap[ "bottomElement" ].Class.Name )
-    #set( $void = $chanwObjectNodeMap[ "main" ].remove( $chanwObjectNodeMap[ "bottomElement" ] ) )
-#end
-
+#set( $void = $chanwObjectNodeMap[ "main" ].removeAllChildren() )
 #chanwAddChildren( $chanwObjectNodeMap[ "main" ] [
     { $TREE_NODE_NAME : "topElement",    $TREE_NODE_CODE : '#outputPageElement(''topElement'')' },
     { $TREE_NODE_NAME : "middleElement",
