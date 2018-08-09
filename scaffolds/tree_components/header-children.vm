@@ -1,5 +1,6 @@
 ## This format defines the two children of <header>
 #chanwAddChildren( $chanwObjectNodeMap[ "header" ] [
     { $TREE_NODE_NAME : "header-row" },
-    { $TREE_NODE_NAME : "global-nav-sidebar" }
+    { $TREE_NODE_NAME : "global-nav-sidebar" },
+    { $TREE_NODE_NAME : "header-placehoder" }
 ] )
