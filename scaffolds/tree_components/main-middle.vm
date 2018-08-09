@@ -1,0 +1,15 @@
+## This format defines the 1-column page layout (center)
+#if( !$chanwObjectNodeMap[ "main" ].Class.Name )
+#chanwCreateNode( {
+    $TREE_NODE_NAME : "main",
+    $TREE_NODE_START_TAG : "<${siteConfigMap[ 'wrapperElement' ].trim()} ${wrapperIdAttribute} class=""${containerClass}""><div class=""row"">",
+    $TREE_NODE_END_TAG : "</div></${siteConfigMap[ 'wrapperElement' ].trim()}>"
+} )
+#end
+#set( $void = $chanwObjectNodeMap[ "main" ].removeAllChildren() )
+#chanwAddChildren( $chanwObjectNodeMap[ "main" ] [
+    { $TREE_NODE_NAME : "middleElement",
+        $TREE_NODE_START_TAG : "<${siteConfigMap[ 'middleElement' ].trim()} ${middleIdAttribute} class=""${middleCssClass}"">",
+        $TREE_NODE_END_TAG   : "</${siteConfigMap[ 'middleElement' ].trim()}>"
+    }
+] )
