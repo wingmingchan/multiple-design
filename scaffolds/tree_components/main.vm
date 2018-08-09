@@ -1,0 +1,5 @@
+#*
+Use this format to create a tree rooted at main.
+This main is a striped-down version of the main associated with html.
+*#
+#chanwCreateNode( { $TREE_NODE_NAME : "main" } )
