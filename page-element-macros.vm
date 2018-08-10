@@ -46,15 +46,15 @@ doc*###
     #macro( rwd4AddBaseAssets )
         ## Set the base assets needed by RWD4
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/bootstrap/3.3.6/css/bootstrap.css' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/global-rwd4-v8.css' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/global-rwd4-v11.css' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/print-rwd4.css' { 'assetPosition' : 0, 'attrs' : { 'media' : 'print' } } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/jquery-ui/1.11.4/base/jquery-ui.css' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/vlightbox1.css' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/visuallightbox.css' { 'assetPosition' : 0, 'attrs' : { 'media' : 'screen' } } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/flexslider.css' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/suny-upstate-mega-menu/1.2.3/suny-upstate-mega-menu.css' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/smartmenus/1.0.1/css/sm-core-css-suny-upstate-custom.css' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/smartmenus/1.0.1/css/sm-blue/sm-blue-suny-upstate-custom.css' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/flexslider-v3.css' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/suny-upstate-mega-menu/1.2.4/suny-upstate-mega-menu.css' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/smartmenus/1.1.0/css/sm-core-css-suny-upstate-custom.css' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/smartmenus/1.1.0/css/sm-blue/sm-blue-suny-upstate-custom.css' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/upstate-mini-menu-1.0.0.css' { 'assetPosition' : 0 } )
 ##
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/jquery/1.12.4/jquery.js' { 'assetPosition' : 0 } )
@@ -66,15 +66,15 @@ doc*###
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/bootstrap/3.3.6/js/bootstrap.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/responsiveslides.min.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/jquery-migrate-1.3.0.js' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/accordion_v2.js' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/accordion_v5.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/jquery.visuallightbox-5.1.23j.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/jquery.flexslider.js' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/suny-upstate-mega-menu/1.2.3/suny-upstate-mega-menu.js' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/smartmenus/1.0.1/js/jquery.smartmenus.js' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/suny-upstate-mega-menu/1.2.4/suny-upstate-mega-menu.js' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/smartmenus/1.1.0/js/jquery.smartmenus.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/jquery-scroll-to/2.1.1/jquery.scrollto.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/simpler-sidebar/2.2.4/simpler-sidebar.min.js' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/upstate-sidebar-v1.js' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/activate-upstate-classic-mega-mini-menus-1.0.0.js' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/upstate-sidebar-v2.js' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/activate-upstate-classic-mega-mini-menus-1.0.1.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/defer-jquery-execute.js' { 'assetPosition' : 0 } )
 ##
         ## These will be encased inside of <!--[if lt IE 9]><![endif]-->
@@ -451,7 +451,7 @@ doc*###
         #chanwImportScript( $BRISK_APP[ 'COMPONENTS_PATH_NTS' ] $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'google-tag-manager-noscript' ] )
     #else
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MJNRN6"
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJNRN6"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     #end
