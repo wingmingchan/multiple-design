@@ -1,0 +1,3 @@
+#macro( processVelocityGroup $map )
+    #evaluate( $map[ "velocity-group;velocity" ][ $KEY_NODE ].TextValue.trim() )
+#end
