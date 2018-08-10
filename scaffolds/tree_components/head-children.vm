@@ -4,5 +4,6 @@
     { $TREE_NODE_NAME : "google" },
     { $TREE_NODE_NAME : "link" },
     { $TREE_NODE_NAME : "head-script" },
-    { $TREE_NODE_NAME : "head-code" }
+    { $TREE_NODE_NAME : "head-code" },
+    { $TREE_NODE_NAME : "head-placeholder" }
 ] )
