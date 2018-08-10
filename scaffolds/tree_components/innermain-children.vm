@@ -7,5 +7,6 @@
     { $TREE_NODE_NAME : "h1" },
     { $TREE_NODE_NAME : "post-h1-choosers" },
     { $TREE_NODE_NAME : "wysiwyg" },
-    { $TREE_NODE_NAME : "post-wysiwyg-choosers" }
+    { $TREE_NODE_NAME : "post-wysiwyg-choosers" },
+    { $TREE_NODE_NAME : "innermain-placeholder" }
 ] )
