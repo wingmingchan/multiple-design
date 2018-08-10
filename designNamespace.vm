@@ -1,0 +1,41 @@
+#macro( resolveDesignNamespace )
+##
+    ## Declare the default site design
+    ## This must be a valid key of $site_designs
+    #set( $design_namespace = 'rwd4Tree' )
+##
+    ## Declare a map of supported site designs
+    ## You can fill in the siteNames with site names specific to a design
+    #set( $site_designs = {
+        'rwd4': {
+            'siteNames': []
+        },
+        'rwd4Tree': {
+            'siteNames': []
+        },
+        'hh': {
+            'siteNames': []
+        },
+        'iu': {
+            'siteNames': []
+        },
+        'uco': {
+            'siteNames': []
+        }
+    } )
+##
+    ## Check if the current rendering page's site name is associated to a specific design
+    #foreach( $key in $site_designs.keySet() )
+        #if( $site_designs[ $key ][ 'siteNames' ].contains( $currentPageSiteName ) )
+            #set( $design_namespace = $key )
+        #end
+    #end
+#end
+##
+##
+#macro( isDesignNamespaceValid )
+    #set( $isDesignNamespaceValid = false )
+    #if( $site_designs[ $design_namespace ].Class.Name )
+        #set( $isDesignNamespaceValid = true )
+    #end
+#end
