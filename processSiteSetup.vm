@@ -162,7 +162,7 @@
     #end
 ##
     ## $block_tree_name and $siteConfigMap[ 'treeName' ], are always defined here
-    #set( $block_tree_name = $block_upstateProcessSetupBlock.Metadata.getDynamicField( "main-tree-picker" ).Value )
+    #set( $block_tree_name = $block_processSetupBlock.Metadata.getDynamicField( "main-tree-picker" ).Value )
     #if( !$siteConfigMap[ 'treeName' ].Class || $block_tree_name != "inherited" )
         #set( $siteConfigMap[ 'treeName' ] = $block_tree_name )
     #end
@@ -228,7 +228,7 @@
 ##
     ## page elements; for partial pages, put names of variables referencing elements in the list
     ## a page using this list must exist in _extra; if the list is empty, the page will be blank
-    #set( $siteConfigMap[ "includeElements" ] = [] )
+    #set( $siteConfigMap[ 'includeElements' ] = [] )
 ##
     ## theme and local stylesheet
     #set( $siteConfigMap[ 'siteThemeCSS' ]   = "" )
