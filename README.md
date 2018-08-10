@@ -2,8 +2,10 @@
 
 In this repository, I am posting the newest implementation files of the tree-driven multiple-design master site approach. Code posted here is the code written by the Upstate team (Wing, German, and Peter), and used in production.
 
-_wing.csse last modified: 7/20/2018<br />
+<pre>
+_wing.csse last modified: 7/20/2018
 code updated:             8/10/2018
+</pre>
 
 All the code I can post used in the implementation of the tree-driven multiple-design master site can be found here. What are not included here are the library Velocity formats, which are posted under https://github.com/wingmingchan/velocity
 
