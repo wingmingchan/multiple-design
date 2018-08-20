@@ -1,4 +1,4 @@
-## this format retrieves a data definition
+## this format retrieves two data definitions
 
 ## locate the dd block
 #set( $block = $_.locateBlock( "core/base-assets/block-multimedia", "_brisk" ) )
