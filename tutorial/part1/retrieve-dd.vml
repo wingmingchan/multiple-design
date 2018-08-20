@@ -11,7 +11,7 @@
 #set( $ddService = $serviceProvider.getStructuredDataDefinitionService() )
 ## get block data definition
 #set( $blockDD = $ddService.get( $blockService.get( $block.Identifier.Id ).StructuredDataDefinition.Id ) )
-$blockDD.Xml
+##$blockDD.Xml
 
 ## locate the page
 #set( $page = $_.locatePage( "index", "standard-model" ) )
@@ -19,4 +19,4 @@ $blockDD.Xml
 #set( $pageService = $serviceProvider.getPageService() )
 ## get page data definition
 #set( $pageDD = $ddService.get( $pageService.get( $page.Identifier.Id ).StructuredDataDefinition.Id ) )
-$pageDD.Xml
+##$pageDD.Xml
