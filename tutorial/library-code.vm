@@ -14,12 +14,29 @@
 ## get SAXBuilder
 #set( $chanwSAXBuilder = $_.Class.forName( "org.jdom.input.SAXBuilder" ).getConstructor().newInstance() )
 
+## build an org.jdom.Element object
 #macro( chanwBuildXMLContentRoot $xmlString )
     ## create the string reader object
     #set( $chanwStringReader = $chanwStringReaderConstructor.newInstance( $xmlString ) )
     #set( $chanwBuildXMLContentRoot = $chanwEmptyString )
     ## read the XML string, pass it into the sax builder, create XML tree, and return the object
     #set( $chanwBuildXMLContentRoot = $chanwSAXBuilder.build( $chanwStringReader ).RootElement )
+#end
+
+## get the FQI of an element
+#macro( chanwGetFQIPathForJDOMElement $element )
+    #set( $chanwGetFQIPathForJDOMElement = $chanwEmptyString )
+    #if( $element.isRootElement() )
+        #break
+    ## recursion
+    #elseif( $element.getParentElement().Class.Name )
+        #chanwGetFQIPathForJDOMElement( $element.getParentElement() )
+        #if( $chanwGetFQIPathForJDOMElement == $chanwEmptyString )
+            #set( $chanwGetFQIPathForJDOMElement = $element.getAttribute( "identifier" ).Value )
+        #else
+            #set( $chanwGetFQIPathForJDOMElement = $chanwGetFQIPathForJDOMElement + ";" + $element.getAttribute( "identifier" ).Value )
+        #end
+    #end
 #end
 
 ## retrieve DD from the API object
