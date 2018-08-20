@@ -1,0 +1,9 @@
+## this format retrieves the FQI of an org.jdom.Element object
+#import( "site://standard-model/_cascade/tutorial/library-code" )
+
+#chanwRetrieveDataDefinition( $_.locateBlock( "core/base-assets/block-multimedia", "_brisk" ) )
+#chanwBuildXMLContentRoot( $chanwRetrieveDataDefinition.Xml )
+#set( $element = $_XPathTool.selectSingleNode( $chanwBuildXMLContentRoot, "group[2]/group[1]/asset" ) )
+#chanwGetFQIPathForJDOMElement( $element )
+## gallery-group;mul-gallery-image-group;gallery-image-chooser
+$chanwGetFQIPathForJDOMElement
