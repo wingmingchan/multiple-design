@@ -1,5 +1,8 @@
-## this format retrieves a data definition
+## this format retrieves two data definitions, using library code
 #import( "site://standard-model/_cascade/tutorial/library-code" )
 
-#chanwRetrieveDataDefinition( $_.locateBlock( "core/base-assets/block-multimedia", "_brisk" ) ) )
-$chanwRetrieveDataDefinition.Xml
+#chanwRetrieveDataDefinition( $_.locateBlock( "core/base-assets/block-multimedia", "_brisk" ) )
+##$chanwRetrieveDataDefinition.Xml
+
+#chanwRetrieveDataDefinition( $_.locatePage( "index", "standard-model" ) )
+##$chanwRetrieveDataDefinition.Xml
