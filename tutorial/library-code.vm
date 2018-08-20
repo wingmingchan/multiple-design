@@ -1,0 +1,20 @@
+## this format contains reusable library code
+
+## get service objects
+#set( $chanwServiceProvider = $_.Class.forName( "com.hannonhill.cascade.model.service.ServiceProviderHolderBean"
+    ).getMethod( "getServiceProvider" ).invoke( null ) )
+#set( $chanwBlockService = $chanwServiceProvider.getBlockService() )
+#set( $chanwDDService    = $chanwServiceProvider.getStructuredDataDefinitionService() )
+#set( $chanwPageService  = $chanwServiceProvider.getPageService() )
+
+## retrieve DD from the API object
+#macro( chanwRetrieveDataDefinition $apiObject )
+    #if( $apiObject.Class.Name && $apiObject.Class.Name == "com.hannonhill.cascade.api.adapters.XHTMLDataDefinitionBlockAPIAdapter" )
+        #set( $chanwRetrieveDataDefinition = $chanwDDService.get( $chanwBlockService.get( $apiObject.Identifier.Id ).StructuredDataDefinition.Id ) )
+    #elseif( $apiObject.Class.Name && $apiObject.Class.Name == "com.hannonhill.cascade.api.adapters.PageAPIAdapter" )
+        #set( $chanwRetrieveDataDefinition = $chanwDDService.get( $chanwPageService.get( $apiObject.Identifier.Id ).StructuredDataDefinition.Id ) )
+    #else
+        ## do whatever necessary
+        #set( $chanwRetrieveDataDefinition = "" )
+    #end
+#end
