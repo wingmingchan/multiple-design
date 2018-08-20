@@ -1,11 +1,26 @@
 ## this format contains reusable library code
 
+#set( $chanwEmptyString = "" )
+
 ## get service objects
 #set( $chanwServiceProvider = $_.Class.forName( "com.hannonhill.cascade.model.service.ServiceProviderHolderBean"
     ).getMethod( "getServiceProvider" ).invoke( null ) )
 #set( $chanwBlockService = $chanwServiceProvider.getBlockService() )
 #set( $chanwDDService    = $chanwServiceProvider.getStructuredDataDefinitionService() )
 #set( $chanwPageService  = $chanwServiceProvider.getPageService() )
+
+## get StringReader
+#set( $chanwStringReaderConstructor = $_.Class.forName( 'java.io.StringReader' ).getConstructor( $chanwEmptyString.Class ) )
+## get SAXBuilder
+#set( $chanwSAXBuilder = $_.Class.forName( "org.jdom.input.SAXBuilder" ).getConstructor().newInstance() )
+
+#macro( chanwBuildXMLContentRoot $xmlString )
+    ## create the string reader object
+    #set( $chanwStringReader = $chanwStringReaderConstructor.newInstance( $xmlString ) )
+    #set( $chanwBuildXMLContentRoot = $chanwEmptyString )
+    ## read the XML string, pass it into the sax builder, create XML tree, and return the object
+    #set( $chanwBuildXMLContentRoot = $chanwSAXBuilder.build( $chanwStringReader ).RootElement )
+#end
 
 ## retrieve DD from the API object
 #macro( chanwRetrieveDataDefinition $apiObject )
@@ -14,7 +29,7 @@
     #elseif( $apiObject.Class.Name && $apiObject.Class.Name == "com.hannonhill.cascade.api.adapters.PageAPIAdapter" )
         #set( $chanwRetrieveDataDefinition = $chanwDDService.get( $chanwPageService.get( $apiObject.Identifier.Id ).StructuredDataDefinition.Id ) )
     #else
-        ## do whatever necessary
-        #set( $chanwRetrieveDataDefinition = "" )
+        ## do whatever necessary here
+        #set( $chanwRetrieveDataDefinition = $chanwEmptyString )
     #end
 #end
