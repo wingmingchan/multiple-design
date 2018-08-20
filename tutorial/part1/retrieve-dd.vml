@@ -1,0 +1,22 @@
+## this format retrieves a data definition
+
+## locate the dd block
+#set( $block = $_.locateBlock( "core/base-assets/block-multimedia", "_brisk" ) )
+## get service provider
+#set( $serviceProvider = $_.Class.forName( "com.hannonhill.cascade.model.service.ServiceProviderHolderBean"
+    ).getMethod( "getServiceProvider" ).invoke( null ) )
+## get block service
+#set( $blockService = $serviceProvider.getBlockService() )
+## get data definition service
+#set( $ddService = $serviceProvider.getStructuredDataDefinitionService() )
+## get block data definition
+#set( $blockDD = $ddService.get( $blockService.get( $block.Identifier.Id ).StructuredDataDefinition.Id ) )
+$blockDD.Xml
+
+## locate the page
+#set( $page = $_.locatePage( "index", "standard-model" ) )
+## get page service
+#set( $pageService = $serviceProvider.getPageService() )
+## get page data definition
+#set( $pageDD = $ddService.get( $pageService.get( $page.Identifier.Id ).StructuredDataDefinition.Id ) )
+$pageDD.Xml
