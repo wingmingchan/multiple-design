@@ -1,0 +1,5 @@
+## this format retrieves a data definition
+#import( "site://standard-model/_cascade/tutorial/library-code" )
+
+#chanwRetrieveDataDefinition( $_.locateBlock( "core/base-assets/block-multimedia", "_brisk" ) ) )
+$chanwRetrieveDataDefinition.Xml
