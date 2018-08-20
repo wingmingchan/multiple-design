@@ -1,6 +1,4 @@
 ## this format builds an org.jdom.Element object
-
-## this format retrieves two data definitions, using library code
 #import( "site://standard-model/_cascade/tutorial/library-code" )
 
 #chanwRetrieveDataDefinition( $_.locateBlock( "core/base-assets/block-multimedia", "_brisk" ) )
