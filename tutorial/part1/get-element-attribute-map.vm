@@ -1,0 +1,7 @@
+## this format retrieves the FQI of an org.jdom.Element object
+#import( "site://standard-model/_cascade/tutorial/library-code" )
+
+#chanwRetrieveDataDefinition( $_.locateBlock( "core/base-assets/block-multimedia", "_brisk" ) )
+#chanwBuildXMLContentRoot( $chanwRetrieveDataDefinition.Xml )
+#chanwGetDataDefinitionAttributeMap( $chanwBuildXMLContentRoot )
+$chanwGetDataDefinitionAttributeMap
