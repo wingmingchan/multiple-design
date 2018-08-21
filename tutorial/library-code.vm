@@ -23,6 +23,41 @@
     #set( $chanwBuildXMLContentRoot = $chanwSAXBuilder.build( $chanwStringReader ).RootElement )
 #end
 
+## retrieve the attribute map
+#macro( chanwGetDataDefinitionAttributeMap $element )
+    #set( $chanwGetDataDefinitionAttributeMap = {} )
+    #chanwGetDataDefinitionAttributeMapHelper( $element )
+#end
+## the helper macro, populating the attribute map
+#macro( chanwGetDataDefinitionAttributeMapHelper $element )
+    #chanwGetFQIPathForJDOMElement( $element )
+    #set( $chanwCurrentFQI = $chanwEmptyString )
+    #set( $chanwCurrentFQI = $chanwGetFQIPathForJDOMElement )
+    
+    #if( $chanwCurrentFQI != $chanwEmptyString )
+        #set( $chanwGetDataDefinitionAttributeMap[ $chanwCurrentFQI ] = {} )
+    #end
+    
+    #if( $element.getAttributes().Class.Name )
+        #foreach( $attr in $element.getAttributes() )
+            #set( $chanwGetDataDefinitionAttributeMap[ $chanwCurrentFQI ][ $attr.Name ] = $attr.Value )
+##
+            #if( $attr.Name == "type" && ( $attr.Value == "checkbox" || $attr.Value == "dropdown" || $attr.Value == "radiobutton" || $attr.Value == "multi-selector" ) )
+                #set( $chanwGetDataDefinitionAttributeMap[ $chanwCurrentFQI ][ "item" ] = [] )
+                #foreach( $child in $element.Children )
+                    #set( $void = $chanwGetDataDefinitionAttributeMap[ $chanwCurrentFQI ][ "item" ].add( $child.getAttribute( "value" ).Value ) )
+                #end
+            #end
+        #end
+    #end
+    
+    #if( $element.isRootElement() || $element.Name == "group" )
+        #foreach( $child in $element.Children )
+            #chanwGetDataDefinitionAttributeMapHelper( $child )
+        #end
+    #end
+#end
+
 ## get the FQI of an element
 #macro( chanwGetFQIPathForJDOMElement $element )
     #set( $chanwGetFQIPathForJDOMElement = $chanwEmptyString )
