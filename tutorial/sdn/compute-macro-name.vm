@@ -1,0 +1,45 @@
+#import( "site://_brisk/core/library/velocity/chanw/chanw-initialization" )
+#chanwProcessBlockChooser( $_.locateBlock( "core/base-assets/block-wysiwyg", "_brisk" ) )
+
+#macro( chanwProcessBlockChooser $block )
+    #if( $block.Class.Name == "com.hannonhill.cascade.api.adapters.XHTMLDataDefinitionBlockAPIAdapter" )
+        #chanwProcessDataBlock( $block )
+    #end
+#end
+
+#macro( chanwProcessDataBlock $block )
+    #if( $block.StructuredData.size() == 2 )
+        #set( $identifier = $block.StructuredData[ 1 ].Identifier )
+    #end
+    #chanwConvertToPascalCase( $identifier "-" )
+    #set( $macroName = "process" + $chanwConvertToPascalCase )
+    #chanwInvokeMacro( $macroName [ "block" ] )
+#end
+
+#macro( chanwConvertToPascalCase $chanwConvertToPascalCaseMacroName $chanwConvertToPascalCaseDelimiter )
+#**##if( !$chanwConvertToPascalCaseDelimiter || $chanwConvertToPascalCaseDelimiter.class.name != $JAVA_LANG_STRING_CLASS_NAME )
+#*    *##set( $chanwConvertToPascalCaseDelimiter = '' ) ## default to empty string
+#**##end
+##
+#**##set( $chanwMacroName = $chanwConvertToPascalCaseMacroName.toLowerCase() )
+#**##set( $chanwConvertToPascalCase = "" )
+##
+#**### there is a delimiter passed in
+#**##if( $chanwConvertToPascalCaseDelimiter.length() > 0 )
+#*    *### the delimiter does not exist in the string
+#*    *##if( $chanwMacroName.indexOf( $chanwConvertToPascalCaseDelimiter ) < 0 )
+#*        *##set( $chanwConvertToPascalCase = $globalApacheWordUtils.capitalize( $chanwConvertToPascalCaseMacroName ) )
+#*    *### there are instances of the delimiter
+#*    *##else
+#*        *### replace delimiters with spaces
+#*        *##set( $chanwMacroName = $chanwMacroName.replaceAll( $chanwConvertToPascalCaseDelimiter, ' ' ) )
+#*        *### capitalize words
+#*        *##set( $chanwMacroName = $globalApacheWordUtils.capitalize( $chanwMacroName ) )
+#*        *### remove spaces
+#*        *##set( $chanwConvertToPascalCase = $chanwMacroName.replaceAll( ' ', '' ) ) 
+#*    *##end
+#**### no delimiter passed in
+#**##else
+#*     *##set( $chanwConvertToPascalCase = $globalApacheWordUtils.capitalize( $chanwMacroName ) )
+#**##end
+#end
