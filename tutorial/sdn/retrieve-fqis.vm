@@ -1,0 +1,87 @@
+#import( "site://_brisk/core/library/velocity/chanw/chanw-global-queue" )
+#import( "site://standard-model/_cascade/tutorial/library-code" )
+
+#chanwGetNodeAttributeMap( $_.locateBlock( "_cascade/blocks/data/about-top-simple-slide-show-720-320", "cvr" ) )
+##chanwGetNodeAttributeMap( $_.locatePage( "index", "web-services" ) )
+
+#foreach( $value in $chanwNodeAttributeMap.values() )
+    $value[ 'fqi' ]
+#end
+
+#macro( chanwGetNodeAttributeMap $page_block )
+    ## get dd attribute map
+    #chanwRetrieveDataDefinition( $page_block )
+    #chanwBuildXMLContentRoot( $chanwRetrieveDataDefinition.Xml )
+    #chanwGetDataDefinitionAttributeMap( $chanwBuildXMLContentRoot )
+    ## set up data structure
+    #set( $chanwChildParentMap   = {} )    ## child node as key, parent node as value
+    #set( $chanwNodeAttributeMap = "" )
+    #set( $chanwNodeAttributeMap = {} )    ## node as key, attribute map as value
+    #set( $chanwRootString = "root" )      ## dummy parent for top-level nodes
+##
+    #set( $sdns = $page_block.StructuredData )
+##
+    ## top-level nodes
+    #foreach( $node in $sdns )
+        #set( $chanwChildParentMap[ $node ] = $chanwRootString )
+        #chanwEnqueueGlobalQueue( $chanwGlobalQueue $node )
+        #set( $chanwNodeAttributes = { 'path':$node.Identifier, 'fqi':$node.Identifier  } )
+        #set( $chanwNodeAttributeMap[ $node ] = $chanwNodeAttributes )
+        ##$node.Identifier
+    #end
+##
+    ## while the queue is not empty
+    #foreach( $num in [ 1..5000 ] )
+        ## get a $_XPathTool.selectSingleNode($collection, "")
+        #chanwDequeueGlobalQueue( $chanwGlobalQueue )
+##
+        #if( $chanwDequeueGlobalQueue.isGroup() )
+            #set( $chanwPreviousIdentifier = "" )
+            #set( $chanwOffset             = 0 )
+            #set( $chanwCurrentIndex       = 0 )
+##
+            ## enqueue child nodes
+            #set( $chanwChildren = $chanwDequeueGlobalQueue.Children )
+            #foreach( $child in $chanwChildren )
+                #chanwEnqueueGlobalQueue( $chanwGlobalQueue $child )
+                #set( $chanwChildParentMap[ $child ] = $chanwDequeueGlobalQueue )
+                #set( $chanwDDFieldPath = "$chanwNodeAttributeMap[ $chanwChildParentMap[ $child ] ][ 'fqi' ];$child.Identifier" )
+                #set( $chanwDDFieldPath = $chanwDDFieldPath.replaceAll( ";\d+;", ";" ) )
+##
+                ## multiple
+                #if( $chanwGetDataDefinitionAttributeMap[ $chanwDDFieldPath ][ "multiple" ].Class.Name )
+                    #if( $chanwPreviousIdentifier == "" || $chanwPreviousIdentifier != $child.Identifier )
+                        ## the actual index of the first instance
+                        #set( $chanwOffset = $chanwChildren.indexOf( $child ) )
+                        ## get the parent fqi
+                        #set( $chanwParentFQI = $chanwNodeAttributeMap[ $chanwChildParentMap[ $child ] ][ 'fqi' ] )
+                        ## append the child local path to parent fqi to create the child fqi
+                        #set( $chanwNodeAttributes = { 'index':0, 'path':"${child.Identifier};0",
+                            'fqi':"${chanwParentFQI};${child.Identifier};0" } )
+                        ## store the size of the set of multiple nodes having the same identifier
+                    ## other instances
+                    #elseif( $chanwPreviousIdentifier == $child.Identifier )
+                        #set( $chanwCurrentIndex = $chanwChildren.indexOf( $child ) - $chanwOffset )
+                        #set( $chanwParentFQI = $chanwNodeAttributeMap[ $chanwChildParentMap[ $child ] ][ 'fqi' ] )
+                        #set( $chanwNodeAttributes = { 'index':$chanwCurrentIndex, 'path':"${child.Identifier};${chanwCurrentIndex}",
+                            'fqi':"${chanwParentFQI};${child.Identifier};${chanwCurrentIndex}" } )
+                    #end
+                #else
+                    #set( $chanwParentFQI = $chanwNodeAttributeMap[ $chanwChildParentMap[ $child ] ][ 'fqi' ] )
+                    #set( $chanwNodeAttributes = { 'path':"${child.Identifier}", 'fqi':"${chanwParentFQI};${child.Identifier}" } )
+                #end
+##
+                ## store attributes
+                #set( $chanwNodeAttributeMap[ $child ] = $chanwNodeAttributes )
+                ## update previous identifier for next loop
+                #set( $chanwPreviousIdentifier = $child.Identifier )
+            #end
+        #end
+##
+        ## get out when the queue is empty
+        #chanwSizeGlobalQueue( $chanwGlobalQueue )
+        #if( $chanwSizeGlobalQueue == 0 )
+            #break
+        #end
+    #end
+#end
