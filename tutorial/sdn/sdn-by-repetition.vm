@@ -1,9 +1,10 @@
 #import( "site://_brisk/core/library/velocity/chanw/chanw-global-queue" )
 
-#chanwProcessStructuredDataNodes( $_.locateBlock( "setup", "web-services" ).StructuredData )
-##chanwProcessStructuredDataNodes( $_.locatePage( "index", "web-services" ).StructuredData )
+#chanwProcessStructuredDataNodes( $_.locateBlock( "setup", "web-services" ) )
+##chanwProcessStructuredDataNodes( $_.locatePage( "index", "web-services" ) )
 
-#macro( chanwProcessStructuredDataNodes $sdns )
+#macro( chanwProcessStructuredDataNodes $page_block )
+    #set( $sdns = $page_block.StructuredData )
     ## top-level nodes
     #foreach( $node in $sdns )
         #chanwEnqueueGlobalQueue( $chanwGlobalQueue $node )
