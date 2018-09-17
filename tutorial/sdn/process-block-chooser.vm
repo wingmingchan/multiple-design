@@ -1,0 +1,7 @@
+#chanwProcessBlockChooser( $_.locateBlock( "setup", "web-services" ) )
+
+#macro( chanwProcessBlockChooser $block )
+    #if( $block.Class.Name == "com.hannonhill.cascade.api.adapters.XHTMLDataDefinitionBlockAPIAdapter" )
+        #chanwProcessDataBlock( $block )
+    #end
+#end
