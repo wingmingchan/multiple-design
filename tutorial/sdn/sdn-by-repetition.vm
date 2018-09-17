@@ -1,7 +1,7 @@
 #import( "site://_brisk/core/library/velocity/chanw/chanw-global-queue" )
 
-##chanwProcessStructuredDataNodes( $_.locateBlock( "setup", "web-services" ).StructuredData )
-#chanwProcessStructuredDataNodes( $_.locatePage( "index", "web-services" ).StructuredData )
+#chanwProcessStructuredDataNodes( $_.locateBlock( "setup", "web-services" ).StructuredData )
+##chanwProcessStructuredDataNodes( $_.locatePage( "index", "web-services" ).StructuredData )
 
 #macro( chanwProcessStructuredDataNodes $sdns )
     ## top-level nodes
@@ -14,18 +14,16 @@
         ## get a $_XPathTool.selectSingleNode($collection, "")
         #chanwDequeueGlobalQueue( $chanwGlobalQueue )
 ##
-        ## enqueue child nodes
         #if( $chanwDequeueGlobalQueue.isGroup() )
             A group node: $chanwDequeueGlobalQueue.Identifier
+            ## enqueue child nodes
             #foreach( $child in $chanwDequeueGlobalQueue.Children )
                 #chanwEnqueueGlobalQueue( $chanwGlobalQueue $child )
             #end
         #elseif( $chanwDequeueGlobalQueue.isText() )
             A text node: [$_DisplayTool.list( $chanwDequeueGlobalQueue.TextValues, "," )]
-        #else
-            #if( $chanwDequeueGlobalQueue.Asset.Class.Name )
-                An asset node: $chanwDequeueGlobalQueue.Asset.Name
-            #end
+        #elseif( $chanwDequeueGlobalQueue.Asset.Class.Name )
+            An asset node: $chanwDequeueGlobalQueue.Asset.Name
         #end
 ##
         ## get out when the queue is empty
