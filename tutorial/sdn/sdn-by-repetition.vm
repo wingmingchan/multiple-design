@@ -28,7 +28,6 @@
 ##
         ## get out when the queue is empty
         #chanwSizeGlobalQueue( $chanwGlobalQueue )
-##
         #if( $chanwSizeGlobalQueue == 0 )
             #break
         #end
