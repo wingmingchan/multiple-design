@@ -11,7 +11,7 @@
     #if( $block.StructuredData.size() == 2 )
         #set( $identifier = $block.StructuredData[ 1 ].Identifier )
     #elseif( $block.StructuredData.size() > 3 )
-        #set( $identifier = $block.StructuredData[ 1 ].TextValues[ 0 ] + "Group" )
+        #set( $identifier = $block.StructuredData[ 1 ].TextValues[ 0 ] + "-group" )
     #end
     #chanwConvertToPascalCase( $identifier "-" )
     #set( $macroName = "process" + $chanwConvertToPascalCase )
