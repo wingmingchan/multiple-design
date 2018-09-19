@@ -1,0 +1,10 @@
+#*
+1. get the static method getServiceProvider of the ServiceProviderHolderBean class
+2. invoke getServiceProvider to get the service provider
+3. get the page service object
+4. get the page dom object
+5. get the content type dom object through the page
+*#
+#set( $ct = $_.Class.forName( 'com.hannonhill.cascade.model.service.ServiceProviderHolderBean' ).getMethod(
+    'getServiceProvider' ).invoke( null ).getPageService().get( $currentPage.Identifier.Id ).ContentType )
+$ct.Name
