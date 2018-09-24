@@ -1,4 +1,6 @@
 ## mapping top-level folder names onto design names
+## note that the site still needs to be assigned a design names
+## for top-level pages
 #set( $siteConfigMap[ 'subsiteDesign' ] = {
     'radio' : 'ipmradio',
     'tv'    : 'ipmtv'
