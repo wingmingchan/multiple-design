@@ -1,0 +1,14 @@
+#set( $siteConfigMap[ 'subsiteDesign' ] = {
+    'radio' : 'ipmradio',
+    'tv'    : 'ipmtv'
+} )
+#set( $siteConfigMap[ 'treeName' ] = 'inherited' )
+#set( $middleCssClass = "col-ms-6" )
+#set( $pathArray      = $currentPage.Identifier.Path.PathSegments )
+
+#foreach( $key in $siteConfigMap[ 'subsiteDesign' ].keySet() )
+    #if( $pathArray[ 0 ].equals( $key ) )
+        #set( $design_namespace = $siteConfigMap[ 'subsiteDesign' ][ $key ] )
+        #break
+    #end
+#end
