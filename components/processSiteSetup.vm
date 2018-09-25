@@ -167,7 +167,7 @@
         #set( $siteConfigMap[ 'treeName' ] = $block_tree_name )
     #end
 ##
-    #chanwGetFQINodeMap( $block_processSetupBlock.StructuredData )
+    #chanwGetFQINodeMap( $block_processSetupBlock.StructuredData $null $block_processSetupBlock )
     #set( $mapKeySet = $chanwGetFQINodeMap.keySet() )
 ##
     #foreach( $key in $mapKeySet )
