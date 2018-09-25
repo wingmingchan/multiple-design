@@ -5,7 +5,7 @@
     'radio' : 'ipmradio',
     'tv'    : 'ipmtv'
 } )
-#set( $pathArray      = $currentPage.Identifier.Path.PathSegments )
+#set( $pathArray = $currentPage.Identifier.Path.PathSegments )
 
 #foreach( $key in $siteConfigMap[ 'subsiteDesign' ].keySet() )
     #if( $pathArray[ 0 ].equals( $key ) )
