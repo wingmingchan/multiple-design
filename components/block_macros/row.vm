@@ -1,0 +1,247 @@
+#macro( processRowGroup $map )
+##
+##
+    #************************************
+     *
+     * Handle recursion of this macro
+     * design-agnostic
+     *
+     *#
+    ## Since we can have recursion, ie. a row block inside of a row block
+    ## we need to be able to not lose sight of the parent row block data
+    ## so let's store the data into a map and auto-sequence it.
+    #if( $processRowGroupVars.Class.Name != 'java.util.LinkedHashMap' )
+        #set( $processRowGroupVars = {
+            'dataMap' : {},
+            'i' : 0
+        } )
+    #end
+##
+    ## Increment the counter and cache $map
+    #set( $processRowGroupVars[ 'i' ] = $processRowGroupVars[ 'i' ] + 1 )
+    #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ] = {} )
+    #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ] = $map.clone() )
+##
+##
+    #************************************
+     *
+     * Attribute processing for the row
+     * design-agnostic
+     *
+     *#
+    ## $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'rowAttributes' ] should be usable regardless of site design
+    ## Always make sure to reset this to nothing
+    #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'rowAttributes' ] = {} )
+##
+    ## Check if the user wants to use custom attributes
+    #if(
+        $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;use-custom-attributes' ][ 'data' ].size() > 0 &&
+        $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;use-custom-attributes' ][ 'data' ][ 0 ] == 'Yes'
+    )
+##
+        ## Does this row block have custom attributes?
+        #if( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;row-attributes' ][ $KEY_NODE ].Asset.Class.Name )
+##
+            ## Get an FQI node map of the row's attributes
+            #chanwGetFQINodeMap( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;row-attributes' ][ $KEY_NODE ].Asset.StructuredData
+                $null $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;row-attributes' ][ $KEY_NODE ].Asset )
+##
+            ## Get the attributes from the FQI node
+            #processAttributesGroup( $chanwGetFQINodeMap )
+##
+            ## Save the attributes for later use in the design-specific macro
+            #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'rowAttributes' ] = $processAttributesGroup )
+        #end
+    #end
+##
+##
+    #************************************
+     *
+     * Row parent container and outer wrapper detection and processing
+     * design-agnostic
+     *
+     *#
+    ## Store the start tags and applicable attributes in a string
+    ## We can later check for non-empty string so that we can figure out the closing tags
+    ## Reset these upon every invocation
+    #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'outerWrapper' ] = '' )
+    #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'outerWrapperAttrributes' ] = '' )
+    #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'outerWrapperCloseTag' ] = '' )
+    #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'containerWrapper' ] = '' )
+    #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'containerWrapperCloseTag' ] = '' )
+##
+    ## Are we wrapping the row in a container?
+    #if( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;container-settings;container-type' ][ $KEY_DATA ] == 'regular' )
+        #drulykgHtmlTag( 'div' {
+            'closeTag' : false,
+            'attrs' : { 'class' : 'container' },
+            'outVar' : "processRowGroupVars[ ${processRowGroupVars[ 'i' ]} ][ 'containerWrapper' ]"
+        } )
+        #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'containerWrapperCloseTag' ] = $drulykgHtmlTagCloseTag )
+    #elseif( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;container-settings;container-type' ][ $KEY_DATA ] == 'container-fluid' )
+        #drulykgHtmlTag( 'div' {
+            'closeTag' : false,
+            'attrs' : { 'class' : 'container-fluid' },
+            'outVar' : "processRowGroupVars[ ${processRowGroupVars[ 'i' ]} ][ 'containerWrapper' ]"
+        } )
+        #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'containerWrapperCloseTag' ] = $drulykgHtmlTagCloseTag )
+    #end
+##
+    ## Are we wrapping everything in an outer wrapper?
+    #if(
+        $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;container-settings;wrapped-div-yes' ][ $KEY_DATA ].size() > 0 &&
+        $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;container-settings;wrapped-div-yes' ][ $KEY_DATA ][ 0 ] == 'Yes'
+    )
+##
+        ## Does this outer wrapper have custom attributes?
+        #if( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;container-settings;wrapped-div-attributes' ][ $KEY_NODE ].Asset.Class.Name )
+##
+            ## Get an FQI node map of the outer wrapper's attributes
+            #chanwGetFQINodeMap( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;container-settings;wrapped-div-attributes' ][ $KEY_NODE ].Asset.StructuredData
+                $null $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;container-settings;wrapped-div-attributes' ][ $KEY_NODE ].Asset )
+##
+            ## Get the attributes from the FQI node
+            #processAttributesGroup( $chanwGetFQINodeMap )
+##
+            ## Save the attributes
+            #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'outerWrapperAttrributes' ] = $processAttributesGroup )
+        #end
+##
+        #drulykgHtmlTag( 'div' {
+            'attrs' : $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'outerWrapperAttrributes' ],
+            'closeTag' : false,
+            'escapeNormalAttr' : false,
+            'outVar' : "processRowGroupVars[ ${processRowGroupVars[ 'i' ]} ][ 'outerWrapper' ]"
+        } )
+        #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'outerWrapperCloseTag' ] = $drulykgHtmlTagCloseTag )
+    #end
+##
+    ## These are either an empty string or content
+    ## so it is safe to simply output them
+    $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'outerWrapper' ]
+    $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'containerWrapper' ]
+##
+    ## Invoke the design-specific macro for this block processor
+    #drulykgInvokeMacro( "${design_namespace}ProcessRowGroup" [ $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ] ] )
+##
+    ## These are either an empty string or content
+    ## so it is safe to simply output them
+    $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'containerWrapperCloseTag' ]
+    $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'outerWrapperCloseTag' ]
+##
+    ## Clear this map so that we do not run into memory issues
+    $processRowGroupVars[ $processRowGroupVars[ 'i' ] ].clear()
+##
+    ## Decrement the counter for recursion of this macro
+    #set( $processRowGroupVars[ 'i' ] = $processRowGroupVars[ 'i' ] - 1 )
+##
+##
+    #************************************
+     *
+     * RWD4 macro
+     *
+     *#
+    #macro( rwd4ProcessRowGroup $map )
+##
+        ## Local vars for this macro
+        ## If it is already a map then clear it
+        ## Otherwise, set a fresh map
+        #if( $rwd4ProcessRowGroupVars.Class.Name == 'java.util.LinkedHashMap' )
+            $rwd4ProcessRowGroupVars.clear()
+        #else
+            #set( $rwd4ProcessRowGroupVars = {} )
+        #end
+##
+        ## RWD4 is Bootstrap so we ALWAYS need the row class
+        ##
+        ## Since $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'rowAttributes' ][ 'class' ] is potentially an array of classes
+        ## We can have #drulykgShallowMerge() make the row class show up first
+        ## because it can merge lists and maps
+        #drulykgShallowMerge( { 'rowClass' : 'row' } $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'rowAttributes' ][ 'class' ] )
+        #set( $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'rowAttributes' ][ 'class' ] = $drulykgShallowMerge )
+##
+        ## Start row tag
+        #drulykgHtmlTag( 'div' {
+            'attrs' : $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'rowAttributes' ],
+            'closeTag' : false,
+            'escapeNormalAttr' : false
+        } )
+##
+        ## Default "even" column widths
+        ## If the row's customize-column-width checkbox is unchecked then
+        ## this value is used for the column width
+        #if( $map[ 'row-group;mul-block-choosers;0' ][ $KEY_SIZE ] == 1 )
+            #set( $rwd4ProcessRowGroupVars[ 'columnWidth' ] = '12' )
+        #elseif( $map[ 'row-group;mul-block-choosers;0' ][ $KEY_SIZE ] == 2 )
+            #set( $rwd4ProcessRowGroupVars[ 'columnWidth' ] = '6' )
+        #elseif( $map[ 'row-group;mul-block-choosers;0' ][ $KEY_SIZE ] == 3 )
+            #set( $rwd4ProcessRowGroupVars[ 'columnWidth' ] = '4' )
+        #elseif( $map[ 'row-group;mul-block-choosers;0' ][ $KEY_SIZE ] == 4 )
+            #set( $rwd4ProcessRowGroupVars[ 'columnWidth' ] = '3' )
+        #else
+            #set( $rwd4ProcessRowGroupVars[ 'columnWidth' ] = '2' )
+        #end
+##
+        ## Loop through the columns and build them
+        #foreach( $index in [ 1..$map[ 'row-group;mul-block-choosers;0' ][ $KEY_SIZE ] ] )
+##
+            ## Each column can have its own attributes block so we need to track that
+            #set( $rwd4ProcessRowGroupVars[ 'columnAttributes' ] = {} )
+##
+            ## The enabling of custom column attributes comes from the row's use-custom-attributes checkbox
+            #if(
+                $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;use-custom-attributes' ][ 'data' ].size() > 0 &&
+                $processRowGroupVars[ $processRowGroupVars[ 'i' ] ][ 'dataMap' ][ 'row-group;use-custom-attributes' ][ 'data' ][ 0 ] == 'Yes'
+            )
+##
+                ## Does this column chooser have custom attributes?
+                #if( $map[ "row-group;mul-block-choosers;${foreach.index};column-attributes" ][ $KEY_NODE ].Asset.Class.Name )
+##
+                    ## Get an FQI node map of this column's attribute chooser
+                    #chanwGetFQINodeMap( $map[ "row-group;mul-block-choosers;${foreach.index};column-attributes" ][ $KEY_NODE ].Asset.StructuredData
+                        $null $map[ "row-group;mul-block-choosers;${foreach.index};column-attributes" ][ $KEY_NODE ].Asset )
+##
+                    ## Get the attributes from the FQI node
+                    #processAttributesGroup( $chanwGetFQINodeMap )
+##
+                    ## Save the attributes for later use in the design-specific macro
+                    #set( $rwd4ProcessRowGroupVars[ 'columnAttributes' ] = $processAttributesGroup )
+                #end
+            #end
+##
+            ## Column width overrides
+            #if(
+                $map[ 'row-group;customize-column-width' ][ $KEY_DATA ].size() > 0 &&
+                $map[ 'row-group;customize-column-width' ][ $KEY_DATA ][ 0 ] == 'Yes'
+            )
+                #set( $rwd4ProcessRowGroupVars[ 'columnWidth' ] = $map[ "row-group;mul-block-choosers;${foreach.index};row-block-chooser-width" ][ $KEY_DATA ] )
+            #end
+##
+            ## The first class of column attributes should always be col-*
+            ## We can leverage #drulykgShallowMerge() to make sure it is the first class item
+            #drulykgShallowMerge( { 'columnClass' : "col-sm-${rwd4ProcessRowGroupVars[ 'columnWidth' ]}" } $rwd4ProcessRowGroupVars[ 'columnAttributes' ][ 'class' ] )
+            #set( $rwd4ProcessRowGroupVars[ 'columnAttributes' ][ 'class' ] = $drulykgShallowMerge )
+##
+            ## Start column tag
+            #drulykgHtmlTag( 'div' {
+                'attrs' : $rwd4ProcessRowGroupVars[ 'columnAttributes' ],
+                'closeTag' : false,
+                'escapeNormalAttr' : false
+            } )
+##
+            ## Process column content if there is any
+            #if( $map[ "row-group;mul-block-choosers;${foreach.index};row-block-chooser" ][ $KEY_CONTENT ] )
+                #chanwProcessBlockChooser( $map[ "row-group;mul-block-choosers;${foreach.index};row-block-chooser" ][ $KEY_CONTENT ] )
+            #elseif( $map[ "row-group;mul-block-choosers;${foreach.index};row-block-chooser" ][ $KEY_NODE ].Asset.Class.Name )
+                #chanwProcessBlockChooser( $map[ "row-group;mul-block-choosers;${foreach.index};row-block-chooser" ][ $KEY_NODE ].Asset )
+            #end
+##
+            ## End column tag
+            </div>
+##
+        #end
+##
+        ## End row tag
+        </div>
+    #end
+#end
