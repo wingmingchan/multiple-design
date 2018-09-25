@@ -1,0 +1,18 @@
+#macro( processColumnGroup $map )
+    #if( $_PropertyTool.isNull( $processColumnGroup_i ) )
+        #set( $processColumnGroup_i = 1 )
+        #set( $processColumnGroup_map = {} )
+    #else
+        #set( $processColumnGroup_i = $processColumnGroup_i + 1 )
+    #end
+##
+    #set( $processColumnGroup_map[ $processColumnGroup_i ] = $map )
+##
+    #foreach( $index in [ 1..$processColumnGroup_map[ $processColumnGroup_i ][ "column-group;mul-column-group-chooser;0" ][ $KEY_SIZE ] ] )
+        #if( $processColumnGroup_map[ $processColumnGroup_i ][ "column-group;mul-column-group-chooser;${foreach.index}" ][ $KEY_NODE ].Asset.Class.Name )
+            #chanwProcessBlockChooser( $processColumnGroup_map[ $processColumnGroup_i ][ "column-group;mul-column-group-chooser;${foreach.index}" ][ $KEY_NODE ].Asset )
+        #end
+    #end
+##
+    #set( $processColumnGroup_i = $processColumnGroup_i - 1 )
+#end
