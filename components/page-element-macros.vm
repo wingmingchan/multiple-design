@@ -23,7 +23,7 @@ doc*###
     #set( $pageElementMap = {} )
     #chanwInvokeMacro( "${design_namespace}Initialize" )
 ##
-    #macro( rwd4TreeInitialize )
+    #macro( rwd4Initialize )
         #setPageElement( "preMain" )
         #setPageElement( "middleContent" )
         #setPageElement( "postMain" )
@@ -34,19 +34,20 @@ doc*###
     《/stepcode》
 《/step》
 《step id=“pageElementMacrosAddBaseAssets”》
-    《title》Add base assets for rwd4Tree《/title》
+    《title》Add base assets for rwd4《/title》
     《content》
-rwd4Tree requires certain CSS and JS files regardless 
+rwd4 requires certain CSS and JS files regardless 
 of the site being rendered.
     《/content》
     《stepcode》
 doc*###
 #macro( addBaseAssets )
     #drulykgInvokeMacro( "${design_namespace}AddBaseAssets" )
+##
     #macro( rwd4AddBaseAssets )
         ## Set the base assets needed by RWD4
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/bootstrap/3.3.6/css/bootstrap.css' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/global-rwd4-v11.css' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/global-rwd4-v12.css' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/print-rwd4.css' { 'assetPosition' : 0, 'attrs' : { 'media' : 'print' } } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/jquery-ui/1.11.4/base/jquery-ui.css' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/vlightbox1.css' { 'assetPosition' : 0 } )
@@ -81,10 +82,6 @@ doc*###
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/html5shiv/3.7.3/html5shiv.js' { 'assetPosition' : 1 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/respond-js/1.4.2/respond.js' { 'assetPosition' : 1 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/ie8-js/0.7.1/ie8.js' { 'assetPosition' : 1 } )
-    #end
-##
-    #macro( rwd4TreeAddBaseAssets )
-        #rwd4AddBaseAssets
     #end
 #end
 ##
@@ -122,10 +119,6 @@ doc*###
     <${siteConfigMap[ 'bottomElement' ].trim()} ${bottomIdAttribute} class="${bottomCssClass}">
     #outputPageElement( "bottomContent" )
     </${siteConfigMap[ 'bottomElement' ].trim()}>
-    #end
-##
-    #macro( rwd4TreeGenerateBottomElement )
-        #rwd4GenerateBottomElement
     #end
 #end
 ##
@@ -232,10 +225,6 @@ doc*###
             $createPageBreadcrumbsVars[ "out" ]
         #end
     #end
-##
-    #macro( rwd4TreeGenerateBreadcrumbs )
-        #rwd4GenerateBreadcrumbs
-    #end
 #end
 ##
 #*doc
@@ -253,10 +242,6 @@ doc*###
 ##
     #macro( rwd4GenerateEditButtonPHP )
         createEditButton( '${currentPage.identifier.id}' );
-    #end
-##
-    #macro( rwd4TreeGenerateEditButtonPHP )
-        #rwd4GenerateEditButtonPHP
     #end
 #end
 ##
@@ -298,10 +283,6 @@ doc*###
         'skipRootChildActiveTagAttrsForHomePage': true
     } )
 </nav>    
-    #end
-##
-    #macro( rwd4TreeGenerateFolderNav )
-        #rwd4GenerateFolderNav
     #end
 #end
 ##
@@ -363,9 +344,6 @@ $E_PHP_PASSTHROUGH
 $E_SYSTEM_VIEW_EXTERNAL
 </div>    
     #end
-    #macro( rwd4TreeGenerateFooterContent )
-        #rwd4GenerateFooterContent
-    #end
 #end
 ##
 #macro( generateLastModified )
@@ -409,9 +387,6 @@ ${S_SYSTEM_VIEW_INTERNAL}Contact $contactName with questions about the content o
 </div>
     #end
 ##
-    #macro( rwd4TreeGenerateLastModified )
-        #rwd4GenerateLastModified
-    #end
 #end
 ##
 #*doc
@@ -478,8 +453,8 @@ doc*###
             <div class="header-container">
                 <div class="container">
                     <div class="row header-row">
-                        #rwd4TreeGenerateLogo
-                        #macro( rwd4TreeGenerateLogo )
+                        #rwd4GenerateLogo
+                        #macro( rwd4GenerateLogo )
                         <div class="col-md-3 header-logo-div">
                             #drulykgHtmlTag( 'a' {
                                 'attrs': {
@@ -488,18 +463,21 @@ doc*###
                                 },
                                 'closeTag': false
                             } )
-                            #set( $rwd4TreeGenerateLogo_a_close = $drulykgHtmlTagCloseTag )
+                            #set( $rwd4GenerateLogo_a_close = $drulykgHtmlTagCloseTag )
                                 #drulykgHtmlTag( 'img' {
                                     'attrs': {
                                         'alt': $siteConfigMap[ 'siteLogoAltText' ],
                                         'src': $siteConfigMap[ 'siteLogoFile' ]
                                     }
                                 } )
-                            $rwd4TreeGenerateLogo_a_close
+                            $rwd4GenerateLogo_a_close
                         </div>
                         #end
-                        #rwd4TreeGenerateSiteTitle
-                        #macro( rwd4TreeGenerateSiteTitle )
+                        ##macro( rwd4TreeGenerateLogo )
+                            ##rwd4GenerateLogo
+                        ##end
+                        #rwd4GenerateSiteTitle
+                        #macro( rwd4GenerateSiteTitle )
                         #if(
                             $siteConfigMap[ 'renderSiteTitle' ] &&
                             $siteConfigMap[ 'siteTitleString' ].Class.Name &&
@@ -516,8 +494,11 @@ doc*###
                             } )
                         #end
                         #end
-                        #rwd4TreeGenerateGlobalNavButton
-                        #macro( rwd4TreeGenerateGlobalNavButton )
+                        ##macro( rwd4TreeGenerateSiteTitle )
+                            ##rwd4GenerateSiteTitle
+                        ##end
+                        #rwd4GenerateGlobalNavButton
+                        #macro( rwd4GenerateGlobalNavButton )
                         #if( $siteConfigMap[ 'renderGlobalNav' ] )
                             <a href="javascript:;" class="sidebar-toggle-btn">
                                 <span class="fas fa-search" aria-hidden="true"></span><span class="hidden-xs sidebar-menu-text">MENU</span><span class="fas fa-bars" aria-hidden="true"></span>
@@ -530,10 +511,13 @@ doc*###
                         }
                         $E_PHP_PASSTHROUGH
                         #end
+                        ##macro( rwd4TreeGenerateGlobalNavButton )
+                            ##rwd4GenerateGlobalNavButton
+                        ##end
                     </div>
                 </div>
-                #rwd4TreeGenerateGlobalNavSidebar
-                #macro( rwd4TreeGenerateGlobalNavSidebar )
+                #rwd4GenerateGlobalNavSidebar
+                #macro( rwd4GenerateGlobalNavSidebar )
                 #if( $siteConfigMap[ 'renderGlobalNav' ] )
                     <div class="sidebar">
                         <div class="sidebar-wrapper" role="navigation">
@@ -575,22 +559,25 @@ doc*###
                     </div>
                 #end
                 #end
+                ##macro( rwd4TreeGenerateGlobalNavSidebar )
+                    ##rwd4GenerateGlobalNavSidebar
+                ##end
             </div>
         </$siteConfigMap[ 'headerElement' ]>
     #end
 ##
-    #macro( rwd4TreeGenerateHeader )
-        #rwd4GenerateHeader
-    #end
     #macro( generateLogo )
         #chanwInvokeMacro( "${design_namespace}GenerateLogo" )
     #end
+##
     #macro( generateSiteTitle )
         #chanwInvokeMacro( "${design_namespace}GenerateSiteTitle" )
     #end
+##
     #macro( generateGlobalNavButton )
         #chanwInvokeMacro( "${design_namespace}GenerateGlobalNavButton" )
     #end
+##
     #macro( generateGlobalNavSidebar )
         #chanwInvokeMacro( "${design_namespace}GenerateGlobalNavSidebar" )
     #end
@@ -660,10 +647,6 @@ doc*###
         ## for inserting code like PHP
         <div id="show-page-level-override"></div>
     #end
-##
-    #macro( rwd4TreeGenerateLink )
-        #rwd4GenerateLink
-    #end
 #end
 ##
 #*doc
@@ -700,10 +683,6 @@ doc*###
 ##
         ## For inserting code like PHP
         <div id="show-page-level-override"></div>
-    #end
-##
-    #macro( rwd4TreeGenerateLinkForExternalInclude )
-        #rwd4GenerateLinkForExternalInclude
     #end
 #end
 ##
@@ -847,11 +826,6 @@ doc*###
     #outputPageElement( "middleContent" )
     </${siteConfigMap[ 'middleElement' ].trim()}>
     #end
-##
-    #macro( rwd4TreeGenerateMiddleElement )
-        ##resolvePageTreeName
-        #rwd4GenerateMiddleElement
-    #end
 #end
 ##
 #*doc
@@ -968,10 +942,6 @@ doc*###
             $E_SYSTEM_VIEW_EXTERNAL
         #end
     #end
-##
-    #macro( rwd4TreeGenerateScript )
-        #rwd4GenerateScript
-    #end
 #end
 ##
 #*doc
@@ -995,6 +965,8 @@ doc*###
 ##
     #macro( rwd4GenerateSiteNav )
 ##
+        <cascadeForcedRoot>
+##
         ## Is this a Mega Menu enabled site?
         #if( $_.locateFolder( '_cascade/blocks/mega-menu', $currentPageSiteName ).Class.Name )
             #import( "${BRISK_APP[ 'COMPONENTS_SITEPATH' ]}generateMegaMenu" )
@@ -1007,12 +979,8 @@ doc*###
         ## Always render the mini menu because all sites use it
         #import( "${BRISK_APP[ 'COMPONENTS_SITEPATH' ]}generateMiniMenu" )
         #generateMiniMenu( $currentPageSiteName )
-    #end
 ##
-    #macro( rwd4TreeGenerateSiteNav )
-    <cascadeForcedRoot>
-        #rwd4GenerateSiteNav()
-    </cascadeForcedRoot>
+        </cascadeForcedRoot>
     #end
 #end
 ##
@@ -1036,10 +1004,6 @@ doc*###
         } )
         #outputPageElement( 'siteNav' )
     #end
-##
-    #macro( rwd4TreeGenerateSiteNavForExternalInclude )
-        #rwd4GenerateSiteNavForExternalInclude()
-    #end
 #end
 ##
 #*doc
@@ -1060,10 +1024,6 @@ doc*###
             }
         } )
         #outputPageElement( 'siteNav' )
-    #end
-##
-    #macro( rwd4TreeGenerateSiteNavForInternalNavFeed )
-        #rwd4GenerateSiteNavForInternalNavFeed()
     #end
 #end
 ##
@@ -1156,10 +1116,6 @@ doc*###
         includeFileWithoutRoot( ${_EscapeTool.d}_SERVER[ 'DOCUMENT_ROOT' ] . "/${rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ]}/_extra/external-nav${siteConfigMap[ 'sitePagePublicFileExtension' ]}" );
         $E_PHP_PASSTHROUGH
     #end
-##
-    #macro( rwd4TreeGenerateSiteNavForPageRender )
-        #rwd4GenerateSiteNavForPageRender()
-    #end
 #end
 ##
 #*doc
@@ -1219,10 +1175,6 @@ doc*###
     <${siteConfigMap[ 'topElement' ].trim()} ${topIdAttribute} class="${topCssClass}">
     #outputPageElement( "topContent" )
     </${siteConfigMap[ 'topElement' ].trim()}>
-    #end
-##
-    #macro( rwd4TreeGenerateTopElement )
-        #rwd4GenerateTopElement
     #end
 #end
 ##
