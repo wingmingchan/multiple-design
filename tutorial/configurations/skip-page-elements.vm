@@ -1,0 +1,6 @@
+#set( $siteConfigMap[ 'skipPageElement' ] = {} )
+#set( $siteConfigMap[ 'skipPageElement' ][ 'breadcrumbs' ] = [] )
+#set( $siteConfigMap[ 'skipPageElement' ][ 'folderNav' ]   = [] )
+#set( $siteConfigMap[ 'skipPageElement' ][ 'h1' ]          = [] )
+#set( $siteConfigMap[ 'skipPageElement' ][ 'siteTitle' ]   = [] )
+#set( $siteConfigMap[ 'skipPageElement' ][ 'pageContent' ] = [] )
