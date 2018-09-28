@@ -1,0 +1,5 @@
+#macro( generateH1 )
+    #if( !$siteConfigMap[ 'skipPageElement' ][ 'h1' ].contains( $currentPagePath ) )
+		## code to generate H1 element
+    #end
+#end
