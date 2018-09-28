@@ -1,0 +1,4 @@
+#if( $chooser.Asset.Path.Class.Name )
+    #set( $void = $siteConfigMap[ 'skipPageElement' ][ $element ].add(
+        $chooser.Asset.Path ) )
+#end
