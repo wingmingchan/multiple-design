@@ -1,0 +1,52 @@
+#*
+#blockChooserPath asks for a rwd4 map pointing to a cascade asset and optionally if it's "external" (used in php code)
+returns $blockChooserPath which gives a path to use
+*#
+#macro( blockChooserPath $map_blockChooserPath )
+##
+    #set( $blockChooserPath = "" )
+    #set( $blockChooserPathSrcSet = "" )
+##
+    #set( $blockChooserPathSrcSetList = [] )
+##
+    #if( $map[ $map_blockChooserPath ][ "subtype" ] == "symlink" )
+##
+        ## Does not work in mega-menu
+        ## #set( $blockChooserPath = $map[ $map_blockChooserPath ][ "content" ].Value )
+##
+        ## Get quicklinks like this because 'content' is null in mega-menu
+        #set( $blockChooserPath = $map[ $map_blockChooserPath ][ 'node' ].getAsset().Link )
+##
+    #elseif( $map[ $map_blockChooserPath ][ "subtype" ] == "file" || $map[ $map_blockChooserPath ][ "subtype" ] == "page" )
+        #set( $blockChooserPath = "site://" + $map[ $map_blockChooserPath ][ "site" ].Name + "/" + $map[$map_blockChooserPath]['data'] )
+    #end
+##
+    #if( $map[ $map_blockChooserPath ][ 'data' ].contains( ".jpg" ) )
+        #thomaspeSrcSetValues
+        #thomaspeGetSrcSetCode( $map[ $map_blockChooserPath ][ 'data' ] $map[ $map_blockChooserPath ][ "site" ].Name $thomaspeSrcSetValues )
+        #set( $blockChooserPathSrcSet = $thomaspeGetSrcSetCode )
+##
+        #if(
+            $drulykgHtmlTagVars[ 'PS' ][ 'protectTagsWithUrlAttrs' ] == true ||
+            $drulykgHtmlTagVars[ 'PS' ][ 'protectTag' ] == true
+        )
+            #set( $blockChooserPathSrcSetList = $thomaspeGetSrcSetCodeInternalViewExternalFile )
+        #else
+            #set( $blockChooserPathSrcSetList = $thomaspeGetSrcSetCodeInternalView )
+        #end
+        #if(
+            $drulykgHtmlTagVars[ 'PS' ][ 'convertUrlsToAbsolutePath' ] == true ||
+            $drulykgHtmlTagVars[ 'PS' ][ 'convertUrlsToAbsolutePathWithDomain' ] == true
+        )
+            #set( $blockChooserPathSrcSetList = $thomaspeGetSrcSetCodeExternalView )
+        #end
+    #end
+#end
+##
+#macro( thomaspeSrcSetValues )
+    #set( $thomaspeSrcSetValues = {} )
+    #set( $void =  $thomaspeSrcSetValues.put( "2500w", [".jpg"] ) )
+    #set( $void =  $thomaspeSrcSetValues.put( "1200w", ["-1000x500.jpg","-1000x333.jpg"] ) )
+    #set( $void =  $thomaspeSrcSetValues.put( "750w", ["-700x350.jpg","-700x233.jpg"] ) )
+    #set( $void =  $thomaspeSrcSetValues.put( "460w", ["-400x200.jpg","-400x133.jpg"] ) )
+#end
