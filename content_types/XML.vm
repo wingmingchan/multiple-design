@@ -1,0 +1,10 @@
+## An XHTML/Data Definition Block hooked up with the BRISK data definition named Velocity
+## is expected to be attached to the DEFAULT region.
+##
+## Manually grab the Velocity code from the textbox ID'd "velocity" and evaluate it.
+##
+## .getChildren()[0] is purposely used to try and ensure that
+## the correct data definition is used.
+##
+## If position 0 cannot be accessed then this will throw an exception to prevent publishing.
+#evaluate( $contentRoot.getChildren( 'velocity-group' )[0].getChildren( 'velocity' )[0].Value )

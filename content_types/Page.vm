@@ -1,0 +1,485 @@
+#############################################################################################
+##
+## Load the libraries, formats, and macros needed by the html presentation
+##
+#############################################################################################
+#drulykgImportPassThrough( "${BRISK_APP[ 'COMPONENTS_SITEPATH' ]}page-load-core" )
+##
+##
+#############################################################################################
+##
+## Resolve $design_namespace
+##
+#############################################################################################
+##
+#drulykgImportPassThrough( "${BRISK_APP[ 'COMPONENTS_SITEPATH' ]}designNamespace" )
+#resolveDesignNamespace()
+##
+##
+#############################################################################################
+##
+## Allow evaluation of code in block attached to master-level-override
+## This could be used to set $design_namespace
+##
+#############################################################################################
+##
+## process master-level chooser, overriding the variable $design_namespace, or for debugging code
+#if( !$deferredEvaluationOfMasterLevelOverride.Class.Name )
+    #set( $masterLevelOverrideBlock = $currentPage.getStructuredDataNode( "admin-group/master-level-override" ).Asset )
+    #if( $masterLevelOverrideBlock.Class.Name )
+        #if( $masterLevelOverrideBlock.Class.Name == $COM_CASCADE_XML_BLOCK_API_CLASS_NAME )
+            #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.XML )
+        #elseif( $masterLevelOverrideBlock.Class.Name == $COM_CASCADE_TEXT_BLOCK_API_CLASS_NAME )
+            #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.Text )
+        #elseif( $masterLevelOverrideBlock.Class.Name == $COM_CASCADE_DATA_BLOCK_API_CLASS_NAME )
+            #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.getStructuredDataNode( "velocity-group/velocity" ).TextValue )
+        #end
+        #evaluate( $masterLevelOverrideBlockCode )
+    #end
+#end
+##
+## Make sure that $design_namespace is still a valid entry of $site_designs
+#isDesignNamespaceValid()
+#if( $isDesignNamespaceValid == false && $currentPage.Class.Name )
+    #set( $design_namespace_is_invalid = [] )
+    $design_namespace_is_invalid[ 0 ]
+#end
+##
+##
+#############################################################################################
+##
+## Start up the presentation
+##
+#############################################################################################
+##
+## for developing a new design or testing
+#if( $design_namespace == "uco" || $design_namespace == "hh" || $design_namespace == "iu" )
+#import( "app/site_designs/${design_namespace}/design-entry" )#stop
+#end
+#import( 'app/components/page-element-macros' )
+#addBaseAssets()
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadFormatsOfLibrary”》
+    《title》
+        Load formats required by the Library sites
+    《/title》
+    《content》
+If we are processing a page from one of the 
+SUNY Upstate Library sites then recursively import 
+their folder of formats.
+    《/content》
+    《stepcode》
+doc*###
+##
+#if(
+    $currentPageSiteName == 'library' ||
+    $currentPageSiteName == 'library-archives' ||
+    $currentPageSiteName == 'library-news' ||
+    $currentPageSiteName == 'librarydev' ||
+    $currentPageSiteName == 'librarydev-archives'
+)
+    #if( $currentPageSiteName.startsWith( 'librarydev' ) )
+        #import( 'site://librarydev/_cascade/formats/custom_macros' )
+    #else
+        #import( 'site://library/_cascade/formats/custom_macros' )
+    #end
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryProcessSiteSetup”》
+    《title》
+        Load setup formats and blocks which alter 《code》$siteConfigMap《/code》
+    《/title》
+    《goto》setupProcessSiteSetup《/goto》
+    《stepcode》
+doc*###
+## Load the design namespace's setup file if it exists
+## The design's setup file contains code to deal with
+## site/folder-specific setup files needed by setup
+#drulykgImportPassThrough( "${BRISK_APP[ 'COMPONENTS_SITEPATH' ]}processSiteSetup" )
+#processSiteSetup()
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntrySetHtmlTagSettings”》
+    《title》
+        Set #drulykgHtmlTag() options which should be persistent
+    《/title》
+    《content》
+#drulykgHtmlTag is able to automatically set the
+srcset for an image so let's enable this for all images.
+    《/content》
+    《stepcode》
+doc*###
+##
+#drulykgHtmlTag( $nulllll {
+    'persistentSettings': {
+        'autoSrcSetDimensions': {
+            '2500w': [ '' ],
+            '1200w': [ '-1000x500', '-1000x333' ],
+            '750w': [ '-700x350', '-700x233' ],
+            '460w': [ '-400x200', '-400x133' ]
+        },
+        'siteRootPageNameOfFolder': $siteConfigMap[ 'siteRootPageNameOfFolder' ]
+    }
+} )
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntrySetCascadeAssetSettings”》
+    《title》
+        Set #drulykgGetCascadeAssetUrl() and #drulykgGetCascadeAssetLink() options which should be persistent.
+    《/title》
+    《stepcode》
+doc*###
+##
+#drulykgGetCascadeAssetLink( $nulllll {
+    'persistentSettings': {
+        'siteRootPageNameOfFolder': $siteConfigMap[ 'siteRootPageNameOfFolder' ]
+    }
+} )
+#drulykgGetCascadeAssetUrl( $nulllll {
+    'persistentSettings': {
+        'siteRootPageNameOfFolder': $siteConfigMap[ 'siteRootPageNameOfFolder' ]
+    }
+} )
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadBlockProcessingFormats”》
+    《title》
+        Load all formats used to process blocks
+    《/title》
+    《stepcode》
+doc*###
+## Import all block-processing formats
+#import( 'app/components/block_macros/_import-all-block-macros' )
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadCustomMacros”》
+    《title》
+        Load the format containing custom macros
+    《/title》
+    《stepcode》
+doc*###
+## app custom_macros
+#chanwImportScript( $BRISK_APP[ 'COMPONENTS_PATH_NTS' ] $BRISK[ 'APP_SITE_NAME' ] 'process-block-chooser-macros' )
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryLoadCSSAndJs”》
+    《title》
+        Load CSS and JS from 《code》$siteConfigMap《/code》
+    《/title》
+    《content》
+Support site-specific CSS and JS file includes which 
+may have been defined in the 《goto》setupProcessSiteSetup《/goto》 
+step.
+    《/content》
+    《stepcode》
+doc*###
+##
+#********************************
+ *
+ * Explicitly use 'assetPosition': 2
+ * to control their load order
+ *
+ *###
+## Check if any sitewide CSS was declared in the setup files
+## Site theme CSS
+#if( $siteConfigMap[ 'siteThemeCSS' ].Class.Name && $siteConfigMap[ 'siteThemeCSS' ] != "" )
+    #if( $siteConfigMap[ 'siteThemeCSS' ].startsWith( 'site://' ) )
+        #drulykgHtmlAssetAdd( $siteConfigMap[ 'siteThemeCSS' ] { 'assetPosition' : 2 } )
+    #else
+        #drulykgHtmlAssetAdd( "site://Upstate-Globals/${siteConfigMap[ 'siteThemeCSS' ]}" { 'assetPosition' : 2 } )
+    #end
+#end
+##
+## Local CSS
+#if( $siteConfigMap[ 'siteLocalCSS' ].Class.Name && $siteConfigMap[ 'siteLocalCSS' ] != "" )
+    #if( $siteConfigMap[ 'siteLocalCSS' ].startsWith( 'site://' ) )
+        #drulykgHtmlAssetAdd( $siteConfigMap[ 'siteLocalCSS' ] { 'assetPosition' : 2 } )
+    #else
+        #drulykgHtmlAssetAdd( "site://${currentPageSiteName}/${siteConfigMap[ 'siteLocalCSS' ]}" { 'assetPosition' : 2 } )
+    #end
+#end
+##
+## Check if any sitewide JS was declared in the setup files
+## Site theme JS
+#if( $siteConfigMap[ 'siteThemeJS' ].Class.Name && $siteConfigMap[ 'siteThemeJS' ] != "" )
+    #if( $siteConfigMap[ 'siteThemeJS' ].startsWith( 'site://' ) )
+        #drulykgHtmlAssetAdd( $siteConfigMap[ 'siteThemeJS' ] { 'assetPosition' : 2 } )
+    #else
+        #drulykgHtmlAssetAdd( "site://Upstate-Globals/${siteConfigMap[ 'siteThemeJS' ]}" { 'assetPosition' : 2 } )
+    #end
+#end
+##
+## Local JS
+#if( $siteConfigMap[ 'siteLocalJS' ].Class.Name && $siteConfigMap[ 'siteLocalJS' ] != "" )
+    #if( $siteConfigMap[ 'siteLocalJS' ].startsWith( 'site://' ) )
+        #drulykgHtmlAssetAdd( $siteConfigMap[ 'siteLocalJS' ] { 'assetPosition' : 2 } )
+    #else
+        #drulykgHtmlAssetAdd( "site://${currentPageSiteName}/${siteConfigMap[ 'siteLocalJS' ]}" { 'assetPosition' : 2 } )
+    #end
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryProcessPageLevelOverride”》
+    《title》
+Process page-level-override chooser
+    《/title》
+    《content》
+Process page-level-override chooser to bypass the execution 
+of the default tree or custom code specific for the page
+    《/content》
+    《stepcode》
+doc*###
+## process page-level override for locally defined tree or code
+#upstateProcessBlockChooser( $pageSystemDataStructure "admin-group/page-level-override" '<div id="hide-page-level-override">' '</div>' )
+## added 4/13/2018 to replace page-level-override
+#if( $deferredEvaluationOfMasterLevelOverride.Class.Name && $deferredEvaluationOfMasterLevelOverride == true )
+#if( $masterLevelOverrideBlock.Class.Name )
+    #if( $masterLevelOverrideBlock.Class.Name == $COM_CASCADE_XML_BLOCK_API_CLASS_NAME )
+        #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.XML )
+    #elseif( $masterLevelOverrideBlock.Class.Name == $COM_CASCADE_TEXT_BLOCK_API_CLASS_NAME )
+        #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.Text )
+    #elseif( $masterLevelOverrideBlock.Class.Name == $COM_CASCADE_DATA_BLOCK_API_CLASS_NAME )
+        #set( $masterLevelOverrideBlockCode = $masterLevelOverrideBlock.getStructuredDataNode( "velocity-group/velocity" ).TextValue )
+    #end
+    #evaluate( $masterLevelOverrideBlockCode )
+#end
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“designEntryOutputPageContent”》
+    《title》
+Output page content
+    《/title》
+    《content》
+Output the page content depending on whether either 《code》$executeLocallyDefinedCode《/code》 
+or 《code》$importLocallyDefinedTree《/code》 is defined:
+《ul》
+《li》If 《code》$executeLocallyDefinedCode《/code》 is defined, then only this code is executed《/li》
+《li》Else if 《code》$importLocallyDefinedTree《/code》 is defined, then the variables 
+related to 《code》pre-main《/code》, 《code》main《/code》 and 《code》post-main《/code》 
+will be resolved and the locally defined tree displayed《/li》
+《li》Else the 《goto》rwd4TreeDesignTree《/goto》 will be displayed《/li》
+《/ul》
+    《/content》
+    《stepcode》
+doc*###
+## output contents, depending on tree or code
+## resolve variables embedded in the tree
+#getTopMiddleBottomInfo
+#resolveRowColumnCssClass
+#if( !$executeLocallyDefinedCode.Class )
+##
+    #if( !$importLocallyDefinedTree.Class )
+
+        ## $siteConfigMap[ 'htmlName' ] is defined in setup
+        #if( $siteConfigMap[ 'htmlName' ].Class.Name && $siteConfigMap[ 'htmlName' ] != "" && $siteConfigMap[ 'htmlName' ] != "inherited" )
+            #if( $siteConfigMap[ 'htmlName' ].startsWith( "site://", 0 ) )
+                #chanwImportScriptByFullPath( $siteConfigMap[ 'htmlName' ] )
+            #else
+                #chanwImportScript( $BRISK_APP[ 'SCAFFOLDS_PATH_NTS' ] $BRISK[ 'APP_SITE_NAME' ] $siteConfigMap[ 'htmlName' ] )
+            #end
+        #else
+            #chanwImportScript( "$BRISK_APP[ 'SCAFFOLDS_PATH' ]${design_namespace}" $BRISK[ 'APP_SITE_NAME' ] $BRISK_APP[ 'DESIGNS_TREE_NAME' ] )
+        #end
+
+        ## $siteConfigMap[ 'treeName' ] is defined in setup
+        ## processSiteSetup reads in site or folder specific $siteConfigMap[ 'treeName' ]
+        ## page-level $siteConfigMap[ 'treeName' ]
+        #resolvePageTreeName
+##
+        ## special case
+        #if( $siteConfigMap[ 'treeName' ] != "inherited" )
+            #set( $mainIndex = $chanwObjectNodeMap[ "body" ].getIndex( $chanwObjectNodeMap[ "main" ] ) )
+            #set( $void = $chanwObjectNodeMap[ "body" ].remove( $chanwObjectNodeMap[ "main" ] ) )
+            #chanwImportScript( $BRISK_APP[ 'SCAFFOLDS_PATH_NTS' ] $BRISK[ 'APP_SITE_NAME' ] "${siteConfigMap[ 'treeName' ]}-main-tree" )
+
+            #set( $void = $chanwObjectNodeMap[ "body" ].insert( $chanwObjectNodeMap[ "main" ], $mainIndex ) )
+            ## innermain
+            #drulykgImportPassThrough( "${BRISK[ 'APP_SITEPATH' ]}scaffolds/innermain-tree" )
+            #set( $void = $chanwObjectNodeMap[ "middleElement" ].add( $chanwObjectNodeMap[ "innermain" ] ) )
+        #end
+#*
+$S_PRE#chanwDisplayTree( $chanwObjectNodeMap[ 'html' ] )$E_PRE
+*#
+        #if( $siteConfigMap[ 'displayHtmlCode' ] == true )
+            #set( $markup = "#chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'html' ] )" )
+            $S_PRE$_EscapeTool.xml( $markup )$E_PRE
+        #elseif( $siteConfigMap[ 'displayMainCode' ] == true )
+            #set( $markup = "#chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'main' ] )" )
+            $S_PRE$_EscapeTool.xml( $markup )$E_PRE
+        #else
+            #set( $markup = "#chanwDisplayTreeNodeRecursively( $chanwObjectNodeMap[ 'html' ] )" )
+##
+            ## Handle automatic image helpers which let users know about
+            ## external links, pdfs, docs, and other files before they
+            ## click on an <a> tags
+##
+            ## Convert our current markup into a JDOM object
+            ## so that we can execute xPath
+            #chanwBuildXMLContentRoot( $markup )
+##
+            ## From pre-main, main, and post-main content ID'd tags, cascadeForcedRoot, and aside tags
+            ## find all of the <a> tags which
+            ##   - Do not have the hide-link-icon class
+            ##   - Do not have an <img> as any descendant
+            #set( $all_a_nodes_xpath = '
+            (
+                //*[
+                    (
+                        contains(@id, "pre-main-content") and
+                        (
+                            @id="pre-main-content" or
+                            starts-with(@id, "pre-main-content ") or
+                            contains(@id, " pre-main-content ") or
+                            substring(@id, string-length(@id) - string-length(" pre-main-content") + 1) = " pre-main-content"
+                        )
+                    ) or
+                    (
+                        contains(@id, "page-content-div") and
+                        (
+                            @id="page-content-div" or
+                            starts-with(@id, "page-content-div ") or
+                            contains(@id, " page-content-div ") or
+                            substring(@id, string-length(@id) - string-length(" page-content-div") + 1) = " page-content-div"
+                        )
+                    ) or
+                    (
+                        contains(@id, "post-main-content") and
+                        (
+                            @id="post-main-content" or
+                            starts-with(@id, "post-main-content ") or
+                            contains(@id, " post-main-content ") or
+                            substring(@id, string-length(@id) - string-length(" post-main-content") + 1) = " post-main-content"
+                        )
+                    )
+                ] |
+                //cascadeForcedRoot |
+                //aside
+            )
+            //a[
+                not(
+                    @class="hide-link-icon" or
+                    starts-with(@class, "hide-link-icon ") or
+                    contains(@class, " hide-link-icon ") or
+                    substring(@class, string-length(@class) - string-length(" hide-link-icon") + 1) = " hide-link-icon" or
+                    descendant::img
+                )
+            ]
+            ' )
+##
+            ## Loop all the <a> nodes and apply Brick string(s)
+            #foreach( $node in $_XPathTool.selectNodes( $chanwBuildXMLContentRoot, $all_a_nodes_xpath ) )
+##
+                ## Store the Bricks string(s) to be added in this variable
+                #set( $add_content = '' )
+##
+                ## Figure out Bricks file icons based on the href value
+                ## Make sure a Brick does not already exist for a given icon
+                #drulykgParseUrl( $node.getAttribute( 'href' ).Value )
+                #set( $drulykgParseUrl[ 'path' ] = $drulykgParseUrl[ 'path' ].toLowerCase() )
+                #if(
+                    $drulykgParseUrl[ 'path' ].endsWith( '.pdf' ) &&
+                    !$_XPathTool.selectSingleNode( $node, 'descendant::text()[contains(., "(((pdf_icon)))")]' )
+                )
+                    #set( $add_content = '(((pdf_icon)))' )
+                #elseif(
+                    ( $drulykgParseUrl[ 'path' ].endsWith( '.doc' ) ||
+                      $drulykgParseUrl[ 'path' ].endsWith( '.docx' ) ) &&
+                    !$_XPathTool.selectSingleNode( $node, 'descendant::text()[contains(., "(((word_icon)))")]' )
+                )
+                    #set( $add_content = '(((word_icon)))' )
+                #elseif(
+                    ( $drulykgParseUrl[ 'path' ].endsWith( '.xls' ) ||
+                      $drulykgParseUrl[ 'path' ].endsWith( '.xlsx' ) ) &&
+                    !$_XPathTool.selectSingleNode( $node, 'descendant::text()[contains(., "(((excel_icon)))")]' )
+                )
+                    #set( $add_content = '(((excel_icon)))' )
+                #elseif(
+                    ( $drulykgParseUrl[ 'path' ].endsWith( '.ppt' ) ||
+                      $drulykgParseUrl[ 'path' ].endsWith( '.pptx' ) ) &&
+                    !$_XPathTool.selectSingleNode( $node, 'descendant::text()[contains(., "(((ppt_icon)))")]' )
+                )
+                    #set( $add_content = '(((ppt_icon)))' )
+                #elseif(
+                    $drulykgParseUrl[ 'path' ].endsWith( '.swf' ) &&
+                    !$_XPathTool.selectSingleNode( $node, 'descendant::text()[contains(., "(((swf_icon)))")]' )
+                )
+                    #set( $add_content = '(((swf_icon)))' )
+                #end
+##
+                ## In addition to file icons we also add external or intra icons if applicable
+                #if(
+                    $drulykgParseUrl[ 'protocol' ].toLowerCase() != 'site' &&
+                    $drulykgParseUrl[ 'secondLD' ].toLowerCase() != '' &&
+                    ( $drulykgParseUrl[ 'secondLD' ].toLowerCase() != 'upstate' ||
+                      $drulykgParseUrl[ 'topLD' ].toLowerCase() != 'edu' ) &&
+                    !$_XPathTool.selectSingleNode( $node, 'descendant::text()[contains(., "(((external_link_icon)))")]' )
+                )
+                    #set( $add_content = $add_content + '(((external_link_icon)))' )
+                #elseif(
+                    ( $drulykgParseUrl[ 'path' ] == 'intra' ||
+                      $drulykgParseUrl[ 'path' ].contains( '/intra/' ) ||
+                      $drulykgParseUrl[ 'path' ].endsWith( '/intra' ) ||
+                      $drulykgParseUrl[ 'path' ].startsWith( 'intra/' ) ) &&
+                    !$_XPathTool.selectSingleNode( $node, 'descendant::text()[contains(., "(((on_network_or_libproxy_access_icon)))")]' )
+                )
+                    #set( $add_content = $add_content + '(((on_network_or_libproxy_access_icon)))' )
+                #end
+##
+                ## Add the Bricks string to this <a> tag
+                #if( $add_content != '' )
+                    #set( $void = $node.addContent( $add_content ) )
+                #end
+            #end
+##
+            ## Turn the JDOM back into a string
+            #set( $markup = $_SerializerTool.serialize( $chanwBuildXMLContentRoot, false ) )
+##
+            ## Convert Bricks strings into their final product
+            #drulykgApplyBricks(
+                $markup
+                {
+                    'local_bricks_feed_file': $_.locateBlock( 'app/components/blocks/feed/bricks-feed', $BRISK[ 'APP_SITE_NAME' ] ),
+                    'subkey': $design_namespace
+                }
+            )
+            $drulykgApplyBricks
+        #end
+    #else
+        $importLocallyDefinedTree
+    #end
+#else
+    $executeLocallyDefinedCode
+##
+#end
+## Cleanup any resources which might be open and stop
+## because we are done anyways
+#if( $currentPageSiteName != "web-services" )
+#drulykgCleanupAndStop
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
+《/documentationautoflow》
+doc*###
