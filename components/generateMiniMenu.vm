@@ -1,0 +1,33 @@
+#import( 'app/components/siteNavHtmlShell' )
+#macro( generateMiniMenu $currentPageSiteName_generateMiniMenu $options_generateMiniMenu )
+    <!-- Mobile Mega Menu -->
+    <nav class="main-nav hidden-md hidden-lg" role="navigation">
+        <!-- Mobile menu toggle button (hamburger/x icon) -->
+        <input id="main-menu-state" type="checkbox" />
+        <label class="main-menu-btn" for="main-menu-state">
+          <span class="main-menu-btn-icon"></span> Toggle main menu visibility
+        </label>
+        <!-- /Mobile menu toggle button (hamburger/x icon) -->
+        <h2 class="nav-brand">
+            #drulykgHtmlTag( 'a' {
+                'attrs' : {
+                    'href' : "site://${currentPageSiteName_generateMiniMenu}/index"
+                },
+                'closeTag' : true,
+                'content' : $siteConfigMap[ 'siteTitleString' ]
+            } )
+        </h2>
+        <!-- Mobile Navigation Stuff -->
+        #drulykgShallowMerge( {
+            'excludeMetadataName': 'exclude-from-mobile-menu',
+            'excludeMetadataValue': 'yes',
+            'rootFolderTagAttrs': {
+                'class': 'sm sm-blue',
+                'id': 'main-menu'
+            }
+        } $options_generateMiniMenu )
+        #siteNavHtmlShell( $currentPageSiteName_generateMiniMenu $drulykgShallowMerge )
+        <!-- /Mobile Navigation Stuff -->
+    </nav>
+    <!-- /Mobile Mega Menu -->
+#end

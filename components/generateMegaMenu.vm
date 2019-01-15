@@ -1,0 +1,46 @@
+#import( 'app/components/siteNavHtmlShell' )
+#macro( generateMegaMenu $currentPageSiteName_generateMegaMenu $options_generateMegaMenu )
+    <nav>
+        <div class="navbar navbar-default hidden-xs hidden-sm suny-upstate-mega-menu mega-edition" role="navigation">
+            <div class="container">
+                <div class="collapse navbar-collapse">
+                    #drulykgShallowMerge( {
+                        'excludeMetadataName': 'exclude-from-menu',
+                        'excludeMetadataValue': 'yes',
+                        'folderTagAttrs': {
+                            'class': 'dropdown-menu'
+                        },
+                        'megaMenuMacro': 'processMegaMenuBlock',
+                        'rootChildActiveTagAttrs': {
+                            'class': 'dropdown current active'
+                        },
+                        'rootChildSeparator': '<li class="separator"></li>',
+                        'rootChildTagAttrs': {
+                            'class': 'dropdown'
+                        },
+                        'rootFolderTagAttrs': {
+                            'class': 'nav navbar-nav navbar-left'
+                        },
+                        'rootHomePageDisplayName': $siteConfigMap[ 'siteNavHomeString' ],
+                        'showRootHomePage': true
+                    } $options_generateMegaMenu)
+                    #siteNavHtmlShell( $currentPageSiteName_generateMegaMenu $drulykgShallowMerge )
+                </div>
+            </div>
+        </div>
+    </nav>
+#end
+#macro( processMegaMenuBlock $blockName )
+    #if( !$_PropertyTool.isNull( $_.locateBlock( "_cascade/blocks/mega-menu/${blockName}", $currentPageSiteName) ) )
+        #import ( "app/components/block_macros/row" )
+        <ul class="dropdown-menu">
+            <li>
+                <div class="container">
+                #set( $megaMenuBlock = $_.locateBlock( "_cascade/blocks/mega-menu/${blockName}", $currentPageSiteName ) )
+                #chanwGetFQINodeMap( $megaMenuBlock.StructuredData $nulllll $megaMenuBlock )
+                #processRowGroup( $chanwGetFQINodeMap )
+                </div>
+            </li>
+        </ul>
+    #end
+#end
