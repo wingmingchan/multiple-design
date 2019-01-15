@@ -20,8 +20,6 @@ try
     // retrieve the root container
     $root_dd_container  = $admin->getAsset(
         a\DataDefinitionContainer::TYPE, $ROOT_PATH, $site_name );
-    
-    $admin->getAsset( a\DataDefinition::TYPE, "Article Feed", $site_name )->dump();
 
     foreach( $dd_names_urls as $dd_name => $dd_url )
     {
