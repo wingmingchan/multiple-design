@@ -17,9 +17,6 @@ try
 {
     u\DebugUtility::setTimeSpaceLimits();
 
-    // retrieve the root folder
-    $root_folder  = $admin->getAsset( a\Folder::TYPE, $ROOT_PATH, $site_name );
-        
     // retrieve the Folder metadata set
     $folder_ms  = $admin->getAsset(
         a\MetadataSet::TYPE, $ROOT_PATH . "Folder", $site_name );
@@ -42,7 +39,15 @@ try
         $folder->getMetadata()->setDisplayName( $folder_name );
         // not indexable and not publishable
         $folder->setShouldBeIndexed( false )->setShouldBePublished( false )->edit();
+        
+        
     }
+   
+    // fix workflow settings of the base folder
+    $base_folder = $admin->getAsset( a\Folder::TYPE, $ROOT_PATH, $site_name );
+    $wf_settings = $base_folder->getWorkflowSettings();
+    $wf_settings->setInheritWorkflows( false )->setRequireWorkflow( false );
+    $base_folder->editWorkflowSettings( true, true );
 }
 catch( \Exception $e ) 
 {
