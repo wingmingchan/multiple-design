@@ -1,0 +1,15 @@
+#*doc
+《code》
+《documentation id=page-load_core”》
+《h2》app/components/page-load-core《/h2》
+《p》The purpose of this format is to load all formats required by the Page content type.《/p》
+《/documentation》
+《format》
+doc*###
+#drulykgImportPassThrough( "${BRISK[ 'MACROS_SITEPATH' ]}import-core-macros" )
+#drulykgImportPassThrough( "${BRISK[ 'LIBRARIES_SITEPATH' ]}velocity/chanw/chanw-library-import" )
+#drulykgImportPassThrough( "${BRISK[ 'LIBRARIES_SITEPATH' ]}velocity/drulykg/drulykg-html-asset" )
+#*doc
+《/format》
+《/code》
+doc*###
