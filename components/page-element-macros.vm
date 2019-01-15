@@ -47,7 +47,7 @@ doc*###
     #macro( rwd4AddBaseAssets )
         ## Set the base assets needed by RWD4
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/bootstrap/3.3.6/css/bootstrap.css' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/global-rwd4-v12.css' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/global-rwd4-v13.css' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/print-rwd4.css' { 'assetPosition' : 0, 'attrs' : { 'media' : 'print' } } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/jquery-ui/1.11.4/base/jquery-ui.css' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/css/vlightbox1.css' { 'assetPosition' : 0 } )
@@ -61,7 +61,7 @@ doc*###
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/jquery/1.12.4/jquery.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/fontawesome/5.0.8/fontawesome-all.min.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/fontawesome/5.0.8/fa-v4-shims.min.js' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/rwd-v2.js' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/rwd-v3.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/jquery-ui/1.11.4/base/jquery-ui.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/jquery.tablesorter.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/bootstrap/3.3.6/js/bootstrap.js' { 'assetPosition' : 0 } )
@@ -75,7 +75,7 @@ doc*###
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/jquery-scroll-to/2.1.1/jquery.scrollto.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/plug-ins/simpler-sidebar/2.2.4/simpler-sidebar.min.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/upstate-sidebar-v2.js' { 'assetPosition' : 0 } )
-        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/activate-upstate-classic-mega-mini-menus-1.0.1.js' { 'assetPosition' : 0 } )
+        #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/activate-upstate-classic-mega-mini-menus-1.0.2.js' { 'assetPosition' : 0 } )
         #drulykgHtmlAssetAdd( 'site://Upstate-Globals/assets/js/defer-jquery-execute.js' { 'assetPosition' : 0 } )
 ##
         ## These will be encased inside of <!--[if lt IE 9]><![endif]-->
@@ -141,8 +141,7 @@ doc*###
             #set( $createPageBreadcrumbsVars = {
                 'currentFolderPath': '',
                 'out': '',
-                'pathParts': $currentPage.path.split( '/' ),
-                'void': ''
+                'pathParts': $currentPage.path.split( '/' )
             } )
             ## Start up the HTML for breadcrumbs
             #drulykgAppendVar( '$createPageBreadcrumbsVars[ "out" ]' '<div id="breadcrumb-div" class="hidden-xs hidden-sm">' )
@@ -230,6 +229,46 @@ doc*###
 #*doc
     《/stepcode》
 《/step》
+《step id=“generateBrightEdgeCloseConnection”》
+    《title》Generate the PHP code to close the BrightEdge connection《/title》
+    《content》《/content》
+    《stepcode》
+doc*###
+#macro( generateBrightEdgeCloseConnection )
+    #if( $currentPageSiteName == 'cancer' )
+        $S_PHP_PASSTHROUGH
+        if( BEIXF_allowed() )
+        {
+            print ${_EscapeTool.d}be_ixf->close();
+        }
+        $E_PHP_PASSTHROUGH
+    #end
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
+《step id=“generateBrightEdgeSEOTags”》
+    《title》Generate the PHP code to invoke BrightEdge's SEO stuff《/title》
+    《content》
+    BrightEdge needs this?
+    《/content》
+    《stepcode》
+doc*###
+#macro( generateBrightEdgeSEOTags )
+    #if( $currentPageSiteName == 'cancer' )
+        $S_PHP_PASSTHROUGH
+        if( BEIXF_allowed() )
+        {
+            print ${_EscapeTool.d}be_ixf->getBodyOpen();
+        }
+        $E_PHP_PASSTHROUGH
+    #end
+#end
+##
+#*doc
+    《/stepcode》
+《/step》
 《step id=“pageElementMacrosGenerateEditButtonPHP”》
     《title》Generate an edit button《/title》
     《content》
@@ -257,7 +296,7 @@ doc*###
 doc*###
 #macro( generateFolderNav )
 ##
-    #drulykgHtmlTag( $nullllllll {
+    #drulykgHtmlTag( $nulllll {
         'persistentSettings' : {
             'siteRootPageNameOfFolder' : $_EscapeTool.xml( $siteConfigMap[ 'siteRootPageNameOfFolder' ] )
         }
@@ -955,7 +994,7 @@ doc*###
 doc*###
 #macro( generateSiteNav )
 ##
-    #drulykgHtmlTag( $nullllllll {
+    #drulykgHtmlTag( $nulllll {
         'persistentSettings' : {
             'siteRootPageNameOfFolder' : $_EscapeTool.xml( $siteConfigMap[ 'siteRootPageNameOfFolder' ] )
         }
@@ -996,7 +1035,7 @@ doc*###
 #macro( generateSiteNavForExternalInclude )
     #drulykgInvokeMacro( "${design_namespace}GenerateSiteNavForExternalInclude" )
     #macro( rwd4GenerateSiteNavForExternalInclude )
-        #drulykgHtmlTag( $nullllllll {
+        #drulykgHtmlTag( $nulllll {
             'persistentSettings' : {
                 'convertUrlsToAbsolutePath' : true,
                 'protectTagsWithUrlAttrs' : true
@@ -1018,7 +1057,7 @@ doc*###
 #macro( generateSiteNavForInternalNavFeed )
     #drulykgInvokeMacro( "${design_namespace}GenerateSiteNavForInternalNavFeed" )
     #macro( rwd4GenerateSiteNavForInternalNavFeed )
-        #drulykgHtmlTag( $nullllllll {
+        #drulykgHtmlTag( $nulllll {
             'persistentSettings' : {
                 'protectTagsWithUrlAttrs' : true
             }
@@ -1043,11 +1082,10 @@ doc*###
     #macro( rwd4GenerateSiteNavForPageRender )
 ##
         #set( $rwd4GenerateSiteNavForPageRenderVars = {
-            'internal_nav_feed_block': $nullllllll,
-            'internal_nav_feed_block_xml': $nullllllll,
-            'internal_nav_feed_block_xml_nav_nodes': $nullllllll,
-            'siteUrl': $nullllllll,
-            'void': $nullllllll
+            'internal_nav_feed_block': $nulllll,
+            'internal_nav_feed_block_xml': $nulllll,
+            'internal_nav_feed_block_xml_nav_nodes': $nulllll,
+            'siteUrl': $nulllll
         } )
 ##
         $S_SYSTEM_VIEW_INTERNAL
@@ -1073,7 +1111,11 @@ doc*###
                     #set( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ] = $_XPathTool.selectNodes( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml' ], "//nav" ) )
                     #if( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ].size() > 1 )
                         $_SerializerTool.serialize( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ][ 0 ], false )
-                        $_SerializerTool.serialize( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ][ 1 ], false )  
+                        #if( $siteConfigMap[ 'turnOffMobileMenu' ] == 'No' )
+                            $_SerializerTool.serialize( $rwd4GenerateSiteNavForPageRenderVars[ 'internal_nav_feed_block_xml_nav_nodes' ][ 1 ], false )  
+                        #else
+                            <div class="hidden-md hidden-lg">Mobile navigation disabled for Cascade page rendering.</div>
+                        #end
                     #else
                         ## <nav> tag is missing
                         <div>Error: The nav tag is missing from the published site://${currentPageSiteName}/${INTERNAL_NAV_PATH} page.</div>
@@ -1107,9 +1149,9 @@ doc*###
             #drulykgConvertToArrayList( $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ].split( '/' ) )
             #set( $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ] = $drulykgConvertToArrayList )
             #if( $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ].size() >= 3 )
-                #set( $rwd4GenerateSiteNavForPageRenderVars[ 'void' ] = $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ].remove( 2 ) )
-                #set( $rwd4GenerateSiteNavForPageRenderVars[ 'void' ] = $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ].remove( 1 ) )
-                #set( $rwd4GenerateSiteNavForPageRenderVars[ 'void' ] = $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ].remove( 0 ) )
+                #set( $void = $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ].remove( 2 ) )
+                #set( $void = $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ].remove( 1 ) )
+                #set( $void = $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ].remove( 0 ) )
             #end
             #set( $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ] = $_DisplayTool.list( $rwd4GenerateSiteNavForPageRenderVars[ 'siteUrl' ], '/' ) )
         #end
