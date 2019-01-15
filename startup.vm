@@ -1,0 +1,34 @@
+#*doc
+《code》
+《documentation id=“core-default”》
+《h2》core/default《/h2》
+《p》The purpose of this format is to serve as the entry point into Brisk by loading 
+constants, a few choice macros, libraries and ultimately delegate processing to other formats.《/p》
+《ol》
+《li》Load the Brisk constants, drulykg-timer library, and #drulykgImportPassThrough macro.《/li》
+《li》Delegate to the 《code》$BRISK[ 'APP_ENTRY_FORMAT' ]《/code》 format.《/li》
+《/ol》
+《/documentation》
+《format》
+doc*###
+##
+##
+## Load the core constants
+#import( 'core/core-constants' )
+##
+##
+## Start up a timer named BRISK so that we can benchmark Brisk's performance if needed
+#import( "${BRISK[ 'LIBRARIES_SITEPATH' ]}velocity/drulykg/drulykg-timer" )
+#drulykgStartTimer( 'BRISK' )
+##
+##
+## Import #drulykgImportPassThrough() because it is needed once we import $BRISK[ 'APP_ENTRY_FORMAT' ]
+#import( "${BRISK[ 'MACROS_SITEPATH' ]}drulykgImportPassThrough" )
+##
+##
+## Import $BRISK[ 'APP_ENTRY_FORMAT' ] and let it take it take over
+#import( "${BRISK[ 'APP_SITEPATH' ]}${BRISK[ 'APP_ENTRY_FORMAT' ]}" )
+#*doc
+《/format》
+《/code》
+doc*###

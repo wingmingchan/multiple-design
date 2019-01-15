@@ -1,0 +1,74 @@
+## A map of Brisk framework constants
+#set( $BRISK = {} )
+##
+## Manually set this variable to avoid issues with $currentPage not being
+## available for dynamically setting CORE_SITE_NAME
+#set( $BRISK[ 'CORE_SITE_NAME' ] = '_brisk' )
+##
+## If $currentPage is available then dynamically get the CORE_SITE_NAME
+#if( $currentPage.Class.Name )
+##
+    ## Get a service provider object
+    #set( $chanwServiceProvider =
+        $_.Class.forName(
+            "com.hannonhill.cascade.model.service.ServiceProviderHolderBean"
+        ).getMethod(
+            "getServiceProvider"
+        ).invoke(
+            null
+        )
+    )
+##
+    ## The name of the site which contains the Brisk framework core
+    ## computed from the content type associated with the current page
+    #set( $BRISK[ 'CORE_SITE_NAME' ] =
+        $_.Class.forName(
+            "com.hannonhill.cascade.model.util.SiteUtil"
+        ).getConstructor().newInstance().getSiteName(
+            $chanwServiceProvider.getPageService().get(
+                $currentPage.Identifier.Id
+            ).ContentType,
+            $chanwServiceProvider
+        )
+    )
+#end
+##
+## The name of the site which contains the Brisk framework app
+#set( $BRISK[ 'APP_SITE_NAME' ] = $BRISK[ 'CORE_SITE_NAME' ] )
+##
+## PATHS
+##
+## _NTS = No Trailing Slash
+##
+## Path to the core of Brisk
+#set( $BRISK[ 'CORE_FOLDER' ]               = 'core' )
+#set( $BRISK[ 'CORE_PATH_NTS' ]             = $BRISK[ 'CORE_FOLDER' ] )
+#set( $BRISK[ 'CORE_PATH' ]                 = $BRISK[ 'CORE_PATH_NTS' ] + '/' )
+#set( $BRISK[ 'CORE_SITEPATH_NTS' ]         = 'site://' + $BRISK[ 'CORE_SITE_NAME' ] + '/' + $BRISK[ 'CORE_PATH_NTS' ] )
+#set( $BRISK[ 'CORE_SITEPATH' ]             = $BRISK[ 'CORE_SITEPATH_NTS' ] + '/' )
+##
+## Path to the core macros of Brisk
+#set( $BRISK[ 'MACROS_FOLDER' ]             = 'macros' )
+#set( $BRISK[ 'MACROS_PATH_NTS' ]           = $BRISK[ 'CORE_PATH' ] + $BRISK[ 'MACROS_FOLDER' ] )
+#set( $BRISK[ 'MACROS_PATH' ]               = $BRISK[ 'MACROS_PATH_NTS' ] + '/' )
+#set( $BRISK[ 'MACROS_SITEPATH_NTS' ]       = $BRISK[ 'CORE_SITEPATH' ] + $BRISK[ 'MACROS_FOLDER' ] )
+#set( $BRISK[ 'MACROS_SITEPATH' ]           = $BRISK[ 'MACROS_SITEPATH_NTS' ] + '/' )
+##
+## Path to the core libraries of Brisk
+#set( $BRISK[ 'LIBRARIES_FOLDER' ]          = 'library' )
+#set( $BRISK[ 'LIBRARIES_PATH_NTS' ]        = $BRISK[ 'CORE_PATH' ] + $BRISK[ 'LIBRARIES_FOLDER' ] )
+#set( $BRISK[ 'LIBRARIES_PATH' ]            = $BRISK[ 'LIBRARIES_PATH_NTS' ] + '/' )
+#set( $BRISK[ 'LIBRARIES_SITEPATH_NTS' ]    = $BRISK[ 'CORE_SITEPATH' ] + $BRISK[ 'LIBRARIES_FOLDER' ] )
+#set( $BRISK[ 'LIBRARIES_SITEPATH' ]        = $BRISK[ 'LIBRARIES_SITEPATH_NTS' ] + '/' )
+##
+## Path to the apps of Brisk
+#set( $BRISK[ 'APP_FOLDER' ]                = 'app' )
+#set( $BRISK[ 'APP_PATH_NTS' ]              = $BRISK[ 'APP_FOLDER' ] )
+#set( $BRISK[ 'APP_PATH' ]                  = $BRISK[ 'APP_PATH_NTS' ] + '/' )
+#set( $BRISK[ 'APP_SITEPATH_NTS' ]          = 'site://' + $BRISK[ 'APP_SITE_NAME' ] + '/' + $BRISK[ 'APP_PATH_NTS' ] )
+#set( $BRISK[ 'APP_SITEPATH' ]              = $BRISK[ 'APP_SITEPATH_NTS' ] + '/' )
+##
+## FORMATS
+##
+## The format which serves as the entry point into the Brisk app
+#set( $BRISK[ 'APP_ENTRY_FORMAT' ]          = 'app-startup' )
