@@ -1,0 +1,259 @@
+##
+#import( 'core/macros/drulykgGetCascadeAssetUrl' )
+##
+#macro( drulykgGetTagsAssetMap $input_drulykgGetTagsAssetMap )
+##
+    ## Always reset this
+    #set( $drulykgGetTagsAssetMap = {
+        'tags': {
+            'children': {}
+        },
+        'links': {
+            'children': {}
+        }
+    } )
+##
+    ## Set some working vars
+    #if( $$drulykgGetTagsAssetMapVars != 'java.util.LinkedHashMap' )
+        #set( $drulykgGetTagsAssetMapVars = {
+            'thumb-nail': $nulllll
+        } )
+    #end
+##
+    ## Loop each $input_drulykgGetTagsAssetMap map, this allows for aggregating stuff across multiple locations
+    #foreach( $map in $input_drulykgGetTagsAssetMap )
+##
+        ## Reset these for every map received
+        #set( $drulykgGetTagsAssetMapVars[ 'includeBlocks' ] = false )
+        #set( $drulykgGetTagsAssetMapVars[ 'includeFiles' ] = false )
+        #set( $drulykgGetTagsAssetMapVars[ 'includeFolders' ] = false )
+        #set( $drulykgGetTagsAssetMapVars[ 'includePages' ] = true )
+        #set( $drulykgGetTagsAssetMapVars[ 'includeSymlinks' ] = false )
+        #set( $drulykgGetTagsAssetMapVars[ 'indexableOnly' ] = true )
+        #set( $drulykgGetTagsAssetMapVars[ 'publishableOnly' ] = true )
+        #set( $drulykgGetTagsAssetMapVars[ 'maxResults' ] = 1000000 )
+        #set( $void = $drulykgGetTagsAssetMapVars.put( 'folderLink', "$!{map[ 'folderAPI' ].link}" ) )
+        #if(
+            $drulykgGetTagsAssetMapVars[ 'folderLink' ] != '' &&
+            !$drulykgGetTagsAssetMapVars[ 'folderLink' ].endsWith( '/' )
+        )
+            #set( $drulykgGetTagsAssetMapVars[ 'folderLink' ] = $drulykgGetTagsAssetMapVars[ 'folderLink' ] + '/' )
+        #end
+        #set( $void = $drulykgGetTagsAssetMapVars.put( 'filterTagPrefix', $nulllll ) )
+##
+        ## normalizeSeparator
+        ##  - Set it to a hyphen
+        ##  - Allow user to specify a value; if null then hyphen is retained
+        ##  - Make sure that normalizeSeparator is a string
+        ##  - Make sure that normalizeSeparator escapes dollar signs for .replaceAll()'s safety
+        #set( $drulykgGetTagsAssetMapVars[ 'normalizeSeparator' ] = '-' )
+        #set( $drulykgGetTagsAssetMapVars[ 'normalizeSeparator' ] = $map[ 'normalizeSeparator' ] )
+        #set( $drulykgGetTagsAssetMapVars[ 'normalizeSeparator' ] = "$drulykgGetTagsAssetMapVars[ 'normalizeSeparator' ]" )
+        #set( $drulykgGetTagsAssetMapVars[ 'normalizeSeparator' ] = $drulykgGetTagsAssetMapVars[ 'normalizeSeparator' ].replaceAll( '\$', '\\\$' ) )
+##
+        ## thumb-nail stuff
+        #set( $drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ] = 'images' )
+        #set( $drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ] = $map[ 'thumbNailPathPrefix' ] )
+        #set( $drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ] = "$drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ]" )
+        #if( $drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ].ensWith( '/' ) )
+            #set( $drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ] = $drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ].substring( 0, $_MathTool.sub( $drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ].lenght(), 1 ) ) )
+        #end
+        #set( $drulykgGetTagsAssetMapVars[ 'thumbNailFileSuffix' ] = '.jpg' )
+        #set( $drulykgGetTagsAssetMapVars[ 'thumbNailFileSuffix' ] = $map[ 'thumbNailFileSuffix' ] )
+        #set( $drulykgGetTagsAssetMapVars[ 'thumbNailFileSuffix' ] = "$drulykgGetTagsAssetMapVars[ 'thumbNailFileSuffix' ]" )
+        #set( $drulykgGetTagsAssetMapVars[ 'thumbNailDefault' ] = '' )
+        #set( $drulykgGetTagsAssetMapVars[ 'thumbNailDefault' ] = $map[ 'thumbNailDefault' ] )
+##
+        #set( $drulykgGetTagsAssetMapVars[ 'tagDisplayNameTranslations' ] = {} )
+##
+        ## Allow invoker to set these
+        #if( $map[ 'includePages' ].Class.Name == 'java.lang.Boolean' )
+            #set( $drulykgGetTagsAssetMapVars[ 'includePages' ] = $map[ 'includePages' ] )
+        #end
+##
+        #if( $map[ 'includeSymlinks' ].Class.Name == 'java.lang.Boolean' )
+            #set( $drulykgGetTagsAssetMapVars[ 'includeSymlinks' ] = $map[ 'includeSymlinks' ] )
+        #end
+##
+        #if( $map[ 'filterTagPrefix' ].Class.Name == 'java.lang.String' )
+            #set( $drulykgGetTagsAssetMapVars[ 'filterTagPrefix' ] = [ { 'filter': $map[ 'filterTagPrefix' ] } ] )
+        #elseif( $map[ 'filterTagPrefix' ].size() > 0 )
+            #set( $drulykgGetTagsAssetMapVars[ 'filterTagPrefix' ] = $map[ 'filterTagPrefix' ] )
+        #end
+##
+        #if( $map[ 'removeTagPrefix' ].Class.Name == 'java.lang.String' )
+            #set( $drulykgGetTagsAssetMapVars[ 'removeTagPrefix' ] = [ $map[ 'removeTagPrefix' ] ] )
+        #elseif( $map[ 'removeTagPrefix' ].size() > 0 )
+            #set( $drulykgGetTagsAssetMapVars[ 'removeTagPrefix' ] = $map[ 'removeTagPrefix' ] )
+        #end
+##
+        ## Allow custom invoker translations
+        #if( $map[ 'tagDisplayNameTranslations' ].Class.Name == 'java.util.LinkedHashMap' )
+            #set( $drulykgGetTagsAssetMapVars[ 'tagDisplayNameTranslations' ] = $map[ 'tagDisplayNameTranslations' ] )
+##
+        ## Save room for single or multi block-based translations
+        #elseif( $map[ 'tagDisplayNameTranslations' ].AssetType == 'block' )
+            ## Empty, for now...
+        #elseif( $map[ 'tagDisplayNameTranslations' ].size().Class.Name )
+            #foreach( $block in $map[ 'tagDisplayNameTranslations' ] )
+                #if( $block.AssetType == 'block' )
+                #end
+            #end
+        #end
+##
+        ## Set up the query and execute it
+        #set( $void = $drulykgGetTagsAssetMapVars.put( 'queryExecute',
+                $_.query().byContentType( 'site://_brisk/Page'
+                ).siteName( $map[ 'folderAPI' ].SiteName
+                ).indexableOnly( $drulykgGetTagsAssetMapVars[ 'indexableOnly' ]
+                ).publishableOnly( $drulykgGetTagsAssetMapVars[ 'publishableOnly' ]
+                ).includeBlocks( $drulykgGetTagsAssetMapVars[ 'includeBlocks' ]
+                ).includeFiles( $drulykgGetTagsAssetMapVars[ 'includeFiles' ]
+                ).includeFolders( $drulykgGetTagsAssetMapVars[ 'includeFolders' ]
+                ).includePages( $drulykgGetTagsAssetMapVars[ 'includePages' ]
+                ).includeSymlinks( $drulykgGetTagsAssetMapVars[ 'includeSymlinks' ]
+                ).maxResults( $drulykgGetTagsAssetMapVars[ 'maxResults' ]
+                ).execute()
+        ) )
+##
+        ## Loop the objects from the query
+        #foreach( $assetAPI in $drulykgGetTagsAssetMapVars[ 'queryExecute' ] )
+##
+            ## Obey the depth of the requested folder
+            #if( $assetAPI.Link.startsWith( $drulykgGetTagsAssetMapVars[ 'folderLink' ] ) )
+##
+                ## Loop the tags and build the map
+                #foreach( $tag in $assetAPI.Tags )
+##
+                    ## Always reset these to null so that we can have unified logic for setting $drulykgGetTagsAssetMap
+                    #set( $void = $drulykgGetTagsAssetMapVars.put( 'tag', $nulllll ) )
+                    #set( $void = $drulykgGetTagsAssetMapVars.put( 'tagDisplayName', $nulllll ) )
+##
+                    ## If we had a specific prefix requested then limit the result set to just that prefix
+                    #if( $drulykgGetTagsAssetMapVars[ 'filterTagPrefix' ].size() > 0 )
+##
+                        #foreach( $filterTagPrefix in $drulykgGetTagsAssetMapVars[ 'filterTagPrefix' ] )
+                            #if(
+                                $filterTagPrefix[ 'filter' ].Class.Name == 'java.lang.String' &&
+                                $tag.startsWith( $filterTagPrefix[ 'filter' ] )
+                            )
+                                #set( $drulykgGetTagsAssetMapVars[ 'tag' ] = $tag )
+##
+                                #set( $drulykgGetTagsAssetMapVars[ 'tagDisplayName' ] = $drulykgGetTagsAssetMapVars[ 'tagDisplayNameTranslations' ][ $drulykgGetTagsAssetMapVars[ 'tag' ] ] )
+##
+                                ## Always remove the tag prefix unless otherwise instructed
+                                #if( $filterTagPrefix[ 'remove' ] != false )
+##
+                                    ## If remove is a string then the user wants a prefix removed which is not the filter
+                                    #if( $filterTagPrefix[ 'remove' ].Class.Name == 'java.lang.String' )
+                                        #set( $drulykgGetTagsAssetMapVars[ 'tag' ] = $drulykgGetTagsAssetMapVars[ 'tag' ].substring( $filterTagPrefix[ 'remove' ].length() ).trim() )
+                                    #else
+                                        #set( $drulykgGetTagsAssetMapVars[ 'tag' ] = $drulykgGetTagsAssetMapVars[ 'tag' ].substring( $filterTagPrefix[ 'filter' ].length() ).trim() )
+                                    #end
+##
+                                    #set( $drulykgGetTagsAssetMapVars[ 'tagDisplayName' ] = $drulykgGetTagsAssetMapVars[ 'tagDisplayNameTranslations' ][ $drulykgGetTagsAssetMapVars[ 'tag' ] ] )
+                                #end
+##
+                                #break
+                            #end
+                        #end
+##
+                    ## No filter prefix was defined so just accept this tag
+                    #else
+                        #set( $drulykgGetTagsAssetMapVars[ 'tag' ] = $tag )
+##
+                        #set( $drulykgGetTagsAssetMapVars[ 'tagDisplayName' ] = $drulykgGetTagsAssetMapVars[ 'tagDisplayNameTranslations' ][ $drulykgGetTagsAssetMapVars[ 'tag' ] ] )
+##
+                        #foreach( $removeTagPrefix in $drulykgGetTagsAssetMapVars[ 'removeTagPrefix' ] )
+                            #if(
+                                $removeTagPrefix.Class.Name == 'java.lang.String' &&
+                                $drulykgGetTagsAssetMapVars[ 'tag' ].startsWith( $removeTagPrefix )
+                            )
+                                #set( $drulykgGetTagsAssetMapVars[ 'tag' ] = $drulykgGetTagsAssetMapVars[ 'tag' ].substring( $removeTagPrefix.length() ).trim() )
+##
+                                #set( $drulykgGetTagsAssetMapVars[ 'tagDisplayName' ] = $drulykgGetTagsAssetMapVars[ 'tagDisplayNameTranslations' ][ $drulykgGetTagsAssetMapVars[ 'tag' ] ] )
+##
+                                #break
+                            #end
+                        #end
+                    #end
+##
+                    ## Does the invoker want tags normalized?
+                    #if( $map[ 'normalizeTag' ] == true )
+##
+                        ## convert the tag to lowercase
+                        ## replace all non alphanumeric chars with a space
+                        ## trim it
+                        ## replace all groups of spaces with one dash
+                        #set( $drulykgGetTagsAssetMapVars[ 'tag' ] = $drulykgGetTagsAssetMapVars[ 'tag' ].toLowerCase().replaceAll( '[^a-z0-9]', ' ' ).trim().replaceAll( ' +', $drulykgGetTagsAssetMapVars[ 'normalizeSeparator' ] ) )
+##
+                        #set( $drulykgGetTagsAssetMapVars[ 'tagDisplayName' ] = $drulykgGetTagsAssetMapVars[ 'tagDisplayNameTranslations' ][ $drulykgGetTagsAssetMapVars[ 'tag' ] ] )
+                    #end
+##
+                    #if( !$drulykgGetTagsAssetMapVars[ 'tagDisplayName' ].Class.Name )
+                        #set( $drulykgGetTagsAssetMapVars[ 'tagDisplayName' ] = $drulykgGetTagsAssetMapVars[ 'tag' ] )
+                    #end
+##
+                    ## Do we have a tag?
+                    #if( $drulykgGetTagsAssetMapVars[ 'tag' ].Class.Name )
+##
+                        #set( $drulykgGetTagsAssetMap[ 'tags' ][ 'children' ][ $drulykgGetTagsAssetMapVars[ 'tag' ] ] = {
+                            'node': 'tag',
+                            'children': {
+                                'name': $drulykgGetTagsAssetMapVars[ 'tag' ],
+                                'display-name': $drulykgGetTagsAssetMapVars[ 'tagDisplayName' ]
+                            }
+                        } )
+##
+                        ## The asset's .getLink() determines uniqueness
+                        ## Make sure it doesn't already exist so that we do not
+                        ## reset the tags sub-node
+                        #if( !$drulykgGetTagsAssetMap[ 'links' ][ 'children' ][ $assetAPI.Link ].Class.Name )
+##
+                            ## Try to get a thumb-nail for this article
+                            #set( $drulykgGetTagsAssetMapVars[ 'thumbNailPath' ] = '' )
+                            #set( $drulykgGetTagsAssetMapVars[ 'thumbNailPath' ] = $assetAPI.Path )
+                            #if( $drulykgGetTagsAssetMapVars[ 'thumbNailPath' ].startsWith( '/' ) )
+                                #set( $drulykgGetTagsAssetMapVars[ 'thumbNailPath' ] = $drulykgGetTagsAssetMapVars[ 'thumbNailPath' ].substring( 1 ) )
+                            #end
+                            #set( $drulykgGetTagsAssetMapVars[ 'thumbNailPath' ] = $drulykgGetTagsAssetMapVars[ 'thumbNailPathPrefix' ] + '/' + $drulykgGetTagsAssetMapVars[ 'thumbNailPath' ] + $drulykgGetTagsAssetMapVars[ 'thumbNailFileSuffix' ] )
+                            #drulykgGetCascadeAssetUrl( $_.locateFile( $drulykgGetTagsAssetMapVars[ 'thumbNailPath' ], $assetAPI.SiteName ) )
+                            #set( $drulykgGetTagsAssetMapVars[ 'thumb-nail' ] = $drulykgGetCascadeAssetUrl )
+                            #if( $drulykgGetTagsAssetMapVars[ 'thumb-nail' ] == '' )
+                                #drulykgGetCascadeAssetUrl( $drulykgGetTagsAssetMapVars[ 'thumbNailDefault' ] )
+                                #set( $drulykgGetTagsAssetMapVars[ 'thumb-nail' ] = $drulykgGetCascadeAssetUrl )
+                            #end
+##
+                            ## Get the web URL which this asset points to
+                            #drulykgGetCascadeAssetUrl( $assetAPI )
+##
+                            ## Set this child link with some data
+                            #set( $drulykgGetTagsAssetMap[ 'links' ][ 'children' ][ $assetAPI.Link ] = {
+                                'node': 'link',
+                                'children': {
+                                    'display-name': $assetAPI.Metadata.DisplayName,
+                                    'summary': $assetAPI.Metadata.Summary,
+                                    'url': $drulykgGetCascadeAssetUrl,
+                                    'start-time': $_MathTool.div( $assetAPI.Metadata.StartDate.Time, 1000 ),
+                                    'end-time': $_MathTool.div( $assetAPI.Metadata.EndDate.Time, 1000 ),
+                                    'tags': {
+                                        'children': {}
+                                    },
+                                    'thumb-nail': $drulykgGetTagsAssetMapVars[ 'thumb-nail' ]
+                                }
+                            } )
+                        #end
+##
+                        ## Within each article, maintain a unique listing of tags
+                        #set( $drulykgGetTagsAssetMap[ 'links' ][ 'children' ][ $assetAPI.Link ][ 'children' ][ 'tags' ][ 'children' ][ $drulykgGetTagsAssetMapVars[ 'tag' ] ] = {
+                            'node': 'tag',
+                            'children': {
+                                'name': $drulykgGetTagsAssetMapVars[ 'tag' ]
+                            }
+                        } )
+                    #end ## /Do we have a tag?
+                #end ## /Loop the tags and build the map
+            #end ## /Obey the depth of the incoming folder
+        #end ## /Loop the objects from the query
+    #end ## /Loop each $input_drulykgGetTagsAssetMap map...
+#end
