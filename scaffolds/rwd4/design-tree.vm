@@ -1,0 +1,17 @@
+#*doc
+《documentationautoflow》
+《step id=“rwd4TreeDesignTree”》
+    《title》
+        The rwd4Tree default tree
+    《/title》
+    《content》
+Imports the default html tree from app/scaffolds.
+    《/content》
+    《stepcode》
+doc*###
+#import( "app/scaffolds/default-html-tree" )
+#*doc
+    《/stepcode》
+《/step》
+《/documentationautoflow》
+doc*###
