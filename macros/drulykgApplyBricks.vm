@@ -1,0 +1,60 @@
+##
+#import( 'core/library/velocity/chanw/chanw-regex-utilities' )
+#import( 'core/library/velocity/chanw/chanw-element-utilities' )
+##
+#macro( drulykgApplyBricks $targetString_drulykgApplyBricks $options_drulykgApplyBricks )
+##
+    ## Always reset the output
+    #set( $drulykgApplyBricks = "$!{targetString_drulykgApplyBricks}" )
+##
+    ## Define some variables for this macro to use
+    #if( $drulykgApplyBricksVars.Class.Name != 'java.util.LinkedHashMap' )
+##
+        ## local_bricks: currently, only the server has knowledge of the value
+        ##               of a Brick variable so if we want Bricks to be deciphered
+        ##               locally then we need to populate them into this variable
+        ##               for xPath searching
+        #set( $drulykgApplyBricksVars = {
+            'local_bricks': $nulllll
+        } )
+    #end
+##
+    #if(
+        $options_drulykgApplyBricks[ 'local_bricks_feed_file' ].AssetType == 'block' &&
+        $options_drulykgApplyBricks[ 'local_bricks_feed_file' ].BlockType == 'feed'
+    )
+        #set( $drulykgApplyBricksVars[ 'local_bricks' ] = $options_drulykgApplyBricks[ 'local_bricks_feed_file' ].FeedAsXMLElement )
+    #end
+##
+    ## If we have locally available Bricks from the XML and find triple-parentheses'd Bricks
+    ## and replace them with their value for internal viewing and PHP bricks() for external
+    #if(
+        $options_drulykgApplyBricks[ 'subkey' ].Class.Name &&
+        $drulykgApplyBricksVars[ 'local_bricks' ].Class.Name == 'org.jdom.Element'
+    )
+##
+        ## Just because a brick is not defined today, does not mean it won't be defined tomorrow
+        #set( $drulykgApplyBricks = $drulykgApplyBricks.replaceAll(
+            "(\({3})(${drulykgValidElementNameRegex})(\){3})",
+            "[system-view:internal]$0[/system-view:internal]<!--#passthrough<?php echo bricks( '$2' ); ?>#passthrough-->"
+        ) )
+##
+        ## Replace Bricks with their reconciled value
+        #foreach( $node in $_XPathTool.selectSingleNode( $drulykgApplyBricksVars[ 'local_bricks' ], "bricks/${options_drulykgApplyBricks[ 'subkey' ]}" ).Children )
+            #set( $drulykgApplyBricks = $drulykgApplyBricks.replace(
+                "[system-view:internal](((${node.Name})))[/system-view:internal]",
+                "[system-view:internal]${node.Value}[/system-view:internal]"
+            ) )
+        #end
+    #else
+##
+        ## No locally defined Bricks? Find all available bricks and surround them with <code></code> tags
+        ## and supply the server-side bricks() function
+        ##
+        ## This should signal that something is actually wrong
+        #set( $drulykgApplyBricks = $drulykgApplyBricks.replaceAll(
+            "(\({3})(${drulykgValidElementNameRegex})(\){3})",
+            "[system-view:internal]<code>$0</code>[/system-view:internal]<!--#passthrough<?php echo bricks( '$2' ); ?>#passthrough-->"
+        ) )
+    #end
+#end
