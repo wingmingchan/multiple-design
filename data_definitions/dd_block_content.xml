@@ -1,5 +1,5 @@
 <system-data-structure>
-	<!--#*doc
+  <!--#*doc
 <documentation><div id="introduction"><h2>Introduction</h2><p>This data definition defines a content block. Currently, this block type provides
 6 different services. The set of identifiers:</p><pre>display
 choose-type
@@ -57,119 +57,120 @@ tabs-group;mul-tab-panel-group;0;tab-label
 tabs-group;mul-tab-panel-group;0;tab-content
 </pre></div><div id="accordion"><h2>Accordion</h2><p>Purpose: Displays an accordion.</p><p>Usage: ...</p></div><div id="contact"><h2>Contact</h2><p>Purpose: Displays a contact.</p><p>Usage: ...</p></div><div id="quick-links"><h2>Quick Links</h2><p>Purpose: Displays a box containing quick links.</p><p>Usage: ...</p></div><div id="simple-table"><h2>Simple Table</h2><p>Purpose: Displays a simple table.</p><p>Usage: ...</p></div><div id="tabs"><h2>Tabs</h2><p>Purpose: Displays a tabbed panel.</p><p>Usage: ...</p></div><div id="wysiwyg"><h2>Wysiwyg</h2><p>Purpose: Displays a wysiwyg.</p><p>Usage: ...</p></div></documentation>
 doc*###-->
-	<text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
-		<radio-item value="yes"/>
-		<radio-item value="no"/>
-	</text>
-	<text default="wysiwyg" help-text="Select a block type" identifier="choose-type" label="Choose A Type" required="true" type="radiobutton">
-		<radio-item show-fields="accordion-group" value="accordion"/>
-		<radio-item show-fields="contact-group" value="contact"/>
-		<radio-item show-fields="quick-links-group" value="quick-links"/>
-		<radio-item show-fields="simple-table-group" value="simple-table"/>
-		<radio-item show-fields="tabs-group" value="tabs"/>
-		<radio-item show-fields="wysiwyg-group" value="wysiwyg"/>
-	</text>
-	<!-- accordion -->
-	<group identifier="accordion-group" label="Accordion Group">
-		<text identifier="show-expand-all" label="Show Expand All" type="checkbox">
-			<checkbox-item checked="true" value="Yes"/>
-		</text>
-		<group identifier="mul-accordion-h2-wysiwyg-group" label="H2 Wysiwyg Group" multiple="true">
-			<text help-text="Text to be clicked to expand the hidden content" identifier="accordion-h2" label="Label"/>
-			<text identifier="accordion-wysiwyg" label="Content" wysiwyg="true"/>
-		</group>
-	</group>
-	<!-- Contact -->
-	<group identifier="contact-group" label="Contact Group">
-		<text help-text="Text appearing before Contact:" identifier="contact-intro-text" label="Introduction text"/>
-		<text identifier="contact-name" label="Name"/>
-		<text help-text="This value will be italicized and put after the name." identifier="contact-title" label="Title"/>
-		<text help-text="Uncheck this to remove the label Contact:" identifier="contact-keep-contact-label" label="Keep label Contact" type="checkbox">
-			<checkbox-item value="Yes"/>
-		</text>
-		<text help-text="This field allows one line only. If line break is needed, use Additional Field." identifier="contact-location" label="Location"/>
-		<group identifier="mul-contact-af-group" label="Additional Field" minimum-number="1" multiple="true">
-			<text help-text="The label in boldface preceding the content. There is a semi-colon between the label and content." identifier="contact-af-label" label="Label"/>
-			<text help-text="Each value will be in a line by itself. If there is a label, it will follow the label." identifier="contact-af-content" label="Content"/>
-		</group>
-		<text help-text="Format: 315 464-XXXX" identifier="contact-phone" label="Phone"/>
-		<text help-text="Format: 315 464-XXXX" identifier="contact-fax" label="Fax"/>
-		<text identifier="contact-email" label="Email"/>
-	</group>
-	<!-- Quick Links -->
-	<group identifier="quick-links-group" label="Quick Links Group">
-		<text default="quick-links-bullets" identifier="quick-links-class" label="Class" type="dropdown">
-			<dropdown-item value="quick-links-buttons"/>
-			<dropdown-item value="quick-links-bullets"/>
-			<dropdown-item value="quick-links-menu"/>
-			<dropdown-item value="quick-links-no-bullets"/>
-			<dropdown-item value="boxlink"/>
-		</text>
-		<text identifier="quick-links-title" label="Title of the box"/>
-		<group identifier="mul-quick-links-list-group" label="Links" multiple="true">
-			<text identifier="quick-links-text" label="Link text"/>
-			<asset help-text="Select a page, a file, or an external link" identifier="quick-links-linkable" label="Page, file, or external link" type="page,file,symlink"/>
-		</group>
-	</group>
-	<!-- simple-table -->
-	<group identifier="simple-table-group" label="Simple Table Group">
-		<text identifier="table-summary" label="Table Summary"/>
-		<text default="2" identifier="column-number" label="How many columns?" type="radiobutton">
-			<radio-item show-fields="simple-table-group/column1-type, simple-table-group/heading1" value="1"/>
-			<radio-item show-fields="simple-table-group/heading2, simple-table-group/heading1, simple-table-group/column1-type, simple-table-group/column2-type" value="2"/>
-			<radio-item show-fields="simple-table-group/heading1, simple-table-group/heading3, simple-table-group/heading2, simple-table-group/column1-type, simple-table-group/column2-type, simple-table-group/column3-type" value="3"/>
-			<radio-item show-fields="simple-table-group/heading1, simple-table-group/heading2, simple-table-group/heading4, simple-table-group/heading3, simple-table-group/column1-type, simple-table-group/column2-type, simple-table-group/column3-type, simple-table-group/column4-type" value="4"/>
-		</text>
-		<text identifier="heading1" label="heading 1"/>
-		<text identifier="heading2" label="heading 2"/>
-		<text identifier="heading3" label="heading 3"/>
-		<text identifier="heading4" label="heading 4"/>
-		<text default="text box" identifier="column1-type" label="column 1 type" type="radiobutton">
-			<radio-item show-fields="simple-table-group/mul-rows/column-1-textbox" value="text box"/>
-			<radio-item show-fields="simple-table-group/mul-rows/column-1-wysiwyg" value="wysiwyg"/>
-		</text>
-		<text default="text box" identifier="column2-type" label="column 2 type" type="radiobutton">
-			<radio-item show-fields="simple-table-group/mul-rows/column-2-textbox" value="text box"/>
-			<radio-item show-fields="simple-table-group/mul-rows/column-2-wysiwyg" value="wysiwyg"/>
-		</text>
-		<text default="text box" identifier="column3-type" label="column 3 type" type="radiobutton">
-			<radio-item show-fields="simple-table-group/mul-rows/column-3-textbox" value="text box"/>
-			<radio-item show-fields="simple-table-group/mul-rows/column-3-wysiwyg" value="wysiwyg"/>
-		</text>
-		<text default="text box" identifier="column4-type" label="column 4 type" type="radiobutton">
-			<radio-item show-fields="simple-table-group/mul-rows/column-4-textbox" value="text box"/>
-			<radio-item show-fields="simple-table-group/mul-rows/column-4-wysiwyg" value="wysiwyg"/>
-		</text>
-		<text default="middle" identifier="vertical-alignment" type="radiobutton">
-			<radio-item value="top"/>
-			<radio-item value="middle"/>
-			<radio-item value="bottom"/>
-		</text>
-		<group identifier="mul-rows" label="Rows" multiple="true">
-			<text identifier="column-1-textbox" label="column 1"/>
-			<text identifier="column-1-wysiwyg" label="column 1" wysiwyg="true"/>
-			<text identifier="column-2-textbox" label="column 2"/>
-			<text identifier="column-2-wysiwyg" label="column 2" wysiwyg="true"/>
-			<text identifier="column-3-textbox" label="column 3"/>
-			<text identifier="column-3-wysiwyg" label="column 3" wysiwyg="true"/>
-			<text identifier="column-4-textbox" label="column 4"/>
-			<text identifier="column-4-wysiwyg" label="column 4" wysiwyg="true"/>
-		</group>
-	</group>
-	<!-- Tabs -->
-	<group identifier="tabs-group" label="Tabs Group">
-		<group identifier="mul-tab-panel-group" label="Tab Panel Group" multiple="true">
-			<text identifier="tab-label" label="Label"/>
-			<text identifier="tab-content" label="Content" wysiwyg="true"/>
-		</group>
-	</group>
-	<!-- wysiwyg -->
-	<group identifier="wysiwyg-group" label="Wysiwyg Group">
-		<text identifier="wysiwyg-content" label="Content" wysiwyg="true"/>
-		<text identifier="admin-options" label="admin-options" restrict-to-groups="Administrators,CWT-Designers" type="checkbox">
-			<checkbox-item value="local-view-only"/>
-			<checkbox-item show-fields="wysiwyg-group/wrapped-block-chooser" value="wrap-a-block-inside"/>
-		</text>
-		<asset identifier="wrapped-block-chooser" label="Wrapped Block Chooser" render-content-depth="5" type="block"/>
-	</group>
+  <text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
+    <radio-item value="yes"/>
+    <radio-item value="no"/>
+  </text>
+  <text default="wysiwyg" help-text="Select a block type" identifier="choose-type" label="Choose A Type" required="true" type="radiobutton">
+    <radio-item show-fields="accordion-group" value="accordion"/>
+    <radio-item show-fields="contact-group" value="contact"/>
+    <radio-item show-fields="quick-links-group" value="quick-links"/>
+    <radio-item show-fields="simple-table-group" value="simple-table"/>
+    <radio-item show-fields="tabs-group" value="tabs"/>
+    <radio-item show-fields="wysiwyg-group" value="wysiwyg"/>
+  </text>
+  <!-- accordion -->
+  <group identifier="accordion-group" label="Accordion Group">
+    <text identifier="show-expand-all" label="Show Expand All" type="checkbox">
+      <checkbox-item checked="true" value="Yes"/>
+    </text>
+    <group identifier="mul-accordion-h2-wysiwyg-group" label="H2 Wysiwyg Group" multiple="true">
+      <text help-text="Text to be clicked to expand the hidden content" identifier="accordion-h2" label="Label"/>
+      <text identifier="accordion-wysiwyg" label="Content" wysiwyg="true"/>
+    </group>
+  </group>
+  <!-- Contact -->
+  <group identifier="contact-group" label="Contact Group">
+    <text help-text="Text appearing before Contact:" identifier="contact-intro-text" label="Introduction text"/>
+    <text identifier="contact-name" label="Name"/>
+    <text help-text="This value will be italicized and put after the name." identifier="contact-title" label="Title"/>
+    <text help-text="Uncheck this to remove the label Contact:" identifier="contact-keep-contact-label" label="Keep label Contact" type="checkbox">
+      <checkbox-item value="Yes"/>
+    </text>
+    <text help-text="This field allows one line only. If line break is needed, use Additional Field." identifier="contact-location" label="Location"/>
+    <group identifier="mul-contact-af-group" label="Additional Field" minimum-number="1" multiple="true">
+      <text help-text="The label in boldface preceding the content. There is a semi-colon between the label and content." identifier="contact-af-label" label="Label"/>
+      <text help-text="Each value will be in a line by itself. If there is a label, it will follow the label." identifier="contact-af-content" label="Content"/>
+    </group>
+    <text help-text="Format: 315 464-XXXX" identifier="contact-phone" label="Phone"/>
+    <text help-text="Format: 315 464-XXXX" identifier="contact-fax" label="Fax"/>
+    <text identifier="contact-email" label="Email"/>
+  </group>
+  <!-- Quick Links -->
+  <group identifier="quick-links-group" label="Quick Links Group">
+    <text default="quick-links-bullets" identifier="quick-links-class" label="Class" type="dropdown">
+      <dropdown-item value="quick-links-buttons"/>
+      <dropdown-item value="quick-links-bullets"/>
+      <dropdown-item value="quick-links-menu"/>
+      <dropdown-item value="quick-links-no-bullets"/>
+      <dropdown-item value="boxlink"/>
+    </text>
+    <text identifier="quick-links-title" label="Title of the box"/>
+    <group identifier="mul-quick-links-list-group" label="Links" multiple="true">
+      <text identifier="quick-links-text" label="Link text"/>
+      <asset help-text="Select a page, a file, or an external link" identifier="quick-links-linkable" label="Page, file, or external link" type="page,file,symlink"/>
+    </group>
+  </group>
+  <!-- simple-table -->
+  <group identifier="simple-table-group" label="Simple Table Group">
+    <text identifier="table-summary" label="Table Summary"/>
+    <text default="2" identifier="column-number" label="How many columns?" type="radiobutton">
+      <radio-item show-fields="simple-table-group/column1-type, simple-table-group/heading1" value="1"/>
+      <radio-item show-fields="simple-table-group/heading2, simple-table-group/heading1, simple-table-group/column1-type, simple-table-group/column2-type" value="2"/>
+      <radio-item show-fields="simple-table-group/heading1, simple-table-group/heading3, simple-table-group/heading2, simple-table-group/column1-type, simple-table-group/column2-type, simple-table-group/column3-type" value="3"/>
+      <radio-item show-fields="simple-table-group/heading1, simple-table-group/heading2, simple-table-group/heading4, simple-table-group/heading3, simple-table-group/column1-type, simple-table-group/column2-type, simple-table-group/column3-type, simple-table-group/column4-type" value="4"/>
+    </text>
+    <text identifier="heading1" label="heading 1"/>
+    <text identifier="heading2" label="heading 2"/>
+    <text identifier="heading3" label="heading 3"/>
+    <text identifier="heading4" label="heading 4"/>
+    <text default="text box" identifier="column1-type" label="column 1 type" type="radiobutton">
+      <radio-item show-fields="simple-table-group/mul-rows/column-1-textbox" value="text box"/>
+      <radio-item show-fields="simple-table-group/mul-rows/column-1-wysiwyg" value="wysiwyg"/>
+    </text>
+    <text default="text box" identifier="column2-type" label="column 2 type" type="radiobutton">
+      <radio-item show-fields="simple-table-group/mul-rows/column-2-textbox" value="text box"/>
+      <radio-item show-fields="simple-table-group/mul-rows/column-2-wysiwyg" value="wysiwyg"/>
+    </text>
+    <text default="text box" identifier="column3-type" label="column 3 type" type="radiobutton">
+      <radio-item show-fields="simple-table-group/mul-rows/column-3-textbox" value="text box"/>
+      <radio-item show-fields="simple-table-group/mul-rows/column-3-wysiwyg" value="wysiwyg"/>
+    </text>
+    <text default="text box" identifier="column4-type" label="column 4 type" type="radiobutton">
+      <radio-item show-fields="simple-table-group/mul-rows/column-4-textbox" value="text box"/>
+      <radio-item show-fields="simple-table-group/mul-rows/column-4-wysiwyg" value="wysiwyg"/>
+    </text>
+    <text default="middle" identifier="vertical-alignment" type="radiobutton">
+      <radio-item value="top"/>
+      <radio-item value="middle"/>
+      <radio-item value="bottom"/>
+    </text>
+    <group identifier="mul-rows" label="Rows" multiple="true">
+      <text identifier="column-1-textbox" label="column 1"/>
+      <text identifier="column-1-wysiwyg" label="column 1" wysiwyg="true"/>
+      <text identifier="column-2-textbox" label="column 2"/>
+      <text identifier="column-2-wysiwyg" label="column 2" wysiwyg="true"/>
+      <text identifier="column-3-textbox" label="column 3"/>
+      <text identifier="column-3-wysiwyg" label="column 3" wysiwyg="true"/>
+      <text identifier="column-4-textbox" label="column 4"/>
+      <text identifier="column-4-wysiwyg" label="column 4" wysiwyg="true"/>
+    </group>
+  </group>
+  <!-- Tabs -->
+  <group identifier="tabs-group" label="Tabs Group">
+    <group identifier="mul-tab-panel-group" label="Tab Panel Group" multiple="true">
+      <text identifier="tab-label" label="Label"/>
+      <text identifier="tab-content" label="Content" wysiwyg="true"/>
+      <asset identifier="mul-block-choosers" label="Additional content (blocks)" multiple="true" type="block"/>
+    </group>
+  </group>
+  <!-- wysiwyg -->
+  <group identifier="wysiwyg-group" label="Wysiwyg Group">
+    <text identifier="wysiwyg-content" label="Content" wysiwyg="true"/>
+    <text identifier="admin-options" label="admin-options" restrict-to-groups="Administrators,CWT-Designers" type="checkbox">
+      <checkbox-item value="local-view-only"/>
+      <checkbox-item show-fields="wysiwyg-group/wrapped-block-chooser" value="wrap-a-block-inside"/>
+    </text>
+    <asset identifier="wrapped-block-chooser" label="Wrapped Block Chooser" render-content-depth="5" type="block"/>
+  </group>
 </system-data-structure>

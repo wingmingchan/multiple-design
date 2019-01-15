@@ -1,6 +1,10 @@
 <system-data-structure>
-	<!--#*doc
-<documentation><div id="introduction"><h2>Introduction</h2><p>This data definition defines a setup block. The set of identifiers:</p><pre>
+  <!--#*doc
+<documentation>
+<div id="introduction">
+<h2>Introduction</h2>
+<p>This data definition defines a setup block. The set of identifiers:</p>
+<pre>
 setup-group
 setup-group;contact
 setup-group;siteInfo
@@ -26,40 +30,43 @@ setup-group;advanced;breadcrumbsHomeString
 setup-group;advanced;tree-config-block
 </pre></div></documentation>
 doc*###-->
-	<group identifier="setup-group" label="Setup" restrict-to-groups="CWT-Designers, Administrators">
-		<group collapsed="true" identifier="contact" label="Contact Information">
-			<text help-text="Enter the full name to be displayed in the footer" identifier="siteContactPerson" label="Contact Person Name"/>
-			<text help-text="Enter the first part of the email; e.g. doej" identifier="siteContactEmail" label="Contact Person Email"/>
-		</group>
-		<group collapsed="true" identifier="siteInfo" label="Site Information" restrict-to-groups="Administrators,CWT-Designers">
-			<text help-text="Site Title" identifier="siteTitleString" label="Site Title"/>
-			<asset identifier="mul-pagesWithoutH1" label="Pages without H1" multiple="true" type="page"/>
-			<asset identifier="mul-pagesWithoutBreadcrumbs" label="Pages without Breadcrumbs" multiple="true" type="page"/>
-			<asset identifier="siteThemeCSS" label="Site Theme CSS" type="file"/>
-			<text default="inherited" help-text="Choose the color theme for this site; when in site root then &quot;inherited&quot; is Upstate Dark Blue" identifier="siteColorTheme" label="Site Color Theme" required="true" type="dropdown">
-				<dropdown-item value="inherited"/>
-				<dropdown-item value="Upstate Dark Blue"/>
-				<dropdown-item value="Upstate White"/>
-			</text>
-			<asset help-text="Select a logo file for this site; defaulted to blue Upstate Medical University logo." identifier="siteLogoFile" label="Logo file" type="file"/>
-			<text help-text="Set the alt text of the logo; defaulted to &quot;Upstate Logo&quot;" identifier="siteLogoAltText" label="Logo file alt text"/>
-			<text default="inherited" help-text="When a visitor clicks on the main logo, where should they be directed? when in site root then &quot;inherited&quot; is &quot;Upstate root&quot;" identifier="siteLogoClickDestination" label="Logo Click Destination" required="true" type="dropdown">
-				<dropdown-item value="inherited"/>
-				<dropdown-item value="Root of current site"/>
-				<dropdown-item value="Domain root of current site"/>
-				<dropdown-item value="Upstate root"/>
-			</text>
-			<asset help-text="When a page is chosen here then it supersedes the dropdown choice." identifier="siteLogoClickDestinationOverride" label="Logo Click Destination Override" type="page"/>
-			<text help-text="The site name where the logo format resides; defaulted to _brisk" identifier="siteLogoSiteName" label="Logo Site Name"/>
-			<text help-text="The path of the folder containing the format; defaulted to site://Upstate-Globals/assets/css" identifier="siteLogoFolderPath" label="Logo Parent Folder Path"/>
-			<text help-text="The name of the format" identifier="siteLogoFormatName" label="Logo Format Name"/>
-			<asset identifier="siteLocalCSS" label="Local CSS" type="file"/>
-		</group>
-		<group collapsed="true" identifier="advanced" label="Advanced Settings" restrict-to-groups="Administrators,CWT-Designers">
-			<text identifier="siteNavHomeString" label="Site Nav Home String"/>
-			<text help-text="A character like &gt;" identifier="breadcrumbsSeparatorString" label="Breadcrumbs Separator"/>
-			<text identifier="breadcrumbsHomeString" label="Breadcrumbs Home String"/>
-			<asset help-text="Attach a Velocity block here to configure the tree" identifier="tree-config-block" label="Tree Config Block" type="block"/>
-		</group>
-	</group>
+  <group identifier="setup-group" label="Setup" restrict-to-groups="CWT-Designers, Administrators">
+    <group collapsed="true" identifier="contact" label="Contact Information">
+      <text help-text="Enter the full name to be displayed in the footer" identifier="siteContactPerson" label="Contact Person Name"/>
+      <text help-text="Enter the first part of the email; e.g. doej" identifier="siteContactEmail" label="Contact Person Email"/>
+    </group>
+    <group collapsed="true" identifier="siteInfo" label="Site Information" restrict-to-groups="Administrators,CWT-Designers">
+      <text help-text="Site Title" identifier="siteTitleString" label="Site Title"/>
+      <asset identifier="mul-pagesWithoutH1" label="Pages without H1" multiple="true" type="page"/>
+      <asset identifier="mul-pagesWithoutBreadcrumbs" label="Pages without Breadcrumbs" multiple="true" type="page"/>
+      <asset identifier="siteThemeCSS" label="Site Theme CSS" type="file"/>
+      <text default="inherited" help-text="Choose the color theme for this site; when in site root then &quot;inherited&quot; is Upstate Dark Blue" identifier="siteColorTheme" label="Site Color Theme" required="true" type="dropdown">
+        <dropdown-item value="inherited"/>
+        <dropdown-item value="Upstate Dark Blue"/>
+        <dropdown-item value="Upstate White"/>
+      </text>
+      <asset help-text="Select a logo file for this site; defaulted to blue Upstate Medical University logo." identifier="siteLogoFile" label="Logo file" type="file"/>
+      <text help-text="Set the alt text of the logo; defaulted to &quot;Upstate Logo&quot;" identifier="siteLogoAltText" label="Logo file alt text"/>
+      <text default="inherited" help-text="When a visitor clicks on the main logo, where should they be directed? when in site root then &quot;inherited&quot; is &quot;Upstate root&quot;" identifier="siteLogoClickDestination" label="Logo Click Destination" required="true" type="dropdown">
+        <dropdown-item value="inherited"/>
+        <dropdown-item value="Root of current site"/>
+        <dropdown-item value="Domain root of current site"/>
+        <dropdown-item value="Upstate root"/>
+      </text>
+      <asset help-text="When a page is chosen here then it supersedes the dropdown choice." identifier="siteLogoClickDestinationOverride" label="Logo Click Destination Override" type="page"/>
+      <text help-text="The site name where the logo format resides; defaulted to _brisk" identifier="siteLogoSiteName" label="Logo Site Name"/>
+      <text help-text="The path of the folder containing the format; defaulted to site://Upstate-Globals/assets/css" identifier="siteLogoFolderPath" label="Logo Parent Folder Path"/>
+      <text help-text="The name of the format" identifier="siteLogoFormatName" label="Logo Format Name"/>
+      <asset identifier="siteLocalCSS" label="Local CSS" type="file"/>
+    </group>
+    <group collapsed="true" identifier="advanced" label="Advanced Settings" restrict-to-groups="Administrators,CWT-Designers">
+      <text identifier="siteNavHomeString" label="Site Nav Home String"/>
+      <text help-text="A character like &gt;" identifier="breadcrumbsSeparatorString" label="Breadcrumbs Separator"/>
+      <text identifier="breadcrumbsHomeString" label="Breadcrumbs Home String"/>
+      <asset help-text="Attach a Velocity block here to configure the tree" identifier="tree-config-block" label="Tree Config Block" type="block"/>
+      <text help-text="Speed up page rendering in Cascade. Large sites produce large mobile navigations which can slow down page rendering." identifier="turnOffMobileMenu" label="Turn off the mobile navigation?" type="checkbox">
+        <checkbox-item value="Yes"/>
+      </text>
+    </group>
+  </group>
 </system-data-structure>

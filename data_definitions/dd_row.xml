@@ -1,7 +1,9 @@
 <system-data-structure>
-	<!--#*doc
-<documentation><p>This data definition defines a row block. Multiple choosers are provided
-to create a row of block contents. The set of identifiers:</p><pre>
+<!--#*doc
+<documentation>
+  <p>This data definition defines a row block. Multiple choosers are provided
+to create a row of block contents. The set of identifiers:</p>
+<pre>
 display
 row-group
 row-group;customize-column-width
@@ -15,49 +17,50 @@ row-group;mul-block-choosers;0;column-attributes
 row-group;container-settings;container-type
 row-group;container-settings;wrapped-div-yes
 row-group;container-settings;wrapped-div-attributes
-</pre></documentation>
+</pre>
+</documentation>
 doc*###-->
-	<text default="yes" help-text="Select yes to display" identifier="display" label="Display" type="radiobutton">
-		<radio-item value="yes"/>
-		<radio-item value="no"/>
-	</text>
-	<!-- row block -->
-	<group identifier="row-group" label="Row Group">
-		<text help-text="Columns are default to equal size. If checked, total width need to add to 12." identifier="customize-column-width" label="Customize column width" type="checkbox">
-			<checkbox-item show-fields="row-group/mul-block-choosers/row-block-chooser-width" value="Yes"/>
-		</text>
-		<text identifier="use-custom-attributes" label="Use Custom Attributes" type="checkbox">
-			<checkbox-item show-fields="row-group/row-attributes, row-group/mul-block-choosers/column-attributes" value="Yes"/>
-		</text>
-		<asset identifier="row-attributes" type="block"/>
-		<group identifier="mul-block-choosers" label="Column" maximum-number="4" multiple="true">
-			<asset identifier="row-block-chooser" label="Block Chooser" render-content-depth="5" type="block"/>
-			<text default="6" identifier="row-block-chooser-width" label="Width (out of 12)" type="dropdown">
-				<dropdown-item value="1"/>
-				<dropdown-item value="2"/>
-				<dropdown-item value="3"/>
-				<dropdown-item value="4"/>
-				<dropdown-item value="5"/>
-				<dropdown-item value="6"/>
-				<dropdown-item value="7"/>
-				<dropdown-item value="8"/>
-				<dropdown-item value="9"/>
-				<dropdown-item value="10"/>
-				<dropdown-item value="11"/>
-				<dropdown-item value="12"/>
-			</text>
-			<asset identifier="column-attributes" restrict-to-groups="CWT-Designers,Administrators" type="block"/>
-		</group>
-		<group identifier="container-settings" label="Container settings">
-			<text default="none" help-text="If the row block is added outside the main content, select &quot;regular&quot; for normal width or &quot;content-fluid&quot; for full-width" identifier="container-type" label="Container type" type="radiobutton">
-				<radio-item value="regular"/>
-				<radio-item value="container-fluid"/>
-				<radio-item value="none"/>
-			</text>
-			<text help-text="Often used to create a background behind a row in pre and post-main" identifier="wrapped-div-yes" label="Wrap container in a div?" type="checkbox">
-				<checkbox-item show-fields="row-group/container/wrapped-div-attributes" value="Yes"/>
-			</text>
-			<asset identifier="wrapped-div-attributes" label="Optional: wrapped-div attribute chooser" type="block"/>
-		</group>
-	</group>
+  <text default="yes" help-text="Select yes to display" identifier="display" label="Display" type="radiobutton">
+    <radio-item value="yes"/>
+    <radio-item value="no"/>
+  </text>
+  <!-- row block -->
+  <group identifier="row-group" label="Row Group">
+    <text help-text="Columns are default to equal size. If checked, total width need to add to 12." identifier="customize-column-width" label="Customize column width" type="checkbox">
+      <checkbox-item show-fields="row-group/mul-block-choosers/row-block-chooser-width" value="Yes"/>
+    </text>
+    <text identifier="use-custom-attributes" label="Use Custom Attributes" type="checkbox">
+      <checkbox-item show-fields="row-group/row-attributes, row-group/mul-block-choosers/column-attributes" value="Yes"/>
+    </text>
+    <asset identifier="row-attributes" type="block"/>
+    <group identifier="mul-block-choosers" label="Column" maximum-number="4" multiple="true">
+      <asset identifier="row-block-chooser" label="Block Chooser" render-content-depth="5" type="block"/>
+      <text default="6" identifier="row-block-chooser-width" label="Width (out of 12)" type="dropdown">
+        <dropdown-item value="1"/>
+        <dropdown-item value="2"/>
+        <dropdown-item value="3"/>
+        <dropdown-item value="4"/>
+        <dropdown-item value="5"/>
+        <dropdown-item value="6"/>
+        <dropdown-item value="7"/>
+        <dropdown-item value="8"/>
+        <dropdown-item value="9"/>
+        <dropdown-item value="10"/>
+        <dropdown-item value="11"/>
+        <dropdown-item value="12"/>
+      </text>
+      <asset identifier="column-attributes" restrict-to-groups="CWT-Designers,Administrators" type="block"/>
+    </group>
+    <group identifier="container-settings" label="Container settings">
+      <text default="none" help-text="If the row block is added outside the main content, select &quot;regular&quot; for normal width or &quot;content-fluid&quot; for full-width" identifier="container-type" label="Container type" type="radiobutton">
+        <radio-item value="regular"/>
+        <radio-item value="container-fluid"/>
+        <radio-item value="none"/>
+      </text>
+      <text help-text="Often used to create a background behind a row in pre and post-main" identifier="wrapped-div-yes" label="Wrap container in a div?" type="checkbox">
+        <checkbox-item show-fields="row-group/container/wrapped-div-attributes" value="Yes"/>
+      </text>
+      <asset identifier="wrapped-div-attributes" label="Optional: wrapped-div attribute chooser" type="block"/>
+    </group>
+  </group>
 </system-data-structure>
