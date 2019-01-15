@@ -1,0 +1,2 @@
+## the format has been imported; hence #import fails
+#evaluate( $_.locate( "app/scaffolds/tree_components/main-top-middle", $CASCADE_API_FORMAT_TYPE, $BRISK[ 'APP_SITE_NAME' ] ).Script )
