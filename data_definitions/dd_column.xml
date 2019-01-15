@@ -1,0 +1,18 @@
+<system-data-structure>
+    <!--#*doc
+<documentation><p>This data definition defines a column block. Multiple choosers are provided
+to create a column of block contents. The set of identifiers:</p>
+<pre>
+display
+column-group
+column-group;mul-column-group-chooser;0</pre>
+</documentation>
+doc*###-->
+  <text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
+    <radio-item value="yes"/>
+    <radio-item value="no"/>
+  </text>
+  <group identifier="column-group" label="Column Group">
+    <asset identifier="mul-column-group-chooser" label="Choose blocks" multiple="true" render-content-depth="5" type="block"/>
+  </group>
+</system-data-structure>

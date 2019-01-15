@@ -1,0 +1,122 @@
+<system-data-structure>
+  <!--#*doc
+<documentation><h2>Introduction</h2><p>This data definition defines an article block. The set of identifiers:</p><pre>
+display
+article-feed-group
+article-feed-group;page-chooser
+</pre></documentation>
+doc*###-->
+  <text default="yes" help-text="Select yes to display" identifier="display" label="Display" type="radiobutton">
+    <radio-item value="yes"/>
+    <radio-item value="no"/>
+  </text>
+  <group identifier="article-feed-group" label="Article feed group">
+    <asset help-text="Select the page which contains an RSS feed" identifier="page-chooser" label="Select an RSS data page" type="page"/>
+    <text help-text="How long should the RSS file be cached on the server before fetching a fresh one; empty or 0 = caching disabled" identifier="cache_ttl" input-data-format="digits only please" label="RSS cache duration (seconds)" regular-expression="^[\d]*$"/>
+    <text allow-custom-values="true" default="default" identifier="template" label="Choose a template" required="true" type="dropdown">
+      <dropdown-item show-fields="article-feed-group/main_categories, article-feed-group/articles_categories, article-feed-group/articles_image_default, article-feed-group/articles_paginate, article-feed-group/articles_per_page, article-feed-group/mul-template-specific-options, article-feed-group/mul-template-specific-options/description_truncate, article-feed-group/current_page_categories" value="default"/>
+      <dropdown-item show-fields="article-feed-group/mul-template-specific-options/title, article-feed-group/mul-template-specific-options/view_all_text, article-feed-group/mul-template-specific-options/view_all_url, article-feed-group/mul-template-specific-options, article-feed-group/mul-template-specific-options/description_truncate" value="text-feed"/>
+      <dropdown-item show-fields="article-feed-group/articles_image_default, article-feed-group/articles_paginate, article-feed-group/mul-template-specific-options/featured_articles_count, article-feed-group/mul-template-specific-options, article-feed-group/mul-template-specific-options/description_truncate, article-feed-group/current_page_previous_next, article-feed-group/main_categories" value="tiles"/>
+      <dropdown-item show-fields="article-feed-group/mul-template-specific-options/description_truncate, article-feed-group/mul-template-specific-options, article-feed-group/main_categories, article-feed-group/articles_image_default, article-feed-group/mul-template-specific-options/cards_per_row, article-feed-group/current_page_previous_next" value="cards"/>
+      <dropdown-item value="random-image"/>
+      <dropdown-item show-fields="article-feed-group/main_categories, article-feed-group/articles_image_default, article-feed-group/mul-template-specific-options, article-feed-group/mul-template-specific-options/description_truncate, article-feed-group/mul-template-specific-options/cards_per_row, article-feed-group/articles_paginate, article-feed-group/mul-template-specific-options/title" value="library-cards"/>
+    </text>
+    <text identifier="articles" label="Hide articles?" type="checkbox">
+      <checkbox-item value="Yes"/>
+    </text>
+    <text help-text="If this block is attached to an article page then it will pull the current page's categories from the RSS" identifier="current_page_categories" label="Show categories of current page?" type="checkbox">
+      <checkbox-item show-fields="article-feed-group/current_page_categories_count, article-feed-group/main_categories_url, article-feed-group/category_sorting_order" value="Yes"/>
+    </text>
+    <text identifier="current_page_categories_count" label="Count categories of current page?" type="checkbox">
+      <checkbox-item value="Yes"/>
+    </text>
+    <text help-text="If this block is attached to an article then this will automatically figure out the previous/next articles." identifier="current_page_previous_next" label="Show previous/next article buttons?" type="checkbox">
+      <checkbox-item show-fields="article-feed-group/current_page_previous_next_amount, article-feed-group/current_page_previous_next_custom_text" value="Yes"/>
+    </text>
+    <text default="2" identifier="current_page_previous_next_amount" label="Number of previous/next buttons" type="dropdown">
+      <dropdown-item value="2"/>
+      <dropdown-item value="4"/>
+    </text>
+    <text identifier="current_page_previous_next_custom_text" label="Use custom text above articles for previous/next buttons?" type="checkbox">
+      <checkbox-item show-fields="article-feed-group/current_page_previous_text, article-feed-group/current_page_next_text" value="Yes"/>
+    </text>
+    <text help-text="Leave empty to omit text" identifier="current_page_previous_text" label="Text above Previous article"/>
+    <text help-text="Leave empty to omit text" identifier="current_page_next_text" label="Text above Next article"/>
+    <text help-text="Show a grouping of all unique categories from this RSS feed?" identifier="main_categories" label="Show main categories?" type="checkbox">
+      <checkbox-item show-fields="article-feed-group/main_categories_count, article-feed-group/main_categories_url, article-feed-group/category_sorting_order" value="Yes"/>
+    </text>
+    <text help-text="Present a count per category?" identifier="main_categories_count" label="Count main categories?" type="checkbox">
+      <checkbox-item value="Yes"/>
+    </text>
+    <asset help-text="Send user to this page when clicking on a category. Default behavior is to stay on current page." identifier="main_categories_url" label="Category click destination" type="page"/>
+    <text identifier="articles_categories" label="Show categories per article?" type="checkbox">
+      <checkbox-item show-fields="article-feed-group/articles_categories_count, article-feed-group/category_sorting_order" value="Yes"/>
+    </text>
+    <text help-text="Present a count per article category?" identifier="articles_categories_count" label="Count article categories?" type="checkbox">
+      <checkbox-item value="Yes"/>
+    </text>
+    <text default="name" help-text="Should categories be alphabetized by name or sorted by their occurrence count?" identifier="category_sorting_order" label="Category sorting" type="dropdown">
+      <dropdown-item value="name"/>
+      <dropdown-item value="count"/>
+    </text>
+    <asset help-text="Default image to display near article if RSS feed does not have one." identifier="articles_image_default" label="Default article image" type="file"/>
+    <text help-text="Present the end-user with page numbers?" identifier="articles_paginate" label="Paginate articles?" type="checkbox">
+      <checkbox-item value="Yes"/>
+    </text>
+    <text default="10" help-text="Display this many articles per page. 0 = show all" identifier="articles_per_page_count" input-data-format="digits only please" label="Articles per page" regular-expression="^[\d]*$"/>
+    <text identifier="articles_per_page" label="Allow user to declare how many articles per page?" type="checkbox">
+      <checkbox-item show-fields="article-feed-group/articles_per_page_choices" value="Yes"/>
+    </text>
+    <text help-text="Comma-separated digits. 0 = show all. Example: 10, 20, 30, 40, 50, 0" identifier="articles_per_page_choices" input-data-format="digits separated by commas only" label="Choices for articles per page" regular-expression="/^[\d]+(, *[\d]+)*$/"/>
+    <text help-text="If the RSS feed has many categories but you only wish to show articles for one of them then use one textbox per category you wish to make available" identifier="mul-main_categories_choices" label="Limit articles to these categories." multiple="true"/>
+    <text help-text="If the RSS feed has many categories and you need to omit specific ones then use one textbox per category you wish to omit" identifier="mul-main_categories_exclude" label="Omit articles which contain any one of these categories." multiple="true"/>
+    <group identifier="mul-prefix_suffix" label="Field prefix/suffix" multiple="true">
+      <text identifier="prefix_suffix-field" label="Field" type="dropdown">
+        <dropdown-item value=""/>
+        <dropdown-item value="Start Date"/>
+        <dropdown-item value="Title"/>
+      </text>
+      <text help-text="Should the text be prefixed or suffixed to the field value" identifier="prefix_suffix-position" label="Prefix or Suffix" type="dropdown">
+        <dropdown-item value=""/>
+        <dropdown-item value="prefix"/>
+        <dropdown-item value="suffix"/>
+      </text>
+      <text help-text="The text to be prefixed or suffixed to the selected field" identifier="prefix_suffix-text" label="Text"/>
+    </group>
+    <group identifier="mul-articles_sorting_order" label="Article sorting" multiple="true">
+      <text identifier="articles_sorting_order-field" label="Field" type="dropdown">
+        <dropdown-item value=""/>
+        <dropdown-item show-fields="article-feed-group/mul-articles_sorting_order/articles_sorting_order-direction" value="Start Date"/>
+        <dropdown-item show-fields="article-feed-group/mul-articles_sorting_order/articles_sorting_order-direction" value="End Date"/>
+        <dropdown-item show-fields="article-feed-group/mul-articles_sorting_order/articles_sorting_order-direction" value="Title"/>
+        <dropdown-item value="Random"/>
+      </text>
+      <text identifier="articles_sorting_order-direction" label="Direction" type="dropdown">
+        <dropdown-item value=""/>
+        <dropdown-item value="ascending"/>
+        <dropdown-item value="descending"/>
+      </text>
+    </group>
+    <group identifier="mul-template-specific-options" label="Template specific options" multiple="true">
+      <text help-text="If a feed has zero articles then display this message." identifier="no_articles_message" label="Message for zero articles"/>
+      <text help-text="Truncate the description after this many characters. The truncation will avoid breaking in the middle of a word." identifier="description_truncate" input-data-format="digits only please" label="Truncate description" regular-expression="^[\d]*$"/>
+      <text help-text="How many cards should show from left to right. Default = 4" identifier="cards_per_row" label="Cards per row" type="dropdown">
+        <dropdown-item value=""/>
+        <dropdown-item value="1"/>
+        <dropdown-item value="2"/>
+        <dropdown-item value="3"/>
+        <dropdown-item value="4"/>
+        <dropdown-item value="6"/>
+        <dropdown-item value="12"/>
+      </text>
+      <text help-text="This will appear as a header above the articles" identifier="title" label="Title"/>
+      <text help-text="After the articles, show this link" identifier="view_all_text" label="Final link text"/>
+      <asset help-text="Send the user to this location" identifier="view_all_url" label="Final link URL" type="page,file,symlink"/>
+      <text help-text="How many articles should be featured above the tiled listing of articles?" identifier="featured_articles_count" label="Featured articles" type="dropdown">
+        <dropdown-item value=""/>
+        <dropdown-item value="1"/>
+        <dropdown-item value="2"/>
+      </text>
+    </group>
+  </group>
+</system-data-structure>

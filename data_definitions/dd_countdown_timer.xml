@@ -1,0 +1,18 @@
+<system-data-structure>
+	<!--#*doc
+<documentation><p>This data definition defines a countdown timer block. The set of identifiers:</p><pre>
+display
+countdown-timer-group
+countdown-timer-group;timestamp
+countdown-timer-group;static-content
+</pre></documentation>
+doc*###-->
+  <text default="yes" help-text="Select yes to display" identifier="display" label="Display" type="radiobutton">
+    <radio-item value="yes"/>
+    <radio-item value="no"/>
+  </text>
+  <group identifier="countdown-timer-group" label="Countdown Timer Group">
+    <text help-text="This is the date/time which will be counted down to" identifier="timestamp" label="Countdown date" required="true" type="datetime"/>
+    <text help-text="This will be placed above the countdown timer" identifier="static-content" label="Content" wysiwyg="true"/>
+  </group>
+</system-data-structure>

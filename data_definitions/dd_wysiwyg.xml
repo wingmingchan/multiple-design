@@ -1,0 +1,23 @@
+<system-data-structure>
+	<!--#*doc
+<documentation><p>This data definition defines a wysiwyg block. The set of identifiers:</p>
+<pre>
+display
+wysiwyg-group
+wysiwyg-group;wysiwyg-content
+wysiwyg-group;admin-options
+</pre>
+</documentation>
+doc*###-->
+  <text default="yes" help-text="Select yes to display" identifier="display" label="Display" required="true" type="radiobutton">
+    <radio-item value="yes"/>
+    <radio-item value="no"/>
+  </text>
+  <!-- wysiwyg -->
+  <group identifier="wysiwyg-group" label="Wysiwyg Group">
+    <text identifier="wysiwyg-content" label="Content" wysiwyg="true"/>
+    <text identifier="admin-options" label="admin-options" restrict-to-groups="Administrators,CWT-Designers" type="checkbox">
+      <checkbox-item value="local-view-only"/>
+    </text>
+  </group>
+</system-data-structure>

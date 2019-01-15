@@ -1,0 +1,28 @@
+<system-data-structure>
+  <!--#*doc
+<documentation>
+<h2>Introduction</h2>
+<p>This data definition defines an attribute block. Such a block can be attached
+to a row block or column block to add attributes to the outmost div element. The current logic
+of having multiple attributes of the same name is accumulative: all values are appended to the
+same attribute. The set of identifiers:</p>
+<pre>
+display
+attributes-group
+attributes-group;mul-attribute;0
+attributes-group;mul-attribute;0;attribute-name
+attributes-group;mul-attribute;0;attribute-value</pre>
+</documentation>
+doc*###-->
+  <text default="yes" help-text="Select yes to display" identifier="display" label="Display" type="radiobutton">
+    <radio-item value="yes"/>
+    <radio-item value="no"/>
+  </text>
+  <!-- attributes group -->
+  <group identifier="attributes-group" label="Attributes Group">
+    <group identifier="mul-attribute" label="Attribute" maximum-number="4" multiple="true">
+      <text help-text="eg. class" identifier="attribute-name"/>
+      <text help-text="eg. &quot;bg1&quot;" identifier="attribute-value"/>
+    </group>
+  </group>
+</system-data-structure>
