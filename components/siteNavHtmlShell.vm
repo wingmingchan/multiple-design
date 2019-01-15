@@ -1,0 +1,365 @@
+#macro( siteNavHtmlShell $object_siteNavHtmlShell $options_siteNavHtmlShell )
+##
+    ## If a string was provided then assume it is a site name and load from that site's root folder
+    #if( $object_siteNavHtmlShell.Class.Name == 'java.lang.String' )
+        ## Check if the folder exists so that we do not infinitely recurse ourselves
+        #if( !$_PropertyTool.isNull( $_.locateFolder( '/' , $object_siteNavHtmlShell ) ) )
+            #siteNavHtmlShell( $_.locateFolder( '/' , $object_siteNavHtmlShell ) $options_siteNavHtmlShell )
+        #end
+    ## If this is the first invocation AND
+    ## $object_siteNavHtmlShell is null or we did not receive a FolderAPIAdapter object then
+    ## use $currentPageSiteName
+    #elseif(
+        ( $_PropertyTool.isNull( $siteNavHtmlShellVars[ 'i' ] ) || $siteNavHtmlShellVars[ 'i' ] == 0 ) &&
+        ( $_PropertyTool.isNull( $object_siteNavHtmlShell ) || $object_siteNavHtmlShell.assetType != 'folder' )
+    )
+        ## Check if the folder exists so that we do not infinitely recurse ourselves
+        #if( !$_PropertyTool.isNull( $_.locateFolder( '/' , $currentPageSiteName ) ) )
+            #siteNavHtmlShell( $_.locateFolder( '/' , $currentPageSiteName ) $options_siteNavHtmlShell )
+        #end
+    #end
+##
+    ## Set up the working vars specific to this macro
+    ## approvedChildren                       : An internal variable used to determine if a folder has valid children
+    ## childTag                               : Child items should be encased in this tag
+    ## childTagAttrs                          : Specific attrs for any childTag
+    ## excludeMetadataName                    : Name of a Metadata field of a folder, page, or symlink
+    ## excludeMetadataValue                   : If this value equals the value of the excludeMetadataName Metadata then exclude the navigation item from the navigation
+    ## folderTag                              : Items of a folder should be encased in this tag
+    ## folderTagAttrs                         : Specific attrs for any folderTag after the root one
+    ## homePageFileName                       : The filename of the assumed home page
+    ## i                                      : Internal incrementor used to determine which level of recursion has been reached
+    ## linkAttrs                              : Attributes of the <a> tag
+    ## maxFolderDepth                         : How deep should the recursion go? 0 means infinity
+    ## megaMenuMacro                          : Macro name which should be called in order to render the mega-menu
+    ## out                                    : The macro's output is stored in this variable
+    ## rootChildActiveTagAttrs                : Apply these attrs to a root child if it is detected that the user is currently on this page
+    ## rootChildSeparator                     : A string to separate the root children
+    ## rootChildTagAttrs                      : Specific attrs for the root children
+    ## rootFolderTagAttrs                     : Specific attrs for the root folderTag
+    ## rootHomePageChildAttrs                 : Specific attrs for the root homepage
+    ## rootHomePageDisplayName                : Assign a specific name to the first homePageFileName found in the base folder
+    ## showRootHomePage                       : Should the homePageFileName of the base folder be shown?
+    ## skipRootChildActiveTagAttrsForHomePage : 
+##
+    #if( $siteNavHtmlShellVars.Class.Name != 'java.util.LinkedHashMap' || $siteNavHtmlShellVars.size() == 0 )
+        #set( $siteNavHtmlShellVars = {
+            'approvedChildren': {},
+            'childTag': 'li',
+            'childTagAttrs': {},
+            'excludeMetadataName': $siteNavHtmlShellForceNull,
+            'excludeMetadataValue': $siteNavHtmlShellForceNull,
+            'folderTag': 'ul',
+            'folderTagAttrs': {},
+            'homePageFileName': 'index',
+            'i': 0,
+            'linkAttrs': {},
+            'maxFolderDepth': 0,
+            'megaMenuMacro': '',
+            'out': '',
+            'rootChildActiveTagAttrs': {},
+            'rootChildSeparator': '',
+            'rootChildTagAttrs': {},
+            'rootFolderTagAttrs': {},
+            'rootHomePageChildAttrs': {},
+            'rootHomePageDisplayName': 'Home',
+            'showRootHomePage': false,
+            'skipRootChildActiveTagAttrsForHomePage': false
+        } )
+    #end
+##
+    ## If this is the base invocation of this macro then allow overwriting of some working vars
+    #if( $siteNavHtmlShellVars[ 'i' ] == 0 )
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'childTag' ] ) )
+            #set( $siteNavHtmlShellVars[ 'childTag' ] = $options_siteNavHtmlShell[ 'childTag' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'childTagAttrs' ] ) )
+            #set( $siteNavHtmlShellVars[ 'childTagAttrs' ] = $options_siteNavHtmlShell[ 'childTagAttrs' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'excludeMetadataName' ] ) )
+            #set( $siteNavHtmlShellVars[ 'excludeMetadataName' ] = $options_siteNavHtmlShell[ 'excludeMetadataName' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'excludeMetadataValue' ] ) )
+            #set( $siteNavHtmlShellVars[ 'excludeMetadataValue' ] = $options_siteNavHtmlShell[ 'excludeMetadataValue' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'folderTag' ] ) )
+            #set( $siteNavHtmlShellVars[ 'folderTag' ] = $options_siteNavHtmlShell[ 'folderTag' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'folderTagAttrs' ] ) )
+            #set( $siteNavHtmlShellVars[ 'folderTagAttrs' ] = $options_siteNavHtmlShell[ 'folderTagAttrs' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'homePageFileName' ] ) )
+            #set( $siteNavHtmlShellVars[ 'homePageFileName' ] = $options_siteNavHtmlShell[ 'homePageFileName' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'linkAttrs' ] ) )
+            #drulykgShallowMerge( $siteNavHtmlShellVars[ 'linkAttrs' ] $options_siteNavHtmlShell[ 'linkAttrs' ] )
+            #set( $siteNavHtmlShellVars[ 'linkAttrs' ] = $drulykgShallowMerge )
+        #end
+##
+        #if(
+            $options_siteNavHtmlShell[ 'maxFolderDepth' ].Class.Name == 'java.lang.Integer' &&
+            $options_siteNavHtmlShell[ 'maxFolderDepth' ] > $siteNavHtmlShellVars[ 'maxFolderDepth' ]
+        )
+            ## Add 1 to the requested maxFolderDepth because of recursion shenanigans
+            #set( $siteNavHtmlShellVars[ 'maxFolderDepth' ] = $options_siteNavHtmlShell[ 'maxFolderDepth' ] + 1 )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'megaMenuMacro' ] ) )
+            #set( $siteNavHtmlShellVars[ 'megaMenuMacro' ] = $options_siteNavHtmlShell[ 'megaMenuMacro' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'rootChildActiveTagAttrs' ] ) )
+            #set( $siteNavHtmlShellVars[ 'rootChildActiveTagAttrs' ] = $options_siteNavHtmlShell[ 'rootChildActiveTagAttrs' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'rootChildSeparator' ] ) )
+            #set( $siteNavHtmlShellVars[ 'rootChildSeparator' ] = $options_siteNavHtmlShell[ 'rootChildSeparator' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'rootChildTagAttrs' ] ) )
+            #set( $siteNavHtmlShellVars[ 'rootChildTagAttrs' ] = $options_siteNavHtmlShell[ 'rootChildTagAttrs' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'rootFolderTagAttrs' ] ) )
+            #set( $siteNavHtmlShellVars[ 'rootFolderTagAttrs' ] = $options_siteNavHtmlShell[ 'rootFolderTagAttrs' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'rootHomePageChildAttrs' ] ) )
+            #set( $siteNavHtmlShellVars[ 'rootHomePageChildAttrs' ] = $options_siteNavHtmlShell[ 'rootHomePageChildAttrs' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'rootHomePageDisplayName' ] ) )
+            #set( $siteNavHtmlShellVars[ 'rootHomePageDisplayName' ] = $options_siteNavHtmlShell[ 'rootHomePageDisplayName' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'showRootHomePage' ] ) )
+            #set( $siteNavHtmlShellVars[ 'showRootHomePage' ] = $options_siteNavHtmlShell[ 'showRootHomePage' ] )
+        #end
+##
+        #if( !$_PropertyTool.isNull( $options_siteNavHtmlShell[ 'skipRootChildActiveTagAttrsForHomePage' ] ) )
+            #set( $siteNavHtmlShellVars[ 'skipRootChildActiveTagAttrsForHomePage' ] = $options_siteNavHtmlShell[ 'skipRootChildActiveTagAttrsForHomePage' ] )
+        #end
+    #end
+##
+    ## Increment the counter
+    #set( $siteNavHtmlShellVars[ 'i' ] = $siteNavHtmlShellVars[ 'i' ] + 1 )
+##
+    #if(
+        $siteNavHtmlShellVars[ 'maxFolderDepth' ] == 0 ||
+        $siteNavHtmlShellVars[ 'i' ] <= $siteNavHtmlShellVars[ 'maxFolderDepth' ]
+    )
+        ## Process this folder if it is index-able
+        ## Check if we are being requested to follow rules from metadata to not display a nav item
+        ## We can only omit a folder if this is not the requested root and it's metadata matches the specified criteria
+        #if(
+            $object_siteNavHtmlShell.AssetType == 'folder' && $object_siteNavHtmlShell.ShouldBeIndexed &&
+            (
+                $siteNavHtmlShellVars[ 'i' ] == 1 ||
+                $siteNavHtmlShellVars[ 'excludeMetadataName' ].Class.Name != 'java.lang.String' ||
+                $object_siteNavHtmlShell.Metadata.getDynamicField( $siteNavHtmlShellVars[ 'excludeMetadataName' ] ).Value != $siteNavHtmlShellVars[ 'excludeMetadataValue' ]
+            )
+        )
+##
+            ## Keep track of whether or not this folder has any children which should be added to the nav
+            ## Having an empty <ul> messes up smartMenus rendering
+            #set( $siteNavHtmlShellVars[ 'approvedChildren' ][ $siteNavHtmlShellVars[ 'i' ] ] = [] )
+##
+            ## Does this folder have folders, pages, or symlinks which should be added to it's nav?
+            ## Add similar logic from the above metadata check but ignore our level
+            #foreach( $child in $object_siteNavHtmlShell.Children )
+                #if(
+                    (
+                        $child.AssetType == 'folder' && $child.ShouldBeIndexed ||
+                        ( $child.AssetType == 'page' && $child.Name != 'index' && $child.ShouldBeIndexed ) ||
+                        $child.AssetType == 'symlink'
+                    ) &&
+                    (
+                        $siteNavHtmlShellVars[ 'excludeMetadataName' ].Class.Name != 'java.lang.String' ||
+                        $child.Metadata.getDynamicField( $siteNavHtmlShellVars[ 'excludeMetadataName' ] ).Value != $siteNavHtmlShellVars[ 'excludeMetadataValue' ]
+                    )
+                )
+                    ## Save the child into a list for later processing
+                    #set( $void = $siteNavHtmlShellVars[ 'approvedChildren' ][ $siteNavHtmlShellVars[ 'i' ] ].add( $child ) )
+                #end
+            #end
+##
+            ## Open root folderTag
+            #if( $siteNavHtmlShellVars[ 'i' ] == 1 )
+                #drulykgHtmlTag( $siteNavHtmlShellVars[ 'folderTag' ] {
+                    'appendTo': 'siteNavHtmlShellVars[ "out" ]',
+                    'attrs' : $siteNavHtmlShellVars[ 'rootFolderTagAttrs' ]
+                } )
+            #end
+##
+            ## Should the root home page be shown?
+            #if( $siteNavHtmlShellVars[ 'showRootHomePage' ] == true && $siteNavHtmlShellVars[ 'i' ] == 1 )
+                #drulykgShallowMerge( $siteNavHtmlShellVars[ 'rootChildTagAttrs' ] )
+                #if(
+                    $currentPage.Path == $siteNavHtmlShellVars[ 'homePageFileName' ] &&
+                    $siteNavHtmlShellVars['skipRootChildActiveTagAttrsForHomePage'] == false
+                )
+                    #drulykgShallowMerge( $drulykgShallowMerge $siteNavHtmlShellVars[ 'rootChildActiveTagAttrs' ] )
+                #end
+##
+                #drulykgShallowMerge( $drulykgShallowMerge $siteNavHtmlShellVars[ 'rootHomePageChildAttrs' ] )
+##
+                ## Encase the <a> in a child tag
+                #drulykgHtmlTag( $siteNavHtmlShellVars['childTag'] {
+                    'appendTo': '$siteNavHtmlShellVars[ "out" ]',
+                    'attrs': $drulykgShallowMerge
+                } )
+##
+                ## Set up the <a> tag
+                #set( $siteNavHtmlShellVars[ 'linkAttrs' ][ 'href' ] = $object_siteNavHtmlShell )
+##
+                #drulykgHtmlTag( 'a' {
+                    'appendTo': '$siteNavHtmlShellVars[ "out" ]',
+                    'attrs': $siteNavHtmlShellVars[ 'linkAttrs' ],
+                    'closeTag': true,
+                    'content': $siteNavHtmlShellVars[ 'rootHomePageDisplayName' ]
+                })
+##
+                #if( $siteNavHtmlShellVars[ 'megaMenuMacro' ] != '' )
+                    ## Call the macro needed to generate the mega-menu
+                    #drulykgAppendVar( '$siteNavHtmlShellVars[ "out" ]' "#drulykgInvokeMacro( $siteNavHtmlShellVars[ 'megaMenuMacro' ] $object_siteNavHtmlShell.Name )" )
+                #end
+                ## Close the child tag
+                #drulykgAppendVar( '$siteNavHtmlShellVars[ "out" ]' "</${siteNavHtmlShellVars['childTag']}>" )
+            #end
+##
+            ## Open sub-folder home page
+            #if( $siteNavHtmlShellVars[ 'i' ] > 1 )
+                #if( $siteNavHtmlShellVars[ 'i' ] == 2 )
+                    #drulykgShallowMerge( $siteNavHtmlShellVars[ 'rootChildTagAttrs' ] )
+                    #if( $currentPage.Path.split( '/' )[ 0 ] == $object_siteNavHtmlShell.Name )
+                        #drulykgShallowMerge( $drulykgShallowMerge $siteNavHtmlShellVars[ 'rootChildActiveTagAttrs' ] )
+                    #end
+                #else
+                    #drulykgShallowMerge( $siteNavHtmlShellVars[ 'childTagAttrs' ] )
+                #end
+##
+                ## Encase the <a> in a child tag
+                #drulykgHtmlTag( $siteNavHtmlShellVars['childTag'] {
+                    'appendTo': '$siteNavHtmlShellVars[ "out" ]',
+                    'attrs': $drulykgShallowMerge
+                } )
+##
+                ## Set up the <a> tag
+                #set( $siteNavHtmlShellVars[ 'linkAttrs' ][ 'href' ] = $object_siteNavHtmlShell )
+##
+                #drulykgHtmlTag( 'a' {
+                    'appendTo': '$siteNavHtmlShellVars[ "out" ]',
+                    'attrs': $siteNavHtmlShellVars[ 'linkAttrs' ],
+                    'closeTag': true,
+                    'content': $_EscapeTool.xml( $object_siteNavHtmlShell.Metadata.DisplayName )
+                })
+##
+                #if( $siteNavHtmlShellVars[ 'i' ] == 2 && $siteNavHtmlShellVars[ 'megaMenuMacro' ] != '' )
+                    ## Call the macro needed to generate the mega-menu
+                    #drulykgAppendVar( '$siteNavHtmlShellVars[ "out" ]' "#drulykgInvokeMacro( $siteNavHtmlShellVars[ 'megaMenuMacro' ] $object_siteNavHtmlShell.Name )" )
+                #end
+                ## DO NOT close the child tag yet
+                ## If this folder has multiple items then we need to encase things in a folderTag
+                #if(
+                    $siteNavHtmlShellVars[ 'approvedChildren' ][ $siteNavHtmlShellVars[ 'i' ] ].size() > 0 &&
+                    ( $siteNavHtmlShellVars[ 'maxFolderDepth' ] == 0 || $siteNavHtmlShellVars[ 'i' ] < $siteNavHtmlShellVars[ 'maxFolderDepth' ] ) &&
+                    ( $siteNavHtmlShellVars[ 'megaMenuMacro' ] == '' || $siteNavHtmlShellVars[ 'i' ] < 2 )
+                )
+                    ## Open the sub-folder folderTag
+                    #drulykgHtmlTag( $siteNavHtmlShellVars[ 'folderTag' ] {
+                        'appendTo': 'siteNavHtmlShellVars[ "out" ]',
+                        'attrs' : $siteNavHtmlShellVars[ 'folderTagAttrs' ]
+                    } )
+                #end
+            #end
+##
+            #if( $siteNavHtmlShellVars[ 'megaMenuMacro' ] == '' || $siteNavHtmlShellVars[ 'i' ] < 2 )
+                #foreach( $child in $siteNavHtmlShellVars[ 'approvedChildren' ][ $siteNavHtmlShellVars[ 'i' ] ] )
+                    #if( $siteNavHtmlShellVars[ 'i' ] == 1 && $siteNavHtmlShellVars[ 'showRootHomePage' ] == true )
+                        #drulykgAppendVar( 'siteNavHtmlShellVars[ "out" ]' $siteNavHtmlShellVars[ 'rootChildSeparator' ] )
+                    #end
+                    ## Recurse each approved child
+                    #siteNavHtmlShell( $child )
+                    #if( $siteNavHtmlShellVars[ 'i' ] == 1 && $siteNavHtmlShellVars[ 'showRootHomePage' ] == false && $foreach.hasNext )
+                        #drulykgAppendVar( 'siteNavHtmlShellVars[ "out" ]' $siteNavHtmlShellVars[ 'rootChildSeparator' ] )
+                    #end
+                #end
+            #end
+##
+            #if( $siteNavHtmlShellVars[ 'i' ] > 1 )
+##
+                ## Close the sub-folder folderTag
+                #if(
+                    $siteNavHtmlShellVars[ 'approvedChildren' ][ $siteNavHtmlShellVars[ 'i' ] ].size() > 0 &&
+                    ( $siteNavHtmlShellVars[ 'maxFolderDepth' ] == 0 || $siteNavHtmlShellVars[ 'i' ] < $siteNavHtmlShellVars[ 'maxFolderDepth' ] ) &&
+                    ( $siteNavHtmlShellVars[ 'megaMenuMacro' ] == '' || $siteNavHtmlShellVars[ 'i' ] < 2 )
+                )
+                    #drulykgAppendVar( 'siteNavHtmlShellVars[ "out" ]' "</${siteNavHtmlShellVars[ 'folderTag' ]}>" )
+                #end
+##
+                ## Close sub-folder home page
+                #drulykgAppendVar( '$siteNavHtmlShellVars[ "out" ]' "</${siteNavHtmlShellVars['childTag']}>" )
+            #end
+##
+            ## Close root folderTag
+            #if( $siteNavHtmlShellVars[ 'i' ] == 1 )
+                #drulykgAppendVar( 'siteNavHtmlShellVars[ "out" ]' "</${siteNavHtmlShellVars[ 'folderTag' ]}>" )
+            #end
+        ## Process this page if it is index-able OR
+        ## Process this symlink
+        ## No need to check for metadata exclusions because approvedChildren already does that for us
+        #elseif(
+            ( $object_siteNavHtmlShell.AssetType == 'page' && $object_siteNavHtmlShell.ShouldBeIndexed ) ||
+            $object_siteNavHtmlShell.AssetType == 'symlink'
+        )
+            #if( $siteNavHtmlShellVars[ 'i' ] == 2 )
+                #drulykgShallowMerge( $siteNavHtmlShellVars[ 'rootChildTagAttrs' ] )
+                #if( $currentPage.Path == $object_siteNavHtmlShell.Path )
+                    #drulykgShallowMerge( $drulykgShallowMerge $siteNavHtmlShellVars[ 'rootChildActiveTagAttrs' ] )
+                #end
+            #else
+                #drulykgShallowMerge( $siteNavHtmlShellVars[ 'childTagAttrs' ] )
+            #end
+##
+            ## Encase the <a> in a child tag
+            #drulykgHtmlTag( $siteNavHtmlShellVars['childTag'] {
+                'appendTo': '$siteNavHtmlShellVars[ "out" ]',
+                'attrs': $drulykgShallowMerge
+            } )
+##
+            ## Set up the <a> tag
+            #set( $siteNavHtmlShellVars[ 'linkAttrs' ][ 'href' ] = $object_siteNavHtmlShell )
+##
+            #drulykgHtmlTag( 'a' {
+                'appendTo': '$siteNavHtmlShellVars[ "out" ]',
+                'attrs': $siteNavHtmlShellVars[ 'linkAttrs' ],
+                'closeTag': true,
+                'content': $_EscapeTool.xml( $object_siteNavHtmlShell.Metadata.DisplayName )
+            } )
+##
+            #if( $siteNavHtmlShellVars[ 'i' ] == 2 && $siteNavHtmlShellVars[ 'megaMenuMacro' ] != '' )
+                ## Call the macro needed to generate the mega-menu
+                #drulykgAppendVar( '$siteNavHtmlShellVars[ "out" ]' "#drulykgInvokeMacro( $siteNavHtmlShellVars[ 'megaMenuMacro' ] $object_siteNavHtmlShell.Name )" )
+            #end
+            #drulykgAppendVar( '$siteNavHtmlShellVars[ "out" ]' "</${siteNavHtmlShellVars['childTag']}>" )
+        #end
+    #end
+##
+    #set( $siteNavHtmlShellVars[ 'i' ] = $siteNavHtmlShellVars[ 'i' ] - 1 )
+##
+    #if( $siteNavHtmlShellVars[ 'i' ] == 0 )
+        ## Output the result!
+        $siteNavHtmlShellVars[ 'out' ]
+##
+        ## Clear the working vars so that subsequent invocations do not use the previous values
+        $siteNavHtmlShellVars.clear()
+    #end
+#end
