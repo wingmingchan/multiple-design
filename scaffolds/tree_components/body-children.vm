@@ -3,6 +3,7 @@ Defines children of body
 *#
 #chanwAddChildren( $chanwObjectNodeMap[ "body" ] [
     { $TREE_NODE_NAME : "body-placeholder1" },
+    { $TREE_NODE_NAME : "bright-edge-seo" },
     { $TREE_NODE_NAME : "google-noscript" },
     { $TREE_NODE_NAME : "header" },
     { $TREE_NODE_NAME : "siteNav" },
@@ -13,5 +14,6 @@ Defines children of body
     { $TREE_NODE_NAME : "footer" },
     { $TREE_NODE_NAME : "script" },
     { $TREE_NODE_NAME : "cd-top" },
+    { $TREE_NODE_NAME : "bright-edge-close" },
     { $TREE_NODE_NAME : "body-placeholder2" }
 ] )
