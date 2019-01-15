@@ -1,6 +1,6 @@
 <?php
 /*/
-This program creates the data definitions.
+This program creates the folders.
 /*/
 
 require_once( 'auth_soap_c8.php' );
@@ -34,11 +34,14 @@ try
             $parent_folder = $admin->getAsset( a\Folder::TYPE, $parent_path, $site_name );
             // create the folder
             $folder = $admin->createFolder( $parent_folder, $folder_name );
-            // set metadata set
-            $folder->setMetadataSet( $folder_ms );
-            // set mandatory display name
-            $folder->getMetadata()->setDisplayName( $folder_name )->getHostAsset()->edit();
         }
+        
+        // set metadata set
+        $folder->setMetadataSet( $folder_ms );
+        // set mandatory display name
+        $folder->getMetadata()->setDisplayName( $folder_name );
+        // not indexable and not publishable
+        $folder->setShouldBeIndexed( false )->setShouldBePublished( false )->edit();
     }
 }
 catch( \Exception $e ) 
