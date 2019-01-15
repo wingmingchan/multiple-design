@@ -28,4 +28,26 @@ $dd_names_urls = array(
     "Velocity"         => "$dd_url_base/dd_velocity.xml",
     "Wysiwyg"          => "$dd_url_base/dd_wysiwyg.xml"
 );
+
+// folders
+$folder_names_parent_paths = array(
+	"app"             => $ROOT_PATH,
+	"components"      => "/app",
+	"block_macros"    => "/app/components",
+	"blocks"          => "/app/components",
+	"content_types"   => "/app",
+	"scaffolds"       => "/app",
+	"rwd4"            => "/app/scaffolds",
+	"tree_components" => "/app/scaffolds",
+	"site_designs"    => "/app",
+
+	"core"            => $ROOT_PATH,
+	"base-assets"     => "/core",
+	"library"         => "/core",
+	"velocity"        => "/core/library",
+	"chanw"           => "/core/library/velocity",
+	"drulykg"         => "/core/library/velocity",
+	"xslt"            => "/core/library",
+	"macros"          => "/core"
+);
 ?>
