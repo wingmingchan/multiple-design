@@ -1,10 +1,5 @@
 #macro( processSiteSetup )
 ##
-    ## Set some internal vars
-    #set( $processSiteSetupVars = {
-        'void': $nulllll
-    } )
-##
     ## Set the site config map so that it can be populated
     #resetSiteConfigMap()
 ##
@@ -14,7 +9,7 @@
     ## Prepend the legacy _cascade/setup format to the list
     ## It's OK if .locate() fails to find it because nulls in
     ## $getSiteSetupBlocksFormatsList are ignored
-    #set( $processSiteSetupVars[ 'void' ] = $getSiteSetupBlocksFormatsList.add( 0, $_.locate( '_cascade/setup', $_FieldTool.in( 'com.hannonhill.cascade.model.dom.identifier.EntityTypes' ).TYPE_FORMAT, $currentPageSiteName ) ) )
+    #set( $void = $getSiteSetupBlocksFormatsList.add( 0, $_.locate( '_cascade/setup', $_FieldTool.in( 'com.hannonhill.cascade.model.dom.identifier.EntityTypes' ).TYPE_FORMAT, $currentPageSiteName ) ) )
 ##
     ## Loop the blocks/formats and process accordingly
     #foreach( $setup in $getSiteSetupBlocksFormatsList )
@@ -55,24 +50,15 @@
     ## a site might be publishing
     #elseif( $siteConfigMap[ 'siteLogoClickDestination' ] == 'Domain root of current site' )
 ##
-        #set( $siteConfigMap[ 'siteLogoClickDestination' ] = '' )
-##
         ## Get the current page's site's root URL and break it into pieces
         #drulykgGetCascadeAssetUrl( $_.locateFolder( '/', $currentPageSiteName ) )
         #drulykgParseUrl( $drulykgGetCascadeAssetUrl )
 ##
         ## We are only interested in everything before the path starts
-        #if( $drulykgParseUrl[ 'host' ] != '' )
-            #if( $drulykgParseUrl[ 'protocol' ] != '' )
-                #drulykgAppendVar( "siteConfigMap[ 'siteLogoClickDestination' ]" "${drulykgParseUrl[ 'protocol' ]}://" )
-            #end
-            #drulykgAppendVar( "siteConfigMap[ 'siteLogoClickDestination' ]" $drulykgParseUrl[ 'host' ] )
-            #if( $drulykgParseUrl[ 'port' ] != '' )
-                #drulykgAppendVar( "siteConfigMap[ 'siteLogoClickDestination' ]" ":${drulykgParseUrl[ 'port' ]}" )
-            #end
+        #set( $siteConfigMap[ 'siteLogoClickDestination' ] = $drulykgParseUrl[ 'prePath' ] )
 ##
-        ## No host? just send user to root-relative root
-        #else
+        ## No prePath? just send user to root-relative root
+        #if( $drulykgParseUrl[ 'prePath' ] == '' )
             #drulykgAppendVar( "siteConfigMap[ 'siteLogoClickDestination' ]" '/' )
         #end
 ##
@@ -98,8 +84,7 @@
         #set( $getSiteSetupBlocksFormatsListVars = {
             'i': 0,
             'setupBlockFormat': $nulllll,
-            'setupPath': $nulllll,
-            'void': $nulllll
+            'setupPath': $nulllll
         } )
     #end
 ##
@@ -128,17 +113,17 @@
         #drulykgAppendVar( "getSiteSetupBlocksFormatsListVars[ 'setupPath' ]" 'setup' )
 ##
         ## Try and locate this as a block
-        #set( $getSiteSetupBlocksFormatsListVars[ 'void' ] = $getSiteSetupBlocksFormatsListVars.put( 'setupBlockFormat', $_.locateBlock( $getSiteSetupBlocksFormatsListVars[ 'setupPath' ], $folder_getSiteSetupBlocksFormatsList.SiteName ) ) )
+        #set( $void = $getSiteSetupBlocksFormatsListVars.put( 'setupBlockFormat', $_.locateBlock( $getSiteSetupBlocksFormatsListVars[ 'setupPath' ], $folder_getSiteSetupBlocksFormatsList.SiteName ) ) )
 ##
         ## If block location failed then check if a format exists
         #if( !$getSiteSetupBlocksFormatsListVars[ 'setupBlockFormat' ].Class.Name )
-            #set( $getSiteSetupBlocksFormatsListVars[ 'void' ] = $getSiteSetupBlocksFormatsListVars.put( 'setupBlockFormat', $_.locate( $getSiteSetupBlocksFormatsListVars[ 'setupPath' ], $_FieldTool.in("com.hannonhill.cascade.model.dom.identifier.EntityTypes").TYPE_FORMAT, $folder_getSiteSetupBlocksFormatsList.SiteName ) ) )
+            #set( $void = $getSiteSetupBlocksFormatsListVars.put( 'setupBlockFormat', $_.locate( $getSiteSetupBlocksFormatsListVars[ 'setupPath' ], $_FieldTool.in("com.hannonhill.cascade.model.dom.identifier.EntityTypes").TYPE_FORMAT, $folder_getSiteSetupBlocksFormatsList.SiteName ) ) )
         #end
 ##
         ## If we have a setup block or format then add it to the beginning of the list
         ## This will automatically produce the correct specificity from root to the current page
         #if( $getSiteSetupBlocksFormatsListVars[ 'setupBlockFormat' ].Class.Name )
-            #set( $getSiteSetupBlocksFormatsListVars[ 'void' ] = $getSiteSetupBlocksFormatsList.add( 0, $getSiteSetupBlocksFormatsListVars[ 'setupBlockFormat' ] ) )
+            #set( $void = $getSiteSetupBlocksFormatsList.add( 0, $getSiteSetupBlocksFormatsListVars[ 'setupBlockFormat' ] ) )
         #end
 ##
         ## If this is not the root folder of the site then keep traversing
@@ -167,7 +152,7 @@
         #set( $siteConfigMap[ 'treeName' ] = $block_tree_name )
     #end
 ##
-    #chanwGetFQINodeMap( $block_processSetupBlock.StructuredData $null $block_processSetupBlock )
+    #chanwGetFQINodeMap( $block_processSetupBlock.StructuredData $nulllll $block_processSetupBlock )
     #set( $mapKeySet = $chanwGetFQINodeMap.keySet() )
 ##
     #foreach( $key in $mapKeySet )
@@ -185,7 +170,10 @@
 ##
         #if(
             ( $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_PLAIN_TEXT ||
-              $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_DROPDOWN ) &&
+              $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_DROPDOWN ||
+              ( $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_CHECKBOX &&
+                $chanwGetFQINodeMap[ $key ][ $KEY_DATA ].size() > 0 )
+            ) &&
             $chanwGetFQINodeMap[ $key ][ $KEY_DATA ]
         )
             #if(
@@ -195,7 +183,14 @@
                     $chanwGetFQINodeMap[ $key ][ $KEY_DATA ] != 'inherited'
                 )
             )
-                #set( $siteConfigMap[ $siteConfigMapKey ] = $chanwGetFQINodeMap[ $key ][ $KEY_DATA ] )
+                #if(
+                    $siteConfigMapKey == 'turnOffMiniMenu' ||
+                    $siteConfigMapKey == 'turnOffMobileMenu'
+                )
+                    #set( $siteConfigMap[ $siteConfigMapKey ] = $chanwGetFQINodeMap[ $key ][ $KEY_DATA ][ 0 ] )
+                #else
+                    #set( $siteConfigMap[ $siteConfigMapKey ] = $chanwGetFQINodeMap[ $key ][ $KEY_DATA ] )
+                #end
             #end
         #elseif( $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_PAGE || $chanwGetFQINodeMap[ $key ][ $KEY_SUBTYPE ] == $TYPE_FILE )
             #if( $siteConfigMapKey == "siteThemeCSS" || $siteConfigMapKey == "siteLocalCSS" )
@@ -293,6 +288,9 @@
     #set( $siteConfigMap[ 'breadcrumbsHomeString' ]      = "Home" )
     #set( $siteConfigMap[ 'breadcrumbsSeparatorString' ] = "&gt;" )
 ##
+    #set( $siteConfigMap[ 'turnOffMiniMenu' ] = 'No' )
+    #set( $siteConfigMap[ 'turnOffMobileMenu' ] = 'No' )
+##
     ## layouts
     #set( $siteConfigMap[ 'headerElement' ]        = "header" )
     #set( $siteConfigMap[ 'wrapperElement' ]       = "main" )
@@ -331,10 +329,6 @@ require_once('cascade/cascade_global.php');
 ##
     #macro( rwd4ResetSiteConfigMap )
         ##set( $siteConfigMap[ 'wrapperElement' ] = "div" )
-    #end
-##
-    #macro( rwd4TreeResetSiteConfigMap )
-        #rwd4ResetSiteConfigMap
     #end
 #end
 ##
