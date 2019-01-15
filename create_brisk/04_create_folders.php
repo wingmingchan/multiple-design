@@ -39,8 +39,6 @@ try
         $folder->getMetadata()->setDisplayName( $folder_name );
         // not indexable and not publishable
         $folder->setShouldBeIndexed( false )->setShouldBePublished( false )->edit();
-        
-        
     }
    
     // fix workflow settings of the base folder
