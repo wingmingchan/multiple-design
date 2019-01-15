@@ -1,0 +1,5 @@
+#macro( drulykgCleanupAndStop )
+    #set( $drulykgCleanupAndStop = "" )
+    #set( $drulykgCleanupAndStop = "#chanwCleanUp" )
+    #stop
+#end
