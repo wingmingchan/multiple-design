@@ -1,0 +1,35 @@
+## Brisk core constants are needed in order to set app constants
+#import( 'core/core-constants' )
+##
+## A map of Brisk app constants
+#set( $BRISK_APP = {} )
+##
+## PATHS
+##
+## _NTS = No Trailing Slash
+##
+#set( $BRISK_APP[ 'COMPONENTS_FOLDER' ]         = 'components' )
+#set( $BRISK_APP[ 'COMPONENTS_PATH_NTS' ]       = $BRISK[ 'APP_PATH' ] + $BRISK_APP[ 'COMPONENTS_FOLDER' ] )
+#set( $BRISK_APP[ 'COMPONENTS_PATH' ]           = $BRISK_APP[ 'COMPONENTS_PATH_NTS' ] + '/' )
+#set( $BRISK_APP[ 'COMPONENTS_SITEPATH_NTS' ]   = $BRISK[ 'APP_SITEPATH' ] + $BRISK_APP[ 'COMPONENTS_FOLDER' ] )
+#set( $BRISK_APP[ 'COMPONENTS_SITEPATH' ]       = $BRISK_APP[ 'COMPONENTS_SITEPATH_NTS' ] + '/' )
+##
+#set( $BRISK_APP[ 'CT_FOLDER' ]                 = 'content_types' )
+#set( $BRISK_APP[ 'CT_PATH_NTS' ]               = $BRISK[ 'APP_PATH' ] + $BRISK_APP[ 'CT_FOLDER' ] )
+#set( $BRISK_APP[ 'CT_PATH' ]                   = $BRISK_APP[ 'CT_PATH_NTS' ] + '/' )
+#set( $BRISK_APP[ 'CT_SITEPATH_NTS' ]           = $BRISK[ 'APP_SITEPATH' ] + $BRISK_APP[ 'CT_FOLDER' ] )
+#set( $BRISK_APP[ 'CT_SITEPATH' ]               = $BRISK_APP[ 'CT_SITEPATH_NTS' ] + '/' )
+##
+#set( $BRISK_APP[ 'SCAFFOLDS_FOLDER' ]          = 'scaffolds' )
+#set( $BRISK_APP[ 'SCAFFOLDS_PATH_NTS' ]        = $BRISK[ 'APP_PATH' ] + $BRISK_APP[ 'SCAFFOLDS_FOLDER' ] )
+#set( $BRISK_APP[ 'SCAFFOLDS_PATH' ]            = $BRISK_APP[ 'SCAFFOLDS_PATH_NTS' ] + '/' )
+#set( $BRISK_APP[ 'SCAFFOLDS_SITEPATH_NTS' ]    = $BRISK[ 'APP_SITEPATH' ] + $BRISK_APP[ 'SCAFFOLDS_FOLDER' ] )
+#set( $BRISK_APP[ 'SCAFFOLDS_SITEPATH' ]        = $BRISK_APP[ 'SCAFFOLDS_SITEPATH_NTS' ] + '/' )
+##
+#set( $BRISK_APP[ 'SITE_DESIGNS_FOLDER' ]       = 'site_designs' )
+#set( $BRISK_APP[ 'SITE_DESIGNS_PATH_NTS' ]     = $BRISK[ 'APP_PATH' ] + $BRISK_APP[ 'SITE_DESIGNS_FOLDER' ] )
+#set( $BRISK_APP[ 'SITE_DESIGNS_PATH' ]         = $BRISK_APP[ 'SITE_DESIGNS_PATH_NTS' ] + '/' )
+#set( $BRISK_APP[ 'SITE_DESIGNS_SITEPATH_NTS' ] = $BRISK[ 'APP_SITEPATH' ] + $BRISK_APP[ 'SITE_DESIGNS_FOLDER' ] )
+#set( $BRISK_APP[ 'SITE_DESIGNS_SITEPATH' ]     = $BRISK_APP[ 'SITE_DESIGNS_SITEPATH_NTS' ] + '/' )
+##
+#set( $BRISK_APP[ 'DESIGNS_TREE_NAME' ]         = 'design-tree' )

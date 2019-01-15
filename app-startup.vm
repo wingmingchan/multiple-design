@@ -1,0 +1,18 @@
+## Load the app constants
+#drulykgImportPassThrough( "${BRISK[ 'APP_PATH' ]}app-constants" )
+##
+## Dynamically figure out the content type of the $currentPage
+##
+## Each supported content type should have its own format
+## so we just delegate to that format from this point.
+#drulykgImportPassThrough(
+    "${BRISK_APP[ 'CT_SITEPATH' ]}${_.Class.forName(
+        'com.hannonhill.cascade.model.service.ServiceProviderHolderBean'
+    ).getMethod(
+        'getServiceProvider'
+    ).invoke(
+        null
+    ).getPageService().get(
+        $currentPage.Identifier.Id
+    ).ContentType.Name}"
+)
